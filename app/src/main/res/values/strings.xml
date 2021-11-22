@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">BioBrainExample</string>
+    <string name="button_scan">Scan</string>
+    <string name="button_scanning">Scanning</string>
+    <string name="button_start">Start</string>
+    <string name="button_stop">Stop</string>
+    <string name="button_disconnect">Disconnect</string>
+    <string name="radio_button_250SPS">250 SPS</string>
+    <string name="radio_button_500SPS">500 SPS</string>
+    <string name="main_device_list">Device list</string>
+    <string name="main_log">Log</string>
+    <string name="main_emg_graph">EMG Graph</string>
+    <string name="main_acc_graph">Acc Graph</string>
+    <string name="main_gyro_graph">Gyro Graph</string>
+    <string name="main_magneto_graph">Magneto Graph</string>
+    <string name="error_device_connected">연결된 디바이스가 있습니다. 연결 해제 후 다시 시도하세요.</string>
+    <string name="error_not_support_ble">BLE를 지원하지 않습니다.</string>
+    <string name="error_ble_start_service">BLE 서비스에서 오류가 발생하였습니다.</string>
+    <string name="error_device_working">디바이스가 응답하지 않습니다. 리셋 후 다시 시도하세요.</string>
+    <string name="scan_complete">디바이스 검색이 완료되었습니다.</string>
+</resources>
