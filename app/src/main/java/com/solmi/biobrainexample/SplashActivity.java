@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.solmi.biobrainexample.ui.login.LoginActivity;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -22,7 +24,8 @@ public class SplashActivity extends AppCompatActivity {
     private class SplashHandler implements Runnable {
         @Override
         public void run() {
-            startActivity(new Intent(getApplication(),MainActivity.class));
+           /* startActivity(new Intent(getApplication(),MainActivity.class));*/
+            startActivity(new Intent(getApplication(), LoginActivity.class));
             SplashActivity.this.finish();
 
         }

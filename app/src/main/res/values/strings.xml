@@ -18,4 +18,13 @@
     <string name="error_ble_start_service">BLE 서비스에서 오류가 발생하였습니다.</string>
     <string name="error_device_working">디바이스가 응답하지 않습니다. 리셋 후 다시 시도하세요.</string>
     <string name="scan_complete">디바이스 검색이 완료되었습니다.</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
