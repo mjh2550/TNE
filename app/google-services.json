@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1086285657151",
+    "project_id": "turtleneckescape",
+    "storage_bucket": "turtleneckescape.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086285657151:android:2202bc29e79809e378748a",
+        "android_client_info": {
+          "package_name": "com.solmi.biobrainexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1086285657151-09b5nr6np6td4qpp91kr80op887v82oo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvH0Imv2RMRZu7WfNMdgCYC8Xw3HgtHpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1086285657151-09b5nr6np6td4qpp91kr80op887v82oo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
