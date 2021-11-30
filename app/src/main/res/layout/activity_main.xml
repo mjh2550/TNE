@@ -7,26 +7,40 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <RadioGroup
-        android:id="@+id/rg_mainSamplingRate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal"
-        android:checkedButton="@id/rb_mainSamplingRate250">
+<!--
+        <FrameLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
 
-        <RadioButton
-            android:id="@+id/rb_mainSamplingRate250"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+-->
+
+        <RadioGroup
+            android:id="@+id/rg_mainSamplingRate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/radio_button_250SPS" />
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:checkedButton="@id/rb_mainSamplingRate250">
 
-        <RadioButton
-            android:id="@+id/rb_mainSamplingRate500"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/radio_button_500SPS" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/rb_mainSamplingRate250"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_button_250SPS" />
+
+            <RadioButton
+                android:id="@+id/rb_mainSamplingRate500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_button_500SPS" />
+        </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -161,5 +175,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
         </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+  <!--      </LinearLayout>
+    </FrameLayout>-->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:menu="@menu/bottom_nav" />
+
 </LinearLayout>

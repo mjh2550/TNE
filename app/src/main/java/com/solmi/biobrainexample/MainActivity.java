@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -14,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,6 +26,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.solmi.ble.BLECommManager;
 import com.solmi.ble.BLEDefine;
 import com.solmi.ble.BTScanEvent;
@@ -69,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
     protected Simple3ChannelGraph mSGMagnetoGraph;
     @BindView(R.id.rg_mainSamplingRate)
     protected RadioGroup mRGSamplingRate;
+
+    @BindView(R.id.nav_view)
+    BottomNavigationView bottomNavigationView;
+
+    private HomeFrag homeFrag;
+    private ResultFrag resultFrag;
+    private InfoFrag infoFrag;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
 
     /**
      * 블루투스 검색 이벤트 핸들러
@@ -146,6 +161,53 @@ public class MainActivity extends AppCompatActivity {
         boolean isPermissionGranted = checkPermission();
         if (isPermissionGranted == false) {
             requestPermission();
+        }
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId())
+                {
+                    case R.id.navigation_1:
+                    setFrag(0);
+                        break;
+                    case R.id.navigation_2:
+                    setFrag(1);
+                        break;
+                    case R.id.navigation_3:
+                    setFrag(2);
+                        break;
+                }
+                return true;
+
+            }
+        });
+
+        homeFrag = new HomeFrag();
+        resultFrag = new ResultFrag();
+        infoFrag = new InfoFrag();
+        setFrag(0);
+
+    }
+
+    private void setFrag(int n)
+    {
+            fm = getSupportFragmentManager();
+            ft = fm.beginTransaction();
+        switch (n)
+        {
+            case 0:
+                ft.replace(R.id.content_layout,homeFrag);
+                ft.commit();
+                break;
+            case 1:
+                ft.replace(R.id.content_layout,resultFrag);
+                ft.commit();
+                break;
+            case 2:
+                ft.replace(R.id.content_layout,infoFrag);
+                ft.commit();
+                break;
         }
     }
 

@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.solmi.biobrainexample.HomeFrag;
 import com.solmi.biobrainexample.MainActivity;
 import com.solmi.biobrainexample.R;
 import com.solmi.biobrainexample.ui.login.LoginViewModel;
@@ -127,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
         // TODO : 성공, 메인화면으로 넘어가야 함
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HomeFrag.class);
         startActivity(intent);
     }
 
