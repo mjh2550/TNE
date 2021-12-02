@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
         // TODO : 성공, 메인화면으로 넘어가야 함
-        Intent intent = new Intent(this, HomeFrag.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
