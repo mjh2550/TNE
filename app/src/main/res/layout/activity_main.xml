@@ -6,22 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <androidx.appcompat.widget.Toolbar
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="20dp"
-            android:text="Title">
-
-        </TextView>
-
-    </androidx.appcompat.widget.Toolbar>
+    <include layout="@layout/titlebar"/>
 
         <FrameLayout
             android:id="@+id/content_layout"
@@ -194,13 +180,7 @@
                 </ScrollView>
               </LinearLayout>
             </FrameLayout>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
-        app:menu="@menu/bottom_nav" />
+
+    <include layout="@layout/bottombar"/>
 
 </LinearLayout>

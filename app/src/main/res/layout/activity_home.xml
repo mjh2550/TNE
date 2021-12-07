@@ -4,10 +4,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="home_page"
-        android:textSize="100dp" />
+        android:text="거북이는 귀엽기라도 하지...."
+        android:textSize="20dp"
+        android:gravity="center"/>
+
+
 
 
 </LinearLayout>
