@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--android:layout_constraintTop_toTopOf="parent"-->
 <androidx.appcompat.widget.Toolbar
-    android:layout_constraintTop_toTopOf="parent"
+
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

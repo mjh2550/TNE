@@ -167,10 +167,11 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initHandler();
         initComponent();
-        boolean isPermissionGranted = checkPermission();
+
+        /*boolean isPermissionGranted = checkPermission();
         if (isPermissionGranted == false) {
             requestPermission();
-        }
+        }*/
 
         //상단 툴바 설정
       //  toolbar = findViewById(R.id.toolbar);
@@ -287,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
      * 권한 설정되었는지 확인하는 함수
      * @return 권한 설정 여부
      */
+    /*
     private boolean checkPermission() {
         int locationPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
         if (locationPermissionCheck == PackageManager.PERMISSION_DENIED) {
@@ -301,6 +303,8 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
     }
+
+     */
 
     /**
      * 구성 요소들 초기화하는 함수

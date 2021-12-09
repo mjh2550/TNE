@@ -1,11 +1,15 @@
 package com.solmi.biobrainexample.ui.login;
 
+import android.Manifest;
 import android.app.Activity;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -23,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.solmi.biobrainexample.HomeActivity;
 import com.solmi.biobrainexample.HomeFrag;
 import com.solmi.biobrainexample.MainActivity;
 import com.solmi.biobrainexample.R;
@@ -30,6 +35,11 @@ import com.solmi.biobrainexample.ui.login.LoginViewModel;
 import com.solmi.biobrainexample.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
+
+    /**
+     * 필요한 권한 요청 상수
+     */
+    private final int PERMISSION_REQUEST_CODE = 100;
 
     private LoginViewModel loginViewModel;
 
@@ -44,6 +54,12 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        boolean isPermissionGranted = checkPermission();
+        if (isPermissionGranted == false) {
+            requestPermission();
+        }
+
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -128,11 +144,44 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
         // TODO : 성공, 메인화면으로 넘어가야 함
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+
+    /**
+     * 필요한 권한 요청하는 함수
+     */
+    private void requestPermission() {
+        String[] needPermissions = {
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                //@@추가
+                Manifest.permission.ACCESS_FINE_LOCATION
+        };
+
+        ActivityCompat.requestPermissions(this, needPermissions, PERMISSION_REQUEST_CODE);
+    }
+
+    /**
+     * 권한 설정되었는지 확인하는 함수
+     * @return 권한 설정 여부
+     */
+    private boolean checkPermission() {
+        int locationPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (locationPermissionCheck == PackageManager.PERMISSION_DENIED) {
+            return false;
+        }
+
+        //@@추가
+        locationPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (locationPermissionCheck == PackageManager.PERMISSION_DENIED) {
+            return false;
+        }
+
+        return true;
     }
 }

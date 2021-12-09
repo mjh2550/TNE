@@ -9,18 +9,18 @@
 
     <include layout="@layout/titlebar"/>
 
-        <FrameLayout
+       <!-- <FrameLayout
             android:id="@+id/content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1" >-->
 
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="invisible">
+                    android:visibility="invisible">-->
 
 
                 <RadioGroup
@@ -128,58 +128,61 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/main_emg_graph"
-                        android:textStyle="bold|italic" />
+                        android:orientation="vertical">
 
-                    <com.solmi.biobrainexample.Simple1ChannelGraph
-                        android:id="@+id/sg_mainEMGGraph"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/main_emg_graph"
+                            android:textStyle="bold|italic" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_acc_graph"
-                        android:textStyle="bold|italic" />
+                        <com.solmi.biobrainexample.Simple1ChannelGraph
+                            android:id="@+id/sg_mainEMGGraph"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
 
-                    <com.solmi.biobrainexample.Simple3ChannelGraph
-                        android:id="@+id/sg_mainAccGraph"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/main_acc_graph"
+                            android:textStyle="bold|italic" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_gyro_graph"
-                        android:textStyle="bold|italic" />
+                        <com.solmi.biobrainexample.Simple3ChannelGraph
+                            android:id="@+id/sg_mainAccGraph"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
 
-                    <com.solmi.biobrainexample.Simple3ChannelGraph
-                        android:id="@+id/sg_mainGyroGraph"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/main_gyro_graph"
+                            android:textStyle="bold|italic" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_magneto_graph"
-                        android:textStyle="bold|italic" />
+                        <com.solmi.biobrainexample.Simple3ChannelGraph
+                            android:id="@+id/sg_mainGyroGraph"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
 
-                    <com.solmi.biobrainexample.Simple3ChannelGraph
-                        android:id="@+id/sg_mainMagnetoGraph"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/main_magneto_graph"
+                            android:textStyle="bold|italic" />
+
+                        <com.solmi.biobrainexample.Simple3ChannelGraph
+                            android:id="@+id/sg_mainMagnetoGraph"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
+                    </LinearLayout>
+
                 </ScrollView>
-              </LinearLayout>
-            </FrameLayout>
+
+            <!--  </LinearLayout>-->
+
+           <!-- </FrameLayout>-->
 
     <include layout="@layout/bottombar"/>
 

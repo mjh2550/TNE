@@ -14,14 +14,14 @@ public class ResultFrag extends Fragment {
     private View view;
 
     public ResultFrag(){
-        super(R.layout.activity_result);
+        super(R.layout.frag_result);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.activity_result,container,false);
+        view = inflater.inflate(R.layout.frag_result,container,false);
 
         return view;
     }

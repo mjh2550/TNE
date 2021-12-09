@@ -14,14 +14,14 @@ public class InfoFrag extends Fragment {
     private View view;
 
     public InfoFrag(){
-        super(R.layout.activity_info);
+        super(R.layout.frag_info);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.activity_info,container,false);
+        view = inflater.inflate(R.layout.frag_info,container,false);
 
         return view;
     }
