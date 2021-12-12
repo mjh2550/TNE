@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sample_splash"
     android:theme="@style/AppTheme"
-
+    android:orientation="vertical"
+    android:background="@color/mint"
+    android:gravity="center"
     tools:context=".SplashActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:src="@drawable/bg_tutle"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="안녕! 거북아!"
+        android:textAlignment="center"
+        android:fontFamily="@font/fontbmhana"
+        android:textSize="36dp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TurtleNeck Escape APP"
+        android:textAlignment="center"
+        android:textSize="22dp"
+        android:fontFamily="@font/fontbmhana"/>
+
+</LinearLayout>

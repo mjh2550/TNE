@@ -9,13 +9,26 @@
 
     <include layout="@layout/titlebar"/>
 
-        <FrameLayout
-                android:id="@+id/content_layout"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" >
+                android:layout_height="wrap_content">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/viewPager"/>
+            </LinearLayout>
+        <FrameLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+    
         </FrameLayout>
 
     <include layout="@layout/bottombar"/>
+
+
 
 </LinearLayout>

@@ -6,4 +6,6 @@
     <color name="black">#000000</color>
     <color name="navy">#10113C</color>
     <color name="white">#ffffff</color>
+    <color name="mint">#CFFFE5</color>
+    <color name="sea">#0080FF</color>
 </resources>

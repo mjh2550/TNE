@@ -5,7 +5,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,8 +17,10 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.solmi.biobrainexample.mainslide.ViewPagerAdapter;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -26,17 +31,23 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+
     private HomeFrag homeFrag;
     private ResultFrag resultFrag;
     private InfoFrag infoFrag;
     private FragmentManager fm;
     private FragmentTransaction ft;
 
+    private FragmentPagerAdapter fragmentPagerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
 
 
         //상단 툴바 설정
@@ -74,6 +85,10 @@ public class HomeActivity extends AppCompatActivity {
         resultFrag = new ResultFrag();
         infoFrag = new InfoFrag();
         setFrag(0);
+
+        //1페이지 메인 슬라이드 배너 뷰페이저 설정
+        fragmentPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(fragmentPagerAdapter);
 
     }
 
@@ -137,21 +152,11 @@ public class HomeActivity extends AppCompatActivity {
 
     /**
      * 롤링 배너
-     * 1. 마지막 위치로 갔을 때 다시 스크롤하면 첫 위치
-     * 2. 자동 스크롤
-     * 3. 스크롤 속도 조절
-     * 4. 인디케이터
-     *
-     * res
-     * RollingBanner - RollingViewPager, RollingViewPagerIndicator
-     * RollingViewPager -  ‘자동 스크롤’, ‘스크롤 속도 조절’, ‘사용자 터치 막기’ 대응용으로 ViewPager를 상속받은 뷰
-     * RollingVIewPagerIndicator – 각각 이미지 리소스, 여백 등을 받고 ViewPager를 설정하면 해당 ViewPager의 실제 아이템 갯수 만큼 이미지를 넣고, 스크롤 될 때 마다 selected 반복하는 역할을 할 커스텀 뷰
-     * RollingViewPagerAdapter – 사실상의 무한대로 아이템을 관리할 커스텀 어댑터 클래스
-     *
-     * warning
-     * 1.필요한 기능을 전부 구현하면서도, 실제 사용하는 코드는 매우 적게
+     * Viewpager, scrollview, fragment 이용
      *
      */
+
+
 
 
 }
