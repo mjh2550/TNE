@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BioBrainExample</string>
+    <string name="app_name">TutleNeckEscape</string>
     <string name="button_scan">Scan</string>
     <string name="button_scanning">Scanning</string>
     <string name="button_start">Start</string>

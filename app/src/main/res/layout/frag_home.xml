@@ -7,11 +7,35 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="거북이는 귀엽기라도 하지...."
+        android:text="main page"
         android:textSize="20dp"
         android:gravity="center"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
 
+        >
+
+
+        <Button
+            android:id="@+id/btn_go_measure"
+            android:layout_width="210dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:text="Button"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            />
+
+        <Button
+            android:id="@+id/btn_go_result"
+            android:layout_width="210dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:text="Button"
+            android:layout_margin="@dimen/activity_horizontal_margin"/>
+    </LinearLayout>
 
 
 

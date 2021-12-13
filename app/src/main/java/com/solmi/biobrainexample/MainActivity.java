@@ -80,9 +80,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rg_mainSamplingRate)
     protected RadioGroup mRGSamplingRate;
 
+    /*
     @BindView(R.id.nav_view)
     BottomNavigationView bottomNavigationView;
-
+    */
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -183,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //하단 바 선택 1,2,3
+        /*
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -208,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         resultFrag = new ResultFrag();
         infoFrag = new InfoFrag();
         setFrag(0);
-
+           */
     }
 
     /**

@@ -10,10 +10,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -21,6 +23,7 @@ import com.solmi.biobrainexample.mainslide.ViewPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -33,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
 
     private HomeFrag homeFrag;
     private ResultFrag resultFrag;
@@ -155,7 +159,6 @@ public class HomeActivity extends AppCompatActivity {
      * Viewpager, scrollview, fragment 이용
      *
      */
-
 
 
 
