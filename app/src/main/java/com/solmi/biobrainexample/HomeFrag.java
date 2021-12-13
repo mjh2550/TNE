@@ -33,18 +33,7 @@ public class HomeFrag extends Fragment {
        ButterKnife.bind(this,view);
        btnMeasure = view.findViewById(R.id.btn_go_measure);
 
-       /*
-        btnMeasure.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                 //fragment는 항상 activity 위에 있어야 하고, this 사용 불가능, getactivity로 context를 받아옴
-                Intent intent = new Intent(getActivity(),MainActivity.class);
-                startActivity(intent);
-            }
-        });
-        */
-
-        return view;
+       return view;
     }
 
 
