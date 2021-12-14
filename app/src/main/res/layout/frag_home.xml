@@ -24,7 +24,9 @@
             android:layout_width="210dp"
             android:layout_height="200dp"
             android:layout_weight="1"
-            android:text="Button"
+            android:background="@drawable/button_round_lightgray"
+            android:text="내 자세\n측정하러가기"
+            android:fontFamily="@font/bmdh"
             android:layout_margin="@dimen/activity_horizontal_margin"
             />
 
@@ -33,7 +35,9 @@
             android:layout_width="210dp"
             android:layout_height="200dp"
             android:layout_weight="1"
-            android:text="Button"
+            android:background="@drawable/button_round_skyblue"
+            android:text="측정 결과\n분석하러 가기"
+            android:fontFamily="@font/bmdh"
             android:layout_margin="@dimen/activity_horizontal_margin"/>
     </LinearLayout>
 

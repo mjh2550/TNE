@@ -4,9 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/appdev/BioBrainExample/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/dev/app/TNE/app/src/main/res/drawable/button_round.xml" value="0.378125" />
+        <entry key="..\:/dev/app/TNE/app/src/main/res/drawable/button_round_skyblue.xml" value="0.378125" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/font/font_style.xml" value="0.2604166666666667" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/font/font_style_BMHNAir.xml" value="0.2604166666666667" />
+        <entry key="..\:/dev/app/TNE/app/src/main/res/font/fontbmdh.xml" value="0.3921875" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/font/fontbmhana.xml" value="0.23229166666666667" />
+        <entry key="..\:/dev/app/TNE/app/src/main/res/font/fontbmhn.xml" value="0.3921875" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.13085676037483265" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/layout-w936dp/activity_login.xml" value="0.152734375" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/layout/actitvity_home.xml" value="0.28804347826086957" />
