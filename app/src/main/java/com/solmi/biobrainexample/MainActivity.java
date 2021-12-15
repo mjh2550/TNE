@@ -80,20 +80,19 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rg_mainSamplingRate)
     protected RadioGroup mRGSamplingRate;
 
-    /*
-    @BindView(R.id.nav_view)
-    BottomNavigationView bottomNavigationView;
-    */
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.tv_01)
+    TextView tv_01;
+    @BindView(R.id.tv_02)
+    TextView tv_02;
+    @BindView(R.id.tv_03)
+    TextView tv_03;
+    @BindView(R.id.tv_04)
+    TextView tv_04;
 
-    private MenuInflater menuInflater;
-    private HomeFrag homeFrag;
-    private ResultFrag resultFrag;
-    private InfoFrag infoFrag;
-    private FragmentManager fm;
-    private FragmentTransaction ft;
+
 
     /**
      * 블루투스 검색 이벤트 핸들러
@@ -213,29 +212,7 @@ public class MainActivity extends AppCompatActivity {
            */
     }
 
-    /**
-     *하단 바 프래그먼트 교체 함수
-     * */
-    private void setFrag(int n)
-    {
-            fm = getSupportFragmentManager();
-            ft = fm.beginTransaction();
-        switch (n)
-        {
-            case 0:
-                ft.replace(R.id.content_layout,homeFrag);
-                ft.commit();
-                break;
-            case 1:
-                ft.replace(R.id.content_layout,resultFrag);
-                ft.commit();
-                break;
-            case 2:
-                ft.replace(R.id.content_layout,infoFrag);
-                ft.commit();
-                break;
-        }
-    }
+
 
     /**
      * munyItem 생성 및 초기화
@@ -524,6 +501,7 @@ public class MainActivity extends AppCompatActivity {
                             if (channels != null) {
                                 float value = (channels[0] / 2047f) * 7.4f;
                                 mSGEMGGraph.putValue(value);
+                                tv_01.setText(Float.toString(value));
                             }
                         }
 
@@ -534,6 +512,7 @@ public class MainActivity extends AppCompatActivity {
                                 float[] valueArray = new float[3];
                                 for (int index = 0; index < 3; index++) {
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
+                                    tv_02.setText(Float.toString(valueArray[index]));
                                 }
 
                                 mSGAccGraph.putValueArray(valueArray);
@@ -547,6 +526,7 @@ public class MainActivity extends AppCompatActivity {
                                 float[] valueArray = new float[3];
                                 for (int index = 0; index < 3; index++) {
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
+                                    tv_03.setText(Float.toString(valueArray[index]));
                                 }
 
                                 mSGGyroGraph.putValueArray(valueArray);
@@ -560,6 +540,7 @@ public class MainActivity extends AppCompatActivity {
                                 float[] valueArray = new float[3];
                                 for (int index = 0; index < 3; index++) {
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
+                                    tv_04.setText(Float.toString(valueArray[index]));
                                 }
 
                                 mSGMagnetoGraph.putValueArray(valueArray);
@@ -766,8 +747,8 @@ public class MainActivity extends AppCompatActivity {
         mDeviceListAdapter.reset();
         /*
         Manifest.permission.ACCESS_COARSE_LOCATION,
-Manifest.permission.ACCESS_FINE_LOCATION,
-Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_BACKGROUND_LOCATION
          */
         mBtnScan.setText(R.string.button_scanning);
         mBtnScan.setEnabled(false);

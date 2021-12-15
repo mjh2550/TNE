@@ -9,11 +9,35 @@
 
     <include layout="@layout/titlebar"/>
 
-       <!-- <FrameLayout
-            android:id="@+id/content_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >-->
+    <TextView
+        android:id="@+id/tv_01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/tv_02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/tv_03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/tv_04"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <!-- <FrameLayout
+         android:id="@+id/content_layout"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_weight="1" >-->
 
 
                 <!--<LinearLayout
