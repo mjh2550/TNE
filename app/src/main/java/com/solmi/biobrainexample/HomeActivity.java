@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +21,9 @@ import android.widget.Button;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.solmi.biobrainexample.mainslide.ViewPagerAdapter;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +49,11 @@ public class HomeActivity extends AppCompatActivity {
     private FragmentTransaction ft;
 
     private FragmentPagerAdapter fragmentPagerAdapter;
+
+
+    int currentPage = 0;
+    final long DELAY_MS = 1000;//delay in milliseconds before task is to be executed
+    final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
 
 
     @Override
@@ -93,6 +102,27 @@ public class HomeActivity extends AppCompatActivity {
         //1페이지 메인 슬라이드 배너 뷰페이저 설정
         fragmentPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentPagerAdapter);
+
+        //자동 슬라이드 기능
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            @Override
+            public void run() {
+                if(currentPage == fragmentPagerAdapter.getCount()) {
+                    currentPage = 0;
+                }
+                viewPager.setCurrentItem(currentPage++, true);
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, DELAY_MS, PERIOD_MS);
+
 
     }
 
@@ -154,12 +184,9 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * 롤링 배너
-     * Viewpager, scrollview, fragment 이용
-     *
-     */
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
