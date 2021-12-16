@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--android:layout_constraintTop_toTopOf="parent"-->
 <androidx.appcompat.widget.Toolbar
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/navy"
     layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    app:layout_constraintTop_toTopOf="parent">
+
+<!--    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/arrow_white"/>-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,4 +25,12 @@
 
     </TextView>
 
+    <!--<ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/more_white"
+        android:layout_gravity="right"
+        android:layout_margin="10dp"/>
+
+-->
 </androidx.appcompat.widget.Toolbar>

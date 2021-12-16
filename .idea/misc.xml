@@ -4,7 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/appdev/BioBrainExample/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/dev/TNE/app/src/main/res/drawable/button_round_lightgray.xml" value="0.378125" />
+        <entry key="..\:/dev/TNE/app/src/main/res/drawable/button_round_skyblue.xml" value="0.378125" />
+        <entry key="..\:/dev/TNE/app/src/main/res/drawable/ic_launcher_background.xml" value="0.378125" />
+        <entry key="..\:/dev/TNE/app/src/main/res/layout/activity_home.xml" value="0.2151268115942029" />
+        <entry key="..\:/dev/TNE/app/src/main/res/layout/activity_login.xml" value="0.3619791666666667" />
+        <entry key="..\:/dev/TNE/app/src/main/res/layout/activity_main.xml" value="0.2151268115942029" />
+        <entry key="..\:/dev/TNE/app/src/main/res/layout/activity_splash.xml" value="0.3619791666666667" />
+        <entry key="..\:/dev/TNE/app/src/main/res/layout/bottombar.xml" value="0.3619791666666667" />
         <entry key="..\:/dev/TNE/app/src/main/res/layout/frag_home.xml" value="0.2078804347826087" />
+        <entry key="..\:/dev/TNE/app/src/main/res/layout/list_item_device.xml" value="0.3619791666666667" />
+        <entry key="..\:/dev/TNE/app/src/main/res/layout/titlebar.xml" value="0.3619791666666667" />
+        <entry key="..\:/dev/TNE/app/src/main/res/menu/top_toolbar.xml" value="0.3619791666666667" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/drawable/button_round.xml" value="0.378125" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/drawable/button_round_skyblue.xml" value="0.378125" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/font/font_style.xml" value="0.2604166666666667" />
