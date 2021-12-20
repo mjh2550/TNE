@@ -7,6 +7,7 @@
     <string name="button_disconnect">Disconnect</string>
     <string name="radio_button_250SPS">250 SPS</string>
     <string name="radio_button_500SPS">500 SPS</string>
+    <string name="main_connect_check">블루투스 연결 확인</string>
     <string name="main_device_list">Device list</string>
     <string name="main_log">Log</string>
     <string name="main_emg_graph">EMG Graph</string>

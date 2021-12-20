@@ -5,7 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/navy"
+    android:background="@color/mint"
     layout_height="match_parent"
     app:layout_constraintTop_toTopOf="parent">
 
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="20dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:text="TurtleNeck Escape">
 

@@ -27,12 +27,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.solmi.biobrainexample.HomeActivity;
-import com.solmi.biobrainexample.HomeFrag;
-import com.solmi.biobrainexample.MainActivity;
+import com.solmi.biobrainexample.home.HomeActivity;
 import com.solmi.biobrainexample.R;
-import com.solmi.biobrainexample.ui.login.LoginViewModel;
-import com.solmi.biobrainexample.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 

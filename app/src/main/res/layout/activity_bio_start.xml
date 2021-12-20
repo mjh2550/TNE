@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BioStartActivity"
+    android:orientation="vertical"
+   >
+
+    <include layout="@layout/titlebar"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_connect_check"
+        android:textSize="24dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold|normal" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/lightgray"
+        android:padding="@dimen/activity_vertical_margin">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_device_list"
+            android:textStyle="bold|italic" />
+
+        <ListView
+            android:id="@+id/lv_DeviceList"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scrollbars="vertical">
+
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_Scan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_scan"
+                android:textSize="12sp"
+                />
+
+           <!-- <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />-->
+
+            <!--<Button
+                android:id="@+id/btn_Start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_start"
+                android:textSize="12sp"
+                android:visibility="gone"/>-->
+
+            <!--<Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />-->
+
+            <!--<Button
+                android:id="@+id/btn_Stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_stop"
+                android:textSize="12sp"
+                android:visibility="gone"/>-->
+
+           <!-- <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />-->
+
+            <Button
+                android:id="@+id/btn_Disconnect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_disconnect"
+                android:enabled="false"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/tv_log_01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
+        <TextView
+            android:id="@+id/tv_log_02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
+        <TextView
+            android:id="@+id/tv_log_03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
+        <TextView
+            android:id="@+id/tv_log_04"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+
+
+    <RadioGroup
+        android:id="@+id/rg_mainSamplingRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:checkedButton="@id/rb_mainSamplingRate250">
+
+        <RadioButton
+            android:id="@+id/rb_mainSamplingRate250"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_250SPS" />
+
+        <RadioButton
+            android:id="@+id/rb_mainSamplingRate500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_500SPS" />
+    </RadioGroup>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/btn_mainScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_scan"
+            android:textSize="12sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_mainStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_start"
+            android:textSize="12sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_mainStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_stop"
+            android:textSize="12sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_mainDisconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_disconnect"
+            android:enabled="false"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_device_list"
+        android:textStyle="bold|italic" />
+
+    <ListView
+        android:id="@+id/lv_mainDeviceList"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scrollbars="vertical">
+
+    </ListView>-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_log"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/tv_mainLogTextView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:scrollbars="vertical"
+        android:gravity="bottom" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/main_emg_graph"
+                android:textStyle="bold|italic" />
+
+            <com.solmi.biobrainexample.Simple1ChannelGraph
+                android:id="@+id/sg_mainEMGGraph"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/main_acc_graph"
+                android:textStyle="bold|italic" />
+
+            <com.solmi.biobrainexample.Simple3ChannelGraph
+                android:id="@+id/sg_mainAccGraph"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/main_gyro_graph"
+                android:textStyle="bold|italic" />
+
+            <com.solmi.biobrainexample.Simple3ChannelGraph
+                android:id="@+id/sg_mainGyroGraph"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/main_magneto_graph"
+                android:textStyle="bold|italic" />
+
+            <com.solmi.biobrainexample.Simple3ChannelGraph
+                android:id="@+id/sg_mainMagnetoGraph"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+</LinearLayout>

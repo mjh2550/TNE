@@ -20,7 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".HomeActivity"
+            android:name=".BioStartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".process.ConnectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
