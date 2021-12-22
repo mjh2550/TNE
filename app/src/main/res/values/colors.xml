@@ -10,4 +10,6 @@
     <color name="sea">#0080FF</color>
     <color name="sky">#50bcdf</color>
     <color name="lightgray">#D3D3D3</color>
+    <color name="lightpink">#ffe3ff</color>
+    <color name="lightblue">#dde4eb</color>
 </resources>

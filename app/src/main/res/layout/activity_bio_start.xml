@@ -6,9 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".BioStartActivity"
     android:orientation="vertical"
+
    >
 
     <include layout="@layout/titlebar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></FrameLayout>
     <Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_vertical_margin" />
@@ -28,7 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/lightgray"
         android:padding="@dimen/activity_vertical_margin">
 
 
@@ -59,36 +64,36 @@
                 android:textSize="12sp"
                 />
 
-           <!-- <Space
+            <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />-->
+                android:layout_weight="1" />
 
-            <!--<Button
+            <Button
                 android:id="@+id/btn_Start"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_start"
                 android:textSize="12sp"
-                android:visibility="gone"/>-->
+                />
 
-            <!--<Space
+            <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />-->
+                android:layout_weight="1" />
 
-            <!--<Button
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
                 android:id="@+id/btn_Stop"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_stop"
                 android:textSize="12sp"
-                android:visibility="gone"/>-->
-
-           <!-- <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />-->
+                />
 
             <Button
                 android:id="@+id/btn_Disconnect"
@@ -98,12 +103,13 @@
                 android:enabled="false"
                 android:textSize="12sp" />
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         >
 
         <TextView
@@ -137,6 +143,51 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="연결된 기기"
+            android:gravity="center"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:id="@+id/tv_connect_device"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="기기 이름"
+            android:gravity="center"
+            android:textSize="20dp"
+            />
+
+       <!-- <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_log"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tv_LogTextView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:scrollbars="vertical"
+            android:gravity="bottom" />-->
+
+
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -162,6 +213,8 @@
             android:layout_height="wrap_content"
             android:text="@string/radio_button_500SPS" />
     </RadioGroup>
+
+
 
     <!--<LinearLayout
         android:layout_width="match_parent"

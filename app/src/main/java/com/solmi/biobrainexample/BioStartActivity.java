@@ -71,6 +71,8 @@ public class BioStartActivity extends AppCompatActivity {
     protected Simple3ChannelGraph mSGMagnetoGraph;
     @BindView(R.id.rg_mainSamplingRate)
     protected RadioGroup mRGSamplingRate;
+    @BindView(R.id.tv_connect_device)
+    TextView tv_connect_device;
 
     /**
      * 블루투스 검색 이벤트 핸들러
@@ -211,6 +213,7 @@ public class BioStartActivity extends AppCompatActivity {
                 mBLEManager.stopScanDevice();
                 BluetoothDevice device = mDeviceListAdapter.getItem(index);
                 mTVLogTextView.setText("device name: " + device.getName());
+                tv_connect_device.setText(device.getName());
                 mBLEManager.setDeviceType(BTDataDefine.DeviceType.SHC_U4);
                 mBLEManager.setReconnectCount(3);
                 mBLEManager.connect(device);
@@ -640,7 +643,7 @@ public class BioStartActivity extends AppCompatActivity {
         mBLEManager.startScanDevice(20 * 1000);
     }
 
-   /* @OnClick(R.id.btn_mainStart)
+    @OnClick(R.id.btn_Start)
     public void onClickStart() {
         resetComponent();
         if (mRGSamplingRate.getCheckedRadioButtonId() == R.id.rb_mainSamplingRate250) {
@@ -658,7 +661,7 @@ public class BioStartActivity extends AppCompatActivity {
             mTVLogTextView.append("\nonClickStart: Send start command 500 SPS");
             mBLEManager.start(UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET, UxProtocol.SAMPLINGRATE_500);
         }
-    }*/
+    }
 
     /**
      * 구성요소 초기화하는 함수
@@ -675,11 +678,11 @@ public class BioStartActivity extends AppCompatActivity {
         mMagnetoCount = 0;
     }
 
-   /* @OnClick(R.id.btn_mainStop)
+    @OnClick(R.id.btn_Stop)
     public void onClickStop() {
         mTVLogTextView.append("\nonClickStop: Send stop command");
         mBLEManager.stop();
-    }*/
+    }
 
     @OnClick(R.id.btn_Disconnect)
     public void onClickDisconnect() {
@@ -692,6 +695,11 @@ public class BioStartActivity extends AppCompatActivity {
             mBtnDisconnect.setEnabled(false);
             stopDataUpdateTimer();
         }
+         tv_01.setText("");
+         tv_02.setText("");
+         tv_03.setText("");
+         tv_04.setText("");
+
     }
 
 }

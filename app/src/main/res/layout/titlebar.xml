@@ -5,7 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/mint"
+    android:background="@drawable/borderline"
     layout_height="match_parent"
     app:layout_constraintTop_toTopOf="parent">
 
@@ -33,4 +33,10 @@
         android:layout_margin="10dp"/>
 
 -->
+
+
+
+
+
+
 </androidx.appcompat.widget.Toolbar>

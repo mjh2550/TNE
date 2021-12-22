@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.solmi.biobrainexample">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -7,6 +8,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+<!--    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions"/>
+    &lt;!&ndash; 서비스 권한 설정 &ndash;&gt;
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -22,9 +28,7 @@
         <activity
             android:name=".BioStartActivity"
             android:exported="false" />
-        <activity
-            android:name=".process.ConnectActivity"
-            android:exported="false" />
+
         <activity
             android:name=".home.HomeActivity"
             android:exported="false" />
