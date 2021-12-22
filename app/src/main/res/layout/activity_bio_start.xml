@@ -11,10 +11,10 @@
 
     <include layout="@layout/titlebar"/>
 
-    <FrameLayout
+   <!-- <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        ></FrameLayout>
+        ></FrameLayout>-->
     <Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_vertical_margin" />
@@ -102,6 +102,14 @@
                 android:text="@string/button_disconnect"
                 android:enabled="false"
                 android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_alram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="alarm_test"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
     </LinearLayout>

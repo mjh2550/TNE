@@ -1039,4 +1039,7 @@ public class BLEService extends Service {
 			return BLEService.this;
 		}
 	}
+
+
+
 }

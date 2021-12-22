@@ -4,10 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothDevice;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -73,6 +79,8 @@ public class BioStartActivity extends AppCompatActivity {
     protected RadioGroup mRGSamplingRate;
     @BindView(R.id.tv_connect_device)
     TextView tv_connect_device;
+    @BindView(R.id.btn_alram)
+    Button button;
 
     /**
      * 블루투스 검색 이벤트 핸들러
@@ -701,5 +709,65 @@ public class BioStartActivity extends AppCompatActivity {
          tv_04.setText("");
 
     }
+    @OnClick(R.id.btn_alram)
+    public void onClickAlram(){
+        showNoti();
+    }
 
-}
+
+
+
+    public void showNoti(){
+
+        /*
+        NotificationCompat.Builder builder = new NotificationCompat
+                .Builder(BioStartActivity.this,CHANNEL_ID)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground)) //BitMap 이미지 요구
+                .setContentTitle("동기화 중입니다.") //타이틀 TEXT
+                .setContentText("잠시만 기다려주세요.") //서브 타이틀 TEXT
+                .setSmallIcon (R.drawable.bg_tutle) //필수 (안해주면 에러)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT) //중요도 기본
+                .setOngoing(true) // 사용자가 직접 못지우게 계속 실행하기.
+                ;
+
+        NotificationManager.notify(0, builder.build());
+
+         */
+
+          NotificationManager manager;
+          NotificationCompat.Builder builder;
+          String CHANNEL_ID = "channel1";
+          String CHANEL_NAME = "Channel1";
+
+          //builder = null;
+          manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+              if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){//버전 오레오 이상일 경우
+                  manager.createNotificationChannel( new NotificationChannel(CHANNEL_ID, CHANEL_NAME, NotificationManager.IMPORTANCE_DEFAULT) );
+          builder = new NotificationCompat.Builder(this,CHANNEL_ID);
+         //하위 버전일 경우
+          }else{
+          builder = new NotificationCompat.Builder(this);
+          }
+         //알림창 제목
+          builder.setContentTitle("알림");
+         //알림창 메시지
+          builder.setContentText("알림 메시지");
+         //알림창 아이콘
+          builder.setSmallIcon(R.drawable.bg_tutle);
+
+          builder.setOngoing(true);
+
+          Notification notification = builder.build();
+
+
+
+
+         //알림창 실행
+          manager.notify(1,notification);
+
+
+
+          }
+
+
+    }
