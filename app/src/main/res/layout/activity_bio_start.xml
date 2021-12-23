@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BioStartActivity"
+    tools:context=".process.BioStartActivity"
     android:orientation="vertical"
 
    >
@@ -155,7 +155,8 @@
         android:padding="@dimen/activity_vertical_margin">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="연결된 기기"
             android:gravity="center"
@@ -163,7 +164,8 @@
             />
         <TextView
             android:id="@+id/tv_connect_device"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="기기 이름"
             android:gravity="center"

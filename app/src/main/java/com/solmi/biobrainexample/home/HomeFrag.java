@@ -11,8 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.solmi.biobrainexample.BioStartActivity;
-import com.solmi.biobrainexample.MainActivity;
+import com.solmi.biobrainexample.process.BioStartActivity;
 import com.solmi.biobrainexample.R;
 
 import butterknife.BindView;

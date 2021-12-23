@@ -34,6 +34,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.solmi.ble.BLECommManager;
 import com.solmi.ble.BLEDefine;
+import com.solmi.ble.BLEService;
 import com.solmi.ble.BTScanEvent;
 import com.solmi.ble.BTStateEvent;
 import com.solmi.bluetoothlibrary.common.BTDataDefine;
@@ -288,7 +289,12 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 구성 요소들 초기화하는 함수
      */
-    private void initComponent() {
+    private void initComponent() {// 블루투스 활성화하기
+
+
+
+
+
         mBLEManager = new BLECommManager(this);
         mBLEManager.registerBTScanEventHandler(mBTScanEventHandler);
         mBLEManager.registerBTStateEventHandler(mBTStateEventHandler);
@@ -303,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), R.string.error_not_support_ble, Toast.LENGTH_SHORT).show();
         }
+
 
         mLVDeviceList.setOnItemClickListener(mItemClickListener);
         mDeviceListAdapter = new DeviceListAdapter(this);

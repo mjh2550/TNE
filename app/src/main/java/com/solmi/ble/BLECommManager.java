@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.solmi.bluetoothlibrary.common.BTDataDefine;
 import com.solmi.uxprotocol.UxParserEvent;
@@ -345,7 +346,7 @@ public class BLECommManager {
 	 * BLE 연결하는 함수
 	 * @param device 연결할 BLE 디바이스
 	 */
-	public void connect(BluetoothDevice device) {
+	/*public void connect(BluetoothDevice device) {
 		// TODO Auto-generated method stub
 		if (mBLEService != null) {
 			boolean result = mBLEService.connect(device);
@@ -355,6 +356,27 @@ public class BLECommManager {
 				}
 			}
 		}
+	}*/
+	/**
+	 * BLE 연결및 연결 성공 시 디바이스 정보 반환
+	 * @param device 연결할 BLE 디바이스
+	 * @return device
+	 */
+	public BluetoothDevice connect(BluetoothDevice device) {
+		// TODO Auto-generated method stub
+		if (mBLEService != null) {
+			boolean result = mBLEService.connect(device);
+			if (result == false) {
+				if (mBTStateEventHandler != null) {
+					mBTStateEventHandler.onStateChanged(BLEDefine.BluetoothState.STATE_CONNECT_FAIL);
+					return null;
+				}
+				return null;
+			}
+			return device;
+		}
+		return null;
+
 	}
 
 	/**
