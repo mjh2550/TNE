@@ -291,10 +291,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initComponent() {// 블루투스 활성화하기
 
-
-
-
-
         mBLEManager = new BLECommManager(this);
         mBLEManager.registerBTScanEventHandler(mBTScanEventHandler);
         mBLEManager.registerBTStateEventHandler(mBTStateEventHandler);

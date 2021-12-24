@@ -238,7 +238,6 @@ public class BLEService extends Service {
 			startActivityForResult(intent, REQUEST_ENABLE_BT);
 
 		}
-
 		 */
 
 	}

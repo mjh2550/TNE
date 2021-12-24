@@ -223,6 +223,33 @@ public class BLECommManager {
 	}
 
 	/**
+	 * BLE 활성화 체크하는 함수
+	 * @return BLE 기능 켜져있으면 true 꺼져있으면 false
+	 */
+	public boolean checkBLEOnOff(){
+
+		final BluetoothManager bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
+		mBluetoothAdapter = bluetoothManager.getAdapter();
+		if(mBluetoothAdapter.isEnabled()){
+			return true;
+		}else{
+			// 블루투스를 활성화 하기 위한 다이얼로그 출력
+
+			//Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+
+			// 선택한 값이 onActivityResult 함수에서 콜백된다.
+
+		//	startActivityForResult(intent, REQUEST_ENABLE_BT);
+
+
+			return false;
+
+		}
+
+	}
+
+
+	/**
 	 * BLE 서비스 시작하는 함수
 	 * @return BLE 서비스 시작 성공 여부
 	 */

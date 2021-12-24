@@ -110,6 +110,13 @@
                 android:text="alarm_test"
                 android:textSize="12sp" />
 
+            <Button
+                android:id="@+id/btn_battery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="batterty_info"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
     </LinearLayout>

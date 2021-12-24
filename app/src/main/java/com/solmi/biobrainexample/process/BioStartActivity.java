@@ -11,10 +11,13 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -87,7 +90,9 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     @BindView(R.id.tv_connect_device)
     TextView tv_connect_device;
     @BindView(R.id.btn_alram)
-    Button button;
+    Button btn_alram;
+    @BindView(R.id.btn_battery)
+    Button btn_battery;
 
     /**
      * 블루투스 검색 이벤트 핸들러
@@ -155,6 +160,15 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
      */
     private int mMagnetoCount = 0;
 
+    /**
+     * Intent request code
+     */
+    //private static final int REQUEST_CONNECT_DEVICE = 1;
+    private static final int REQUEST_ENABLE_BT = 2;
+
+
+
+
     @BindView(R.id.tv_log_01)
     TextView tv_01;
     @BindView(R.id.tv_log_02)
@@ -192,7 +206,17 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         } else {
             Toast.makeText(getApplicationContext(), R.string.error_not_support_ble, Toast.LENGTH_SHORT).show();
         }
+        boolean isBLEOnOFF = mBLEManager.checkBLEOnOff();//블루투스가 켜져있는지 확인
+        if(isBLEOnOFF){
+            Toast.makeText(getApplicationContext(), R.string.main_info_ble_on, Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), R.string.main_info_ble_off, Toast.LENGTH_SHORT).show();
 
+            // 블루투스를 활성화 하기 위한 다이얼로그 출력
+            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            // 선택한 값이 onActivityResult 함수에서 콜백된다.
+            startActivityForResult(intent, REQUEST_ENABLE_BT);
+        }
         mLVDeviceList.setOnItemClickListener(mItemClickListener);
         mDeviceListAdapter = new DeviceListAdapter(this);
         mLVDeviceList.setAdapter(mDeviceListAdapter);
@@ -226,13 +250,22 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                 }
 
                 mBLEManager.stopScanDevice();
-                BluetoothDevice device = mDeviceListAdapter.getItem(index);
-                mTVLogTextView.setText("device name: " + device.getName());
+                //BluetoothDevice device = mDeviceListAdapter.getItem(index);
+
                 mBLEManager.setDeviceType(BTDataDefine.DeviceType.SHC_U4);
                 mBLEManager.setReconnectCount(3);
+                BluetoothDevice device = mBLEManager.connect(mDeviceListAdapter.getItem(index));
+                tv_connect_device.setText(device.getName()==null ? "" : device.getName());
+                mTVLogTextView.setText("device name: " + device.getName());
+                showNoti(device);
+
+
+                /*
                 BluetoothDevice connDeviceInfo = mBLEManager.connect(device);
                 tv_connect_device.setText(connDeviceInfo.getName()==null ? "" : connDeviceInfo.getName());
                 showNoti(connDeviceInfo);
+
+                 */
             }
         };
     }
@@ -291,6 +324,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 BatteryInfo batteryInfo = headerPacket.getBatteryInfo();
                                 String log = String.format("\nRES_BATT_INFO: Max: %.1f Cur: %.1f", batteryInfo.getMaximumVoltage(), batteryInfo.getCurrentVoltage());
                                 mTVLogTextView.append(log);
+                                tv_connect_device.setText(log);
                             }
                         });
                         break;
@@ -464,6 +498,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         mBTStateEventHandler = new BTStateEvent() {
             @Override
             public void onStateChanged(BLEDefine.BluetoothState bluetoothState) {
+                //BluetoothDevice
                 switch (bluetoothState) {
                     case STATE_DISCONNECTED:
                         runOnUiThread(new Runnable() {
@@ -775,7 +810,8 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
           }
 
         //  @RequiresApi(api = Build.VERSION_CODES.O)
-          @Override
+
+         @Override
         public  void delNoti(){
 
               NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -792,5 +828,9 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
             tv_04.setText("");
         }
 
+        @OnClick(R.id.btn_battery)
+        public void onClickBtnBattery(){
+        mBLEManager.getBatteryInfo();
+        }
 
     }

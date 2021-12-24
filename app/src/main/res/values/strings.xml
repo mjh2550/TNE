@@ -18,6 +18,8 @@
     <string name="error_not_support_ble">BLE를 지원하지 않습니다.</string>
     <string name="error_ble_start_service">BLE 서비스에서 오류가 발생하였습니다.</string>
     <string name="error_device_working">디바이스가 응답하지 않습니다. 리셋 후 다시 시도하세요.</string>
+    <string name="main_info_ble_on">블루투스가 켜져 있습니다.</string>
+    <string name="main_info_ble_off">블루투스가 꺼져 있습니다. 블루투스를 켜주세요.</string>
     <string name="scan_complete">디바이스 검색이 완료되었습니다.</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
