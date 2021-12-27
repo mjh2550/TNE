@@ -1,6 +1,7 @@
 package com.solmi.biobrainexample.process;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -206,8 +208,8 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         } else {
             Toast.makeText(getApplicationContext(), R.string.error_not_support_ble, Toast.LENGTH_SHORT).show();
         }
-        boolean isBLEOnOFF = mBLEManager.checkBLEOnOff();//블루투스가 켜져있는지 확인
-        if(isBLEOnOFF){
+        boolean isBLEOnOff = mBLEManager.checkBLEOnOff();//블루투스가 켜져있는지 확인
+        if(isBLEOnOff){
             Toast.makeText(getApplicationContext(), R.string.main_info_ble_on, Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(getApplicationContext(), R.string.main_info_ble_off, Toast.LENGTH_SHORT).show();
@@ -238,6 +240,35 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     }
 
     /**
+     * 블루투스 설정 콜백 함수
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch(requestCode) {
+            case REQUEST_ENABLE_BT:
+                if(resultCode == RESULT_OK) {
+                    // 블루투스가 활성 상태로 변경됨
+
+                    finish();//인텐트 종료
+                    overridePendingTransition(0, 0);//인텐트 효과 없애기
+                    Intent intent = getIntent(); //인텐트
+                    startActivity(intent); //액티비티 열기
+                    overridePendingTransition(0, 0);//인텐트 효과 없애기
+                }
+
+                else if(resultCode == RESULT_CANCELED) {
+                    // 블루투스가 비활성 상태임
+                    finish();  //  어플리케이션 종료
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
      * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러 초기화하는 함수
      */
     private void initItemClickListener() {
@@ -255,9 +286,9 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                 mBLEManager.setDeviceType(BTDataDefine.DeviceType.SHC_U4);
                 mBLEManager.setReconnectCount(3);
                 BluetoothDevice device = mBLEManager.connect(mDeviceListAdapter.getItem(index));
-                tv_connect_device.setText(device.getName()==null ? "" : device.getName());
+                tv_connect_device.setText(device.getName()==null ? "" : "DEVICE_NAME: "+device.getName());
                 mTVLogTextView.setText("device name: " + device.getName());
-                showNoti(device);
+                //showNoti(device);
 
 
                 /*
@@ -322,9 +353,19 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                             @Override
                             public void run() {
                                 BatteryInfo batteryInfo = headerPacket.getBatteryInfo();
-                                String log = String.format("\nRES_BATT_INFO: Max: %.1f Cur: %.1f", batteryInfo.getMaximumVoltage(), batteryInfo.getCurrentVoltage());
+                                //String log = String.format("\nRES_BATT_INFO: Max: %.1f Cur: %.1f", batteryInfo.getMaximumVoltage(), batteryInfo.getCurrentVoltage());
+                                float batMax100 =  (batteryInfo.getMaximumVoltage()/batteryInfo.getMaximumVoltage())*100;
+                                float batCur100 =  (batteryInfo.getCurrentVoltage()/batteryInfo.getMaximumVoltage())*100;
+                                String log = String.format("\nR    ES_BATT_INFO: Max: %.1f Cur: %.1f"
+                                            + "\nRES_BATT_INFO100: Max: %.0f Cur: %.2f"
+                                            , batteryInfo.getMaximumVoltage()
+                                            , batteryInfo.getCurrentVoltage()
+                                            , batMax100
+                                            , batCur100
+                                            );
+
                                 mTVLogTextView.append(log);
-                                tv_connect_device.setText(log);
+                                tv_connect_device.append(log);
                             }
                         });
                         break;
@@ -528,6 +569,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 Toast.makeText(getApplicationContext(), "onStateChanged: STATE_CONNECTED", Toast.LENGTH_SHORT).show();
                                 mTVLogTextView.append("\nonStateChanged: STATE_CONNECTED");
                                 mBtnDisconnect.setEnabled(true);
+                                showNoti();
 
                             }
                         });
@@ -763,7 +805,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     private final String CHANEL_NAME = "Channel1";
 
     @Override
-    public void showNoti(BluetoothDevice device){
+    public void showNoti(){
 
         /*
         NotificationCompat.Builder builder = new NotificationCompat
@@ -782,30 +824,39 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
 
           NotificationManager manager;
           NotificationCompat.Builder builder;
-
-
+          Intent intent = new Intent(this, BioStartActivity.class);
+          PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
           //builder = null;
           manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
               if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){//버전 오레오 이상일 경우
                   manager.createNotificationChannel( new NotificationChannel(CHANNEL_ID, CHANEL_NAME, NotificationManager.IMPORTANCE_DEFAULT) );
           builder = new NotificationCompat.Builder(this,CHANNEL_ID);
-         //하위 버전일 경우
+          //하위 버전일 경우
           }else{
           builder = new NotificationCompat.Builder(this);
           }
-         //알림창 제목
+          //알림창 제목
           builder.setContentTitle("알림");
-         //알림창 메시지
-          builder.setContentText("블루투스 기기가 연결되었어요. \n디바이스 이름 : "+device.getName());
-         //알림창 아이콘
+          //알림창 메시지
+          //builder.setContentText("블루투스 기기가 연결되었어요. \n디바이스 이름 : "+device.getName());
+          builder.setContentText("블루투스 기기가 연결되었어요.");
+          //알림창 아이콘
           builder.setSmallIcon(R.drawable.bg_tutle);
-
+          //알림창 유지
           builder.setOngoing(true);
+          //탭 클릭 시 화면이동
+          builder.setContentIntent(pendingIntent);
+          //탭 클릭 후에도 알림은 사라지지 않음 (연결 종료시에만 사라짐)
+          builder.setAutoCancel(false);
+
 
           Notification notification = builder.build();
 
-         //알림창 실행
+          //알림창 실행
           manager.notify(CHANNEL_ID_NUM,notification);
+          
+          //배터리 정보
+          mBLEManager.getBatteryInfo();
 
           }
 
@@ -830,7 +881,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
 
         @OnClick(R.id.btn_battery)
         public void onClickBtnBattery(){
-        mBLEManager.getBatteryInfo();
+            mBLEManager.getBatteryInfo();
         }
 
     }

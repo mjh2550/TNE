@@ -9,6 +9,6 @@
         android:text="slide_frag3"
         android:textSize="20dp"
         android:gravity="center"
-        android:background="@color/sea"/>
+        android:background="@drawable/running"/>
 
 </LinearLayout>
