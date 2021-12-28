@@ -39,6 +39,7 @@ import com.solmi.biobrainexample.Simple1ChannelGraph;
 import com.solmi.biobrainexample.Simple3ChannelGraph;
 import com.solmi.ble.BLECommManager;
 import com.solmi.ble.BLEDefine;
+import com.solmi.ble.BLEService;
 import com.solmi.ble.BTScanEvent;
 import com.solmi.ble.BTStateEvent;
 import com.solmi.bluetoothlibrary.common.BTDataDefine;
@@ -479,6 +480,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 for (int index = 0; index < 3; index++) {
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_02.setText(Float.toString(valueArray[index]));
+
                                 }
 
                                 mSGAccGraph.putValueArray(valueArray);
@@ -507,6 +509,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 for (int index = 0; index < 3; index++) {
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_04.setText(Float.toString(valueArray[index]));
+                                    Log.i("<<<TESTMSG>>>", "run: ongoing....");
                                 }
 
                                 mSGMagnetoGraph.putValueArray(valueArray);
@@ -807,24 +810,22 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     @Override
     public void showNoti(){
 
-        /*
-        NotificationCompat.Builder builder = new NotificationCompat
-                .Builder(BioStartActivity.this,CHANNEL_ID)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground)) //BitMap 이미지 요구
-                .setContentTitle("동기화 중입니다.") //타이틀 TEXT
-                .setContentText("잠시만 기다려주세요.") //서브 타이틀 TEXT
-                .setSmallIcon (R.drawable.bg_tutle) //필수 (안해주면 에러)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT) //중요도 기본
-                .setOngoing(true) // 사용자가 직접 못지우게 계속 실행하기.
-                ;
+        NotificationManager manager;
+        NotificationCompat.Builder builder;
 
-        NotificationManager.notify(0, builder.build());
+         /* Intent snoozeIntent = new Intent(this, MyBroadcastReceiver.class);
+          snoozeIntent.setAction(ACTION_SNOOZE);
+          snoozeIntent.putExtra(CHANNEL_ID, 0);
+          PendingIntent snoozePendingIntent =
+                    PendingIntent.getBroadcast(this, 0, snoozeIntent, 0);*/
 
-         */
+        Intent bleIntent = new Intent(this, BioStartActivity.class);
+        //bleIntent.setAction(getClass().);
+         PendingIntent  blePendingIntent = PendingIntent.getActivity(this,0,bleIntent,0);
 
-          NotificationManager manager;
-          NotificationCompat.Builder builder;
+
           Intent intent = new Intent(this, BioStartActivity.class);
+
           PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
           //builder = null;
           manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -849,12 +850,14 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
           //탭 클릭 후에도 알림은 사라지지 않음 (연결 종료시에만 사라짐)
           builder.setAutoCancel(false);
 
+          builder.addAction(R.drawable.arrow,"test",blePendingIntent);
+
 
           Notification notification = builder.build();
 
           //알림창 실행
           manager.notify(CHANNEL_ID_NUM,notification);
-          
+
           //배터리 정보
           mBLEManager.getBatteryInfo();
 
