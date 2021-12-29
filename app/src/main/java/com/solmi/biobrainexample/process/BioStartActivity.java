@@ -16,7 +16,9 @@ import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.BatteryManager;
@@ -91,12 +93,17 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     @BindView(R.id.rg_mainSamplingRate)
     protected RadioGroup mRGSamplingRate;
     @BindView(R.id.tv_connect_device)
-    TextView tv_connect_device;
+    protected TextView tv_connect_device;
+    @BindView(R.id.tv_battery)
+    protected TextView tv_battery;
     @BindView(R.id.btn_alram)
-    Button btn_alram;
+    protected Button btn_alram;
     @BindView(R.id.btn_battery)
-    Button btn_battery;
-
+    protected Button btn_battery;
+    @BindView(R.id.btn_tray)
+    protected Button btn_tray;
+    @BindView(R.id.btn_dataCnt)
+    protected Button btn_dataCnt;
     /**
      * 블루투스 검색 이벤트 핸들러
      */
@@ -169,17 +176,43 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     //private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
 
-
+    private BroadcastReceiver mReceiver;
 
 
     @BindView(R.id.tv_log_01)
-    TextView tv_01;
+    protected TextView tv_01;
     @BindView(R.id.tv_log_02)
-    TextView tv_02;
+    protected TextView tv_02;
     @BindView(R.id.tv_log_03)
-    TextView tv_03;
+    protected TextView tv_03;
     @BindView(R.id.tv_log_04)
-    TextView tv_04;
+    protected TextView tv_04;
+    @BindView(R.id.tv_log_05)
+    protected TextView tv_05;
+    @BindView(R.id.tv_log_06)
+    protected TextView tv_06;
+    @BindView(R.id.tv_log_07)
+    protected TextView tv_07;
+    @BindView(R.id.tv_log_08)
+    protected TextView tv_08;
+
+    /*@Override
+    protected void onPause() {
+        super.onPause();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
+        intentFilter.addAction(MyBroadcastReceiver.Myaction);
+        registerReceiver(mReceiver,intentFilter);
+    }*/
+
+    public void sendMyBroadcast(String action){
+
+        Intent intent = new Intent();
+        //intent.setAction(MyBroadcastReceiver.Myaction);
+        intent.setAction(action);
+        sendBroadcast(intent);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,6 +221,13 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         ButterKnife.bind(this);
         initHandler();
         initComponent();
+
+        mReceiver = new MyBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
+        intentFilter.addAction(MyBroadcastReceiver.Myaction);
+        registerReceiver(mReceiver,intentFilter);
+
 
     }
 
@@ -357,7 +397,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 //String log = String.format("\nRES_BATT_INFO: Max: %.1f Cur: %.1f", batteryInfo.getMaximumVoltage(), batteryInfo.getCurrentVoltage());
                                 float batMax100 =  (batteryInfo.getMaximumVoltage()/batteryInfo.getMaximumVoltage())*100;
                                 float batCur100 =  (batteryInfo.getCurrentVoltage()/batteryInfo.getMaximumVoltage())*100;
-                                String log = String.format("\nR    ES_BATT_INFO: Max: %.1f Cur: %.1f"
+                                String log = String.format("RES_BATT_INFO: Max: %.1f Cur: %.1f"
                                             + "\nRES_BATT_INFO100: Max: %.0f Cur: %.2f"
                                             , batteryInfo.getMaximumVoltage()
                                             , batteryInfo.getCurrentVoltage()
@@ -366,7 +406,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                             );
 
                                 mTVLogTextView.append(log);
-                                tv_connect_device.append(log);
+                                tv_battery.setText(log);
                             }
                         });
                         break;
@@ -398,24 +438,32 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
             public void onParserECG(int[] channels) {
                 mEMGCount++;
                 mEMGBuffer.offer(channels.clone());
+                //tv_05.setText(Integer.toString(mEMGCount));
+                Log.i("datacnt>>>>>", "onParserECG: "+mEMGCount);
             }
 
             @Override
             public void onParserACC(int[] channels) {
                 mAccCount++;
                 mAccBuffer.offer(channels.clone());
+                //tv_06.setText(Integer.toString(mAccCount));
+                Log.i("datacnt>>>>>", "mAccCount: "+mAccCount);
             }
 
             @Override
             public void onParserGYRO(int[] channels) {
                 mGyroCount++;
                 mGyroBuffer.offer(channels.clone());
+                //tv_07.setText(Integer.toString(mGyroCount));
+                Log.i("datacnt>>>>>", "mGyroCount: "+mGyroCount);
             }
 
             @Override
             public void onParserMAGNETO(int[] channels) {
                 mMagnetoCount++;
                 mMagnetoBuffer.offer(channels.clone());
+                //tv_08.setText(Integer.toString(mMagnetoCount));
+                Log.i("datacnt>>>>>", "mMagnetoCount: "+mMagnetoCount);
             }
 
             @Override
@@ -469,6 +517,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 float value = (channels[0] / 2047f) * 7.4f;
                                 mSGEMGGraph.putValue(value);
                                 tv_01.setText(Float.toString(value));
+                                tv_05.setText(Integer.toString(mEMGCount));
                             }
                         }
 
@@ -480,7 +529,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 for (int index = 0; index < 3; index++) {
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_02.setText(Float.toString(valueArray[index]));
-
+                                    tv_06.setText(Integer.toString(mAccCount));
                                 }
 
                                 mSGAccGraph.putValueArray(valueArray);
@@ -495,6 +544,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 for (int index = 0; index < 3; index++) {
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_03.setText(Float.toString(valueArray[index]));
+                                    tv_07.setText(Integer.toString(mGyroCount));
                                 }
 
                                 mSGGyroGraph.putValueArray(valueArray);
@@ -509,6 +559,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 for (int index = 0; index < 3; index++) {
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_04.setText(Float.toString(valueArray[index]));
+                                    tv_08.setText(Integer.toString(mMagnetoCount));
                                     Log.i("<<<TESTMSG>>>", "run: ongoing....");
                                 }
 
@@ -687,7 +738,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+         super.onDestroy();
         if (mBLEManager != null) {
             mBLEManager.stopScanDevice();
             mBLEManager.stop();
@@ -761,6 +812,24 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
             mTVLogTextView.append("\nonClickStart: Send start command 500 SPS");
             mBLEManager.start(UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET, UxProtocol.SAMPLINGRATE_500);
         }
+
+    }
+    
+    @OnClick(R.id.btn_tray)
+    public void onClickTray(){
+        //홈버튼 효과
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+        startActivity(homeIntent);
+    }
+
+    @OnClick(R.id.btn_dataCnt)
+    public void onClickBtnDataCnt(){
+        tv_05.setText(Integer.toString(mEMGCount));
+        tv_06.setText(Integer.toString(mAccCount));
+        tv_07.setText(Integer.toString(mGyroCount));
+        tv_08.setText(Integer.toString(mMagnetoCount));
     }
 
     /**
@@ -801,6 +870,8 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     @OnClick(R.id.btn_alram)
     public void onClickAlram(){
         //showNoti();
+        sendMyBroadcast(MyBroadcastReceiver.Myaction);
+
     }
 
     private final String CHANNEL_ID = "channel1";
@@ -876,10 +947,15 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         }
         private void setTvClear(){
             tv_connect_device.setText("");
+            tv_battery.setText("");
             tv_01.setText("");
             tv_02.setText("");
             tv_03.setText("");
             tv_04.setText("");
+            tv_05.setText("");
+            tv_06.setText("");
+            tv_07.setText("");
+            tv_08.setText("");
         }
 
         @OnClick(R.id.btn_battery)

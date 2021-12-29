@@ -54,42 +54,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
 
             <Button
                 android:id="@+id/btn_Scan"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button_scan"
                 android:textSize="12sp"
+
                 />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/btn_Start"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button_start"
                 android:textSize="12sp"
                 />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
             <Button
                 android:id="@+id/btn_Stop"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button_stop"
                 android:textSize="12sp"
@@ -97,24 +86,48 @@
 
             <Button
                 android:id="@+id/btn_Disconnect"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button_disconnect"
                 android:enabled="false"
                 android:textSize="12sp" />
 
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
             <Button
                 android:id="@+id/btn_alram"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="alarm_test"
+                android:text="alarm"
                 android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btn_battery"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="batterty_info"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_tray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="APP_TRAY"
+                android:textSize="12sp" />
+            <Button
+                android:id="@+id/btn_dataCnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="data_cnt"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -124,30 +137,88 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:gravity="center"
         >
 
         <TextView
             android:id="@+id/tv_log_01"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24dp"
             />
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_log_02"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24dp"
             />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_log_03"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24dp"
             />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_log_04"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/tv_log_05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_log_06"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_log_07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_log_08"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24dp"
             />
@@ -166,6 +237,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="연결된 기기"
+            android:textColor="@color/colorPrimary"
             android:gravity="center"
             android:textSize="20dp"
             />
@@ -174,8 +246,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="기기 이름"
             android:gravity="center"
+            android:textColor="@color/colorPrimary"
             android:textSize="20dp"
             />
 
@@ -193,6 +265,49 @@
             android:paddingEnd="10dp"
             android:scrollbars="vertical"
             android:gravity="bottom" />-->
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="기기 배터리 정보"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:id="@+id/tv_battery"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            />
+
+        <!-- <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="@string/main_log"
+             android:textStyle="bold|italic" />
+
+         <TextView
+             android:id="@+id/tv_LogTextView"
+             android:layout_width="match_parent"
+             android:layout_height="150dp"
+             android:paddingStart="10dp"
+             android:paddingEnd="10dp"
+             android:scrollbars="vertical"
+             android:gravity="bottom" />-->
 
 
 
