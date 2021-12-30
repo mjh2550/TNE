@@ -1,5 +1,6 @@
 package com.solmi.biobrainexample.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,7 +22,6 @@ import butterknife.OnClick;
 public class HomeFrag extends Fragment {
 
     private View view;
-
 
     @BindView(R.id.btn_go_measure)
     Button btnMeasure;
@@ -47,13 +47,5 @@ public class HomeFrag extends Fragment {
         startActivity(intent);
 
     }
-
-
-
-
-
-
-
-
 
 }

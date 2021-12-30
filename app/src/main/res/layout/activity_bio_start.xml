@@ -92,9 +92,6 @@
                 android:enabled="false"
                 android:textSize="12sp" />
 
-
-
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -129,6 +126,8 @@
                 android:layout_height="wrap_content"
                 android:text="data_cnt"
                 android:textSize="12sp" />
+
+
 
         </LinearLayout>
 
@@ -179,6 +178,18 @@
 
 
     </LinearLayout>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="프레임레이아웃"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -225,6 +236,18 @@
 
 
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="프레임레이아웃 끝"/>
+    </LinearLayout>
+</FrameLayout>
+
+    <fragment
+        android:name="com.solmi.biobrainexample.process.BioStart1Fragment"
+        android:id="@+id/b1f"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

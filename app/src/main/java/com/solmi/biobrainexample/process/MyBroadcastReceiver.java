@@ -29,7 +29,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         if(Myaction.equals(intent.getAction())){
             Toast.makeText(context,"버튼이 눌렸습니다.",Toast.LENGTH_SHORT).show();
 
-
         }
 
          /*  final PendingResult pendingResult = goAsync();

@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_mainTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="main page"
@@ -41,8 +42,8 @@
             android:textSize="24dp"
             android:fontFamily="@font/bmdh"
             android:layout_margin="@dimen/activity_horizontal_margin"/>
-    </LinearLayout>
 
+    </LinearLayout>
 
 
 

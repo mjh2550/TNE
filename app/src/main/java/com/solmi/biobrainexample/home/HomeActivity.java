@@ -14,20 +14,23 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.solmi.biobrainexample.R;
 import com.solmi.biobrainexample.mainslide.ViewPagerAdapter;
+import com.solmi.biobrainexample.process.BioStart1Fragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity {
-
 
     @BindView(R.id.nav_view)
     BottomNavigationView bottomNavigationView;
@@ -38,12 +41,12 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-
     private HomeFrag homeFrag;
     private ResultFrag resultFrag;
     private InfoFrag infoFrag;
     private FragmentManager fm;
     private FragmentTransaction ft;
+    private BioStart1Fragment b1f;
 
     private FragmentPagerAdapter fragmentPagerAdapter;
 
@@ -99,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
         //1페이지 메인 슬라이드 배너 뷰페이저 설정
         fragmentPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentPagerAdapter);
+
 
         //자동 슬라이드 기능
         final Handler handler = new Handler();
@@ -186,4 +190,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 }
