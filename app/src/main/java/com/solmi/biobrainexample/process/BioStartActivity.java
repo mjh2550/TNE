@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -29,7 +30,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -199,10 +202,12 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     @BindView(R.id.tv_log_08)
     protected TextView tv_08;
 
+    protected Button btn_start;
+    protected Button btn_stop;
 
     BioStart1Fragment bioStart1Fragment;
     FragmentManager fm;
-   // FragmentTransaction ft;
+    FragmentTransaction ft;
   //  TextView tv_mainTitle;
     TextView tv_a_log_5;
     TextView tv_a_log_6;
@@ -234,6 +239,14 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         setContentView(R.layout.activity_bio_start);
         ButterKnife.bind(this);
 
+        //TODO:프래그먼트 변수 액티비티에 가져오기
+        //LayoutInflater inflater = getLayoutInflater();
+        //View fview1 = inflater.inflate(R.layout.frag_bio_start1,(ViewGroup) findViewById(R.id.frag_), false);
+
+
+        //getSystemService(Context.LAYOUT_INFLATER_SERVICE)
+
+        
         //fragment bind
 
         fm = getSupportFragmentManager();
@@ -241,6 +254,20 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
       bioStart1Fragment = (BioStart1Fragment)fm.findFragmentById(R.id.b1f);
     //  tv_mainTitle =(TextView) bioStart1Fragment.getView().findViewById(R.id.tv_b1f);
         setFragmentBind(bioStart1Fragment);
+
+        btn_start.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                onClickStart();
+            }
+        });
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickStop();
+            }
+        });
 
         initHandler();
         initComponent();
@@ -264,6 +291,8 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         tv_a_log_6 = fragment.getView().findViewById(R.id.tv_f_log_06);
         tv_a_log_7 = fragment.getView().findViewById(R.id.tv_f_log_07);
         tv_a_log_8 = fragment.getView().findViewById(R.id.tv_f_log_08);
+        btn_start = fragment.getView().findViewById(R.id.btn_Start);
+        btn_stop = fragment.getView().findViewById(R.id.btn_Stop);
     }
 
     /**
@@ -833,7 +862,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         mBLEManager.startScanDevice(20 * 1000);
     }
 
-    @OnClick(R.id.btn_Start)
+    //@OnClick(R.id.btn_Start)
     public void onClickStart() {
         resetComponent();
         if (mRGSamplingRate.getCheckedRadioButtonId() == R.id.rb_mainSamplingRate250) {
@@ -886,7 +915,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         mMagnetoCount = 0;
     }
 
-    @OnClick(R.id.btn_Stop)
+   // @OnClick(R.id.btn_Stop)
     public void onClickStop() {
         mTVLogTextView.append("\nonClickStop: Send stop command");
         mBLEManager.stop();
@@ -1007,5 +1036,28 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
             mBLEManager.getBatteryInfo();
         }
 
+    /**
+     *프래그먼트 교체 함수
+     * */
+    private void setFrag(int n)
+    {
+      //  fm = getSupportFragmentManager();
+        ft = fm.beginTransaction();
+        switch (n)
+        {
+            case 0:
+                ft.replace(R.id.bio_content_layout,bioStart1Fragment);
+                ft.commit();
+                break;
+            case 1:
+                ft.replace(R.id.bio_content_layout,bioStart1Fragment);
+                ft.commit();
+                break;
+            case 2:
+                ft.replace(R.id.bio_content_layout,bioStart1Fragment);
+                ft.commit();
+                break;
+        }
+    }
 
     }

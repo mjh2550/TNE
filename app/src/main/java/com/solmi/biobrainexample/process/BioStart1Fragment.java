@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.solmi.biobrainexample.R;
 
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link BioStart1Fragment#newInstance} factory method to
@@ -60,6 +62,7 @@ public class BioStart1Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.frag_bio_start1, container, false);
     }

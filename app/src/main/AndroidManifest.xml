@@ -40,7 +40,7 @@
         <activity
             android:name=".process.BioStartActivity"
             android:exported="false"
-
+            android:launchMode="singleInstance"
             android:taskAffinity="com.solme.biobrainexample" />
         <activity
             android:name=".home.HomeActivity"
