@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -74,6 +75,12 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
      * 로그 출력을 위한 태그
      */
     private final String TAG = MainActivity.class.getSimpleName();
+
+    /**
+     * CONTEXT를 전역변수화
+     * 모든 화면에서 해당 액티비티 사용 가능하게끔
+     */
+    public static Context mContext;
 
     /**
      * 필요한 권한 요청 상수
@@ -184,6 +191,9 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
 
     private BroadcastReceiver mReceiver;
 
+    View frameContentView;
+    View linearContentView;
+
 
     @BindView(R.id.tv_log_01)
     protected TextView tv_01;
@@ -193,6 +203,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     protected TextView tv_03;
     @BindView(R.id.tv_log_04)
     protected TextView tv_04;
+
     @BindView(R.id.tv_log_05)
     protected TextView tv_05;
     @BindView(R.id.tv_log_06)
@@ -202,10 +213,18 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     @BindView(R.id.tv_log_08)
     protected TextView tv_08;
 
-    protected Button btn_start;
-    protected Button btn_stop;
+    //protected Button btn_start;
+    //protected Button btn_stop;
 
+    @BindView(R.id.btn_1frag)
+    protected Button btn_1frag;
+
+    @BindView(R.id.btn_2frag)
+    protected Button btn_2frag;
+
+    BioStartFragment bioStartFragment;
     BioStart1Fragment bioStart1Fragment;
+    BioStart2Fragment bioStart2Fragment;
     FragmentManager fm;
     FragmentTransaction ft;
   //  TextView tv_mainTitle;
@@ -238,36 +257,24 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bio_start);
         ButterKnife.bind(this);
+        mContext = this;
+
+        frameContentView = findViewById(R.id.bio_content_layout);
+        linearContentView = findViewById(R.id.bio_content_l_layout);
 
         //TODO:프래그먼트 변수 액티비티에 가져오기
-        //LayoutInflater inflater = getLayoutInflater();
-        //View fview1 = inflater.inflate(R.layout.frag_bio_start1,(ViewGroup) findViewById(R.id.frag_), false);
-
-
-        //getSystemService(Context.LAYOUT_INFLATER_SERVICE)
-
-        
         //fragment bind
 
         fm = getSupportFragmentManager();
         //매니져 객체에게 findFragmentById()를 요청하면서 id 전달
-      bioStart1Fragment = (BioStart1Fragment)fm.findFragmentById(R.id.b1f);
-    //  tv_mainTitle =(TextView) bioStart1Fragment.getView().findViewById(R.id.tv_b1f);
-        setFragmentBind(bioStart1Fragment);
 
-        btn_start.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                onClickStart();
-            }
-        });
-        btn_stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickStop();
-            }
-        });
+        //프래그먼트 싱글톤으로 생성
+        bioStartFragment = BioStartFragment.getInstance();
+        bioStart1Fragment = BioStart1Fragment.getInstance();
+        bioStart2Fragment = BioStart2Fragment.getInstance();
+        setFrag(0);
+       // bioStart1Fragment = (BioStart1Fragment)fm.findFragmentById(R.id.b1f);
+       // setFragmentBind(bioStart1Fragment);
 
         initHandler();
         initComponent();
@@ -287,12 +294,13 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
     public void setFragmentBind(Fragment fragment){
       //  fm = getSupportFragmentManager();
       //  fragment = (Fragment) fm.findFragmentById(R.id.b1f);
+        /*
         tv_a_log_5 = fragment.getView().findViewById(R.id.tv_f_log_05);
         tv_a_log_6 = fragment.getView().findViewById(R.id.tv_f_log_06);
         tv_a_log_7 = fragment.getView().findViewById(R.id.tv_f_log_07);
-        tv_a_log_8 = fragment.getView().findViewById(R.id.tv_f_log_08);
-        btn_start = fragment.getView().findViewById(R.id.btn_Start);
-        btn_stop = fragment.getView().findViewById(R.id.btn_Stop);
+        tv_a_log_8 = fragment.getView().findViewById(R.id.tv_f_log_08);*/
+        /*btn_start = fragment.getView().findViewById(R.id.btn_Start);
+        btn_stop = fragment.getView().findViewById(R.id.btn_Stop);*/
     }
 
     /**
@@ -459,15 +467,20 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                             public void run() {
                                 BatteryInfo batteryInfo = headerPacket.getBatteryInfo();
                                 //String log = String.format("\nRES_BATT_INFO: Max: %.1f Cur: %.1f", batteryInfo.getMaximumVoltage(), batteryInfo.getCurrentVoltage());
-                                float batMax100 =  (batteryInfo.getMaximumVoltage()/batteryInfo.getMaximumVoltage())*100;
-                                float batCur100 =  (batteryInfo.getCurrentVoltage()/batteryInfo.getMaximumVoltage())*100;
-                                String log = String.format("RES_BATT_INFO: Max: %.1f Cur: %.1f"
+                                float batMax = batteryInfo.getMaximumVoltage();
+                                float batCur = batteryInfo.getCurrentVoltage();
+                                float batMax100 =  (batMax/batMax)*100;
+                                float batCur100 =  (batCur/batMax)*100;
+                                /*String log = String.format("RES_BATT_INFO: Max: %.1f Cur: %.1f"
                                             + "\nRES_BATT_INFO100: Max: %.0f Cur: %.2f"
-                                            , batteryInfo.getMaximumVoltage()
-                                            , batteryInfo.getCurrentVoltage()
+                                            , batMax
+                                            , batCur
                                             , batMax100
                                             , batCur100
-                                            );
+                                            );*/
+                                String log = String.format("%.2f",batMax);
+                                        log += String.format("/ %.2f",batCur);
+
 
                                 mTVLogTextView.append(log);
                                 tv_battery.setText(log);
@@ -502,7 +515,6 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
             public void onParserECG(int[] channels) {
                 mEMGCount++;
                 mEMGBuffer.offer(channels.clone());
-                //tv_05.setText(Integer.toString(mEMGCount));
                 Log.i("datacnt>>>>>", "onParserECG: "+mEMGCount);
             }
 
@@ -510,7 +522,6 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
             public void onParserACC(int[] channels) {
                 mAccCount++;
                 mAccBuffer.offer(channels.clone());
-                //tv_06.setText(Integer.toString(mAccCount));
                 Log.i("datacnt>>>>>", "mAccCount: "+mAccCount);
             }
 
@@ -518,7 +529,6 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
             public void onParserGYRO(int[] channels) {
                 mGyroCount++;
                 mGyroBuffer.offer(channels.clone());
-                //tv_07.setText(Integer.toString(mGyroCount));
                 Log.i("datacnt>>>>>", "mGyroCount: "+mGyroCount);
             }
 
@@ -526,7 +536,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
             public void onParserMAGNETO(int[] channels) {
                 mMagnetoCount++;
                 mMagnetoBuffer.offer(channels.clone());
-                //tv_08.setText(Integer.toString(mMagnetoCount));
+
                 Log.i("datacnt>>>>>", "mMagnetoCount: "+mMagnetoCount);
             }
 
@@ -582,7 +592,6 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                 mSGEMGGraph.putValue(value);
                                 tv_01.setText(Float.toString(value));
                                 tv_05.setText(Integer.toString(mEMGCount));
-                                tv_a_log_5.setText(Integer.toString(mEMGCount));
                             }
                         }
 
@@ -595,7 +604,6 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_02.setText(Float.toString(valueArray[index]));
                                     tv_06.setText(Integer.toString(mAccCount));
-                                    tv_a_log_6.setText(Integer.toString(mAccCount));
                                 }
 
                                 mSGAccGraph.putValueArray(valueArray);
@@ -611,7 +619,6 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_03.setText(Float.toString(valueArray[index]));
                                     tv_07.setText(Integer.toString(mGyroCount));
-                                    tv_a_log_7.setText(Integer.toString(mGyroCount));
                                 }
 
                                 mSGGyroGraph.putValueArray(valueArray);
@@ -627,7 +634,6 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_04.setText(Float.toString(valueArray[index]));
                                     tv_08.setText(Integer.toString(mMagnetoCount));
-                                    tv_a_log_8.setText(Integer.toString(mMagnetoCount));
                                     Log.i("<<<TESTMSG>>>", "run: ongoing....");
                                 }
 
@@ -989,8 +995,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
           //탭 클릭 후에도 알림은 사라지지 않음 (연결 종료시에만 사라짐)
           builder.setAutoCancel(false);
 
-          builder.addAction(R.drawable.arrow,"test",blePendingIntent);
-
+          builder.addAction(R.drawable.arrow,"측정페이지로 이동",blePendingIntent);
 
           Notification notification = builder.build();
 
@@ -1025,10 +1030,10 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
             tv_06.setText("");
             tv_07.setText("");
             tv_08.setText("");
-            tv_a_log_5.setText("");
-            tv_a_log_6.setText("");
-            tv_a_log_7.setText("");
-            tv_a_log_8.setText("");
+       //     tv_a_log_5.setText("");
+       //     tv_a_log_6.setText("");
+       //     tv_a_log_7.setText("");
+       //     tv_a_log_8.setText("");
         }
 
         @OnClick(R.id.btn_battery)
@@ -1046,18 +1051,32 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         switch (n)
         {
             case 0:
-                ft.replace(R.id.bio_content_layout,bioStart1Fragment);
+                frameContentView.setVisibility(View.GONE);
+                linearContentView.setVisibility(View.VISIBLE);
+                ft.replace(R.id.bio_content_layout,bioStartFragment);
                 ft.commit();
                 break;
             case 1:
+                frameContentView.setVisibility(View.VISIBLE);
+                linearContentView.setVisibility(View.GONE);
                 ft.replace(R.id.bio_content_layout,bioStart1Fragment);
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.bio_content_layout,bioStart1Fragment);
+                frameContentView.setVisibility(View.VISIBLE);
+                linearContentView.setVisibility(View.GONE);
+                ft.replace(R.id.bio_content_layout,bioStart2Fragment);
                 ft.commit();
                 break;
         }
     }
+        @OnClick(R.id.btn_1frag)
+        public void onClickBtn1Frag(){
+        setFrag(0);
+        }
+        @OnClick(R.id.btn_2frag)
+        public void onClickBtn2Frag(){
+        setFrag(1);
+        }
 
     }

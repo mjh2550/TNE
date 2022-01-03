@@ -26,8 +26,20 @@ public class BioStart2Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public BioStart2Fragment() {
+    public static BioStart2Fragment instance;
+
+    private BioStart2Fragment() {
         // Required empty public constructor
+    }
+
+    public static BioStart2Fragment getInstance(){
+
+        if(instance==null){
+            instance = new BioStart2Fragment();
+        }else{
+
+        }
+        return instance;
     }
 
     /**

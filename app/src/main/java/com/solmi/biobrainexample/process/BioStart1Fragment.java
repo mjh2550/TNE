@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.solmi.biobrainexample.R;
 
@@ -24,12 +25,26 @@ public class BioStart1Fragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static BioStart1Fragment instance;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public BioStart1Fragment() {
+    public Button btn_start;
+    public Button btn_stop;
+
+    private BioStart1Fragment() {
         // Required empty public constructor
+    }
+
+    public static BioStart1Fragment getInstance(){
+        if(instance==null){
+            instance = new BioStart1Fragment();
+        }else{
+
+        }
+        return instance;
     }
 
     /**
@@ -57,6 +72,9 @@ public class BioStart1Fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
@@ -64,6 +82,25 @@ public class BioStart1Fragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_bio_start1, container, false);
+        //view 를 그리기 전에 컴포넌트에 접근하지 못함. inflater로 그린 후 접근해준다.
+        View v = inflater.inflate(R.layout.frag_bio_start1, container, false);
+
+        //BiostartActivity의 함수를 실행시킴
+        btn_start = (Button) v.findViewById(R.id.btn_Start);
+        btn_stop = (Button) v.findViewById(R.id.btn_Stop);
+        btn_start.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                ((BioStartActivity)BioStartActivity.mContext).onClickStart();
+            }
+        });
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BioStartActivity)BioStartActivity.mContext).onClickStop();
+            }
+        });
+        return v;
     }
 }

@@ -8,17 +8,29 @@
     android:orientation="vertical"
    >
 
+    <!--타이틀 바-->
     <include layout="@layout/titlebar"/>
 
+
+
+    <!--프레임(프래그먼트 교체부분)-->
     <FrameLayout
         android:id="@+id/bio_content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-        <LinearLayout
+        android:layout_gravity="center">
+
+
+
+    </FrameLayout>
+
+    <!--1페이지-->
+    <LinearLayout
+        android:id="@+id/bio_content_l_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
         <Space
             android:layout_width="match_parent"
             android:layout_height="@dimen/activity_vertical_margin" />
@@ -114,215 +126,196 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            >
-
-            <TextView
-                android:id="@+id/tv_log_01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                />
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_log_02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                />
-
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_log_03"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                />
-
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_log_04"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                />
-
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
+    <!--데이터로그-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/tv_log_01"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:text="프레임레이아웃"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    >
-
-                    <TextView
-                        android:id="@+id/tv_log_05"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="24dp"
-                        />
-                    <Space
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/tv_log_06"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="24dp"
-                        />
-
-                    <Space
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/tv_log_07"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="24dp"
-                        />
-
-                    <Space
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/tv_log_08"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="24dp"
-                        />
-
-                </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:text="프레임레이아웃 끝"/>
-            </LinearLayout>
-        </FrameLayout>
-
-        <fragment
-            android:name="com.solmi.biobrainexample.process.BioStart1Fragment"
-            android:id="@+id/b1f"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            tools:layout="@layout/frag_bio_start1" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:textSize="24dp"
+            />
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_log_02"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="연결된 기기"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
-                android:textSize="20dp"
-                />
-
-            <TextView
-                android:id="@+id/tv_connect_device"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20dp"
-                />
-
-            <!-- <TextView
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:text="@string/main_log"
-                 android:textStyle="bold|italic" />
-
-             <TextView
-                 android:id="@+id/tv_LogTextView"
-                 android:layout_width="match_parent"
-                 android:layout_height="150dp"
-                 android:paddingStart="10dp"
-                 android:paddingEnd="10dp"
-                 android:scrollbars="vertical"
-                 android:gravity="bottom" />-->
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="기기 배터리 정보"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
-                android:textSize="20dp"
-                />
-            <TextView
-                android:id="@+id/tv_battery"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20dp"
-                />
-
-            <!-- <TextView
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:text="@string/main_log"
-                 android:textStyle="bold|italic" />
-
-             <TextView
-                 android:id="@+id/tv_LogTextView"
-                 android:layout_width="match_parent"
-                 android:layout_height="150dp"
-                 android:paddingStart="10dp"
-                 android:paddingEnd="10dp"
-                 android:scrollbars="vertical"
-                 android:gravity="bottom" />-->
-
-        </LinearLayout>
+            android:textSize="24dp"
+            />
 
         <Space
-            android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_log_03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
 
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_log_04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            />
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_log_05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"/>
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_log_06"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"/>
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_log_07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"/>
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_log_08"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"/>
+
+
+    </LinearLayout>
+
+    <!--블루투스 기기정보-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="연결된 기기"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_connect_device"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            />
+
+        <!-- <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="@string/main_log"
+             android:textStyle="bold|italic" />
+
+         <TextView
+             android:id="@+id/tv_LogTextView"
+             android:layout_width="match_parent"
+             android:layout_height="150dp"
+             android:paddingStart="10dp"
+             android:paddingEnd="10dp"
+             android:scrollbars="vertical"
+             android:gravity="bottom" />-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="기기 배터리 정보"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:id="@+id/tv_battery"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            />
+
+        <!-- <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="@string/main_log"
+             android:textStyle="bold|italic" />
+
+         <TextView
+             android:id="@+id/tv_LogTextView"
+             android:layout_width="match_parent"
+             android:layout_height="150dp"
+             android:paddingStart="10dp"
+             android:paddingEnd="10dp"
+             android:scrollbars="vertical"
+             android:gravity="bottom" />-->
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
+    <!--버튼 컨트롤러-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
+            android:layout_weight="1"
             >
 
             <Button
@@ -352,11 +345,32 @@
                 android:text="data_cnt"
                 android:textSize="12sp" />
 
-            </LinearLayout>
+
         </LinearLayout>
-    </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_1frag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="go_1frag"
+                android:textSize="12sp"/>
+            <Button
+                android:id="@+id/btn_2frag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="go_2frag"
+                android:textSize="12sp"/>
 
 
+        </LinearLayout>
+    </LinearLayout>
 
     <!--그래프 가리는 영역-->
     <LinearLayout
