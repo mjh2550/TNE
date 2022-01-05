@@ -68,7 +68,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BioStartActivity extends AppCompatActivity implements BioStart{
+public class BioStartActivity extends AppCompatActivity implements BioStart,Animation{
 
 
     /**
@@ -1051,32 +1051,61 @@ public class BioStartActivity extends AppCompatActivity implements BioStart{
         switch (n)
         {
             case 0:
+                ft.replace(R.id.bio_content_layout,bioStartFragment);
+               // ft.setCustomAnimations(R.anim.back,R.anim.next);
+                ft.commit();
                 frameContentView.setVisibility(View.GONE);
                 linearContentView.setVisibility(View.VISIBLE);
-                ft.replace(R.id.bio_content_layout,bioStartFragment);
-                ft.commit();
                 break;
             case 1:
-                frameContentView.setVisibility(View.VISIBLE);
-                linearContentView.setVisibility(View.GONE);
+                ft.setCustomAnimations(R.anim.next,R.anim.back);
                 ft.replace(R.id.bio_content_layout,bioStart1Fragment);
                 ft.commit();
-                break;
-            case 2:
                 frameContentView.setVisibility(View.VISIBLE);
                 linearContentView.setVisibility(View.GONE);
+                break;
+            case 2:
+                ft.setCustomAnimations(R.anim.next,R.anim.back);
                 ft.replace(R.id.bio_content_layout,bioStart2Fragment);
                 ft.commit();
+                frameContentView.setVisibility(View.VISIBLE);
+                linearContentView.setVisibility(View.GONE);
                 break;
         }
     }
+        @OnClick(R.id.btn_0frag)
+        public void onClickBtn0Frag(){
+            //onNextAnim();
+            setFrag(0);
+        }
         @OnClick(R.id.btn_1frag)
         public void onClickBtn1Frag(){
-        setFrag(0);
+            //onNextAnim();
+            setFrag(1);
         }
         @OnClick(R.id.btn_2frag)
         public void onClickBtn2Frag(){
-        setFrag(1);
+            setFrag(2);
         }
 
+    @Override
+    public void onNextAnim() {
+        //새로 나타나는 화면, 이전화면 에니메이션 설정
+        overridePendingTransition(R.anim.next,R.anim.back);
     }
+
+    @Override
+    public void onBackAnim() {
+
+    }
+
+    @Override
+    public void onUpAnim() {
+
+    }
+
+    @Override
+    public void onDownAnim() {
+
+    }
+}
