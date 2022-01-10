@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.solmi.biobrainexample.R;
 
@@ -25,6 +26,9 @@ public class BioStart2Fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button btn_go_next;
+    private Button btn_go_prev;
+
 
     public static BioStart2Fragment instance;
 
@@ -72,7 +76,26 @@ public class BioStart2Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View v = inflater.inflate(R.layout.frag_bio_start2, container, false);
+        btn_go_next = (Button) v.findViewById(R.id.btn_frag2_go_next);
+        btn_go_prev = (Button) v.findViewById(R.id.btn_frag2_go_prev);
+
+
+        btn_go_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                ((BioStartActivity)BioStartActivity.mContext).setFrag(2);
+            }
+        });
+        btn_go_prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BioStartActivity)BioStartActivity.mContext).setFrag(1);
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_bio_start2, container, false);
+        return v;
     }
 }

@@ -31,8 +31,11 @@ public class BioStart1Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Button btn_start;
-    public Button btn_stop;
+    private Button btn_start;
+    private Button btn_stop;
+    private Button btn_go_next;
+    private Button btn_go_prev;
+
 
     private BioStart1Fragment() {
         // Required empty public constructor
@@ -88,8 +91,10 @@ public class BioStart1Fragment extends Fragment {
         //BiostartActivity의 함수를 실행시킴
         btn_start = (Button) v.findViewById(R.id.btn_Start);
         btn_stop = (Button) v.findViewById(R.id.btn_Stop);
-        btn_start.setOnClickListener(new View.OnClickListener(){
+        btn_go_next = (Button) v.findViewById(R.id.btn_frag1_go_next);
+        btn_go_prev = (Button) v.findViewById(R.id.btn_frag1_go_prev);
 
+        btn_start.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 ((BioStartActivity)BioStartActivity.mContext).onClickStart();
@@ -101,6 +106,20 @@ public class BioStart1Fragment extends Fragment {
                 ((BioStartActivity)BioStartActivity.mContext).onClickStop();
             }
         });
+
+        btn_go_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BioStartActivity)BioStartActivity.mContext).setFrag(2);
+            }
+        });
+        btn_go_prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BioStartActivity)BioStartActivity.mContext).setFrag(0);
+            }
+        });
+
         return v;
     }
 }

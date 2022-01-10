@@ -1044,7 +1044,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
     /**
      *프래그먼트 교체 함수
      * */
-    private void setFrag(int n)
+    public void setFrag(int n)
     {
       //  fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
