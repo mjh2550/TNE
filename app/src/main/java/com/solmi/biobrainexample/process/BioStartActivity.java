@@ -232,6 +232,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
     TextView tv_a_log_6;
     TextView tv_a_log_7;
     TextView tv_a_log_8;
+    TextView tv_data_conn;
 
 
     /*@Override
@@ -273,8 +274,11 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         bioStart1Fragment = BioStart1Fragment.getInstance();
         bioStart2Fragment = BioStart2Fragment.getInstance();
         setFrag(0);
+
+
        // bioStart1Fragment = (BioStart1Fragment)fm.findFragmentById(R.id.b1f);
-       // setFragmentBind(bioStart1Fragment);
+       // frameContentView.findViewById(R.id.tv_f_log_05);
+
 
         initHandler();
         initComponent();
@@ -294,12 +298,12 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
     public void setFragmentBind(Fragment fragment){
       //  fm = getSupportFragmentManager();
       //  fragment = (Fragment) fm.findFragmentById(R.id.b1f);
-        /*
         tv_a_log_5 = fragment.getView().findViewById(R.id.tv_f_log_05);
         tv_a_log_6 = fragment.getView().findViewById(R.id.tv_f_log_06);
         tv_a_log_7 = fragment.getView().findViewById(R.id.tv_f_log_07);
-        tv_a_log_8 = fragment.getView().findViewById(R.id.tv_f_log_08);*/
-        /*btn_start = fragment.getView().findViewById(R.id.btn_Start);
+        tv_a_log_8 = fragment.getView().findViewById(R.id.tv_f_log_08);
+        tv_data_conn = fragment.getView().findViewById(R.id.tv_data_conn);
+      /*  btn_start = fragment.getView().findViewById(R.id.btn_Start);
         btn_stop = fragment.getView().findViewById(R.id.btn_Stop);*/
     }
 
@@ -515,29 +519,24 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
             public void onParserECG(int[] channels) {
                 mEMGCount++;
                 mEMGBuffer.offer(channels.clone());
-                Log.i("datacnt>>>>>", "onParserECG: "+mEMGCount);
             }
 
             @Override
             public void onParserACC(int[] channels) {
                 mAccCount++;
                 mAccBuffer.offer(channels.clone());
-                Log.i("datacnt>>>>>", "mAccCount: "+mAccCount);
             }
 
             @Override
             public void onParserGYRO(int[] channels) {
                 mGyroCount++;
                 mGyroBuffer.offer(channels.clone());
-                Log.i("datacnt>>>>>", "mGyroCount: "+mGyroCount);
             }
 
             @Override
             public void onParserMAGNETO(int[] channels) {
                 mMagnetoCount++;
                 mMagnetoBuffer.offer(channels.clone());
-
-                Log.i("datacnt>>>>>", "mMagnetoCount: "+mMagnetoCount);
             }
 
             @Override
@@ -573,6 +572,9 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         }
     }
 
+    public Float getRunTime(long mStartTime){
+        return (System.currentTimeMillis() - mStartTime) / 1000f;
+    }
     /**
      * 데이터 업데이트 타이머 태스크 반환하는 함수
      * @return 타이머 태스크
@@ -584,6 +586,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.i("시간초 로그 출력 >>>>>>>>>>", String.format("\nRun time: %.3f(s)", getRunTime(mStartTime)));
                         int emgSize = mEMGBuffer.size();
                         for (int count = 0; count < emgSize; count++) {
                             int[] channels = mEMGBuffer.poll();
@@ -592,6 +595,11 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
                                 mSGEMGGraph.putValue(value);
                                 tv_01.setText(Float.toString(value));
                                 tv_05.setText(Integer.toString(mEMGCount));
+                               tv_a_log_5.setText(Integer.toString(mEMGCount));
+                               if(tv_data_conn.getText().equals("수신한 데이터 없음") && Integer.parseInt((String) tv_05.getText())>0){
+                                   tv_data_conn.setText("데이터 수신 중....");
+                               }
+
                             }
                         }
 
@@ -604,6 +612,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_02.setText(Float.toString(valueArray[index]));
                                     tv_06.setText(Integer.toString(mAccCount));
+                                    tv_a_log_6.setText(Integer.toString(mAccCount));
                                 }
 
                                 mSGAccGraph.putValueArray(valueArray);
@@ -619,6 +628,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_03.setText(Float.toString(valueArray[index]));
                                     tv_07.setText(Integer.toString(mGyroCount));
+                                    tv_a_log_7.setText(Integer.toString(mGyroCount));
                                 }
 
                                 mSGGyroGraph.putValueArray(valueArray);
@@ -634,7 +644,8 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
                                     valueArray[index] = (channels[index] / 1023f) * 3f;
                                     tv_04.setText(Float.toString(valueArray[index]));
                                     tv_08.setText(Integer.toString(mMagnetoCount));
-                                    Log.i("<<<TESTMSG>>>", "run: ongoing....");
+                                    tv_a_log_8.setText(Integer.toString(mMagnetoCount));
+                                 //   Log.i("<<<TESTMSG>>>", "run: ongoing....");
                                 }
 
                                 mSGMagnetoGraph.putValueArray(valueArray);
@@ -871,6 +882,9 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
     //@OnClick(R.id.btn_Start)
     public void onClickStart() {
         resetComponent();
+        if(tv_a_log_5==null){
+            setFragmentBind(bioStart1Fragment);
+        }
         if (mRGSamplingRate.getCheckedRadioButtonId() == R.id.rb_mainSamplingRate250) {
             mSGEMGGraph.setSamplingRate(250);
             mSGAccGraph.setSamplingRate(31.25f);
@@ -1030,10 +1044,13 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
             tv_06.setText("");
             tv_07.setText("");
             tv_08.setText("");
-       //     tv_a_log_5.setText("");
-       //     tv_a_log_6.setText("");
-       //     tv_a_log_7.setText("");
-       //     tv_a_log_8.setText("");
+            if(tv_a_log_5!=null) {
+                tv_a_log_5.setText("");
+                tv_a_log_6.setText("");
+                tv_a_log_7.setText("");
+                tv_a_log_8.setText("");
+                tv_data_conn.setText("수신한 데이터 없음");
+            }
         }
 
         @OnClick(R.id.btn_battery)

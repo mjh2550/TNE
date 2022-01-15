@@ -68,6 +68,9 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:gravity="center"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
