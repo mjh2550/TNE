@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -38,21 +39,22 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.viewPager)
+
     ViewPager viewPager;
 
     private HomeFrag homeFrag;
     private ResultFrag resultFrag;
     private InfoFrag infoFrag;
+    private SettingFrag settingFrag;
     private FragmentManager fm;
     private FragmentTransaction ft;
-    private BioStart1Fragment b1f;
+  //  private BioStart1Fragment b1f;
 
     private FragmentPagerAdapter fragmentPagerAdapter;
 
 
-    int currentPage = 0;
-    final long DELAY_MS = 1000;//delay in milliseconds before task is to be executed
+   int currentPage = 0;
+    final long DELAY_MS = 3000;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
 
 
@@ -61,7 +63,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-
 
         //상단 툴바 설정
         //  toolbar = findViewById(R.id.toolbar);
@@ -72,7 +73,7 @@ public class HomeActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true); //뒤로가기 자동생성
 
 
-        //하단 바 선택 1,2,3
+        //하단 바 선택 1,2,3,4
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -87,50 +88,32 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.navigation_3:
                         setFrag(2);
                         break;
+                    case R.id.navigation_4:
+                        setFrag(3);
+                        break;
                 }
                 return true;
 
             }
         });
-
         //기본 네비 뷰 설정
         homeFrag = new HomeFrag();
         resultFrag = new ResultFrag();
         infoFrag = new InfoFrag();
+        settingFrag = new SettingFrag();
+
         setFrag(0);
 
-        //1페이지 메인 슬라이드 배너 뷰페이저 설정
-        fragmentPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(fragmentPagerAdapter);
-
-
-        //자동 슬라이드 기능
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            @Override
-            public void run() {
-                if(currentPage == fragmentPagerAdapter.getCount()) {
-                    currentPage = 0;
-                }
-                viewPager.setCurrentItem(currentPage++, true);
-            }
-        };
-
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, DELAY_MS, PERIOD_MS);
 
 
     }
 
+
+
     /**
      *하단 바 프래그먼트 교체 함수
      * */
-    private void setFrag(int n)
+    public void setFrag(int n)
     {
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -146,6 +129,10 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case 2:
                 ft.replace(R.id.content_layout,infoFrag);
+                ft.commit();
+                break;
+            case 3:
+                ft.replace(R.id.content_layout,settingFrag);
                 ft.commit();
                 break;
         }
