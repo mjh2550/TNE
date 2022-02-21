@@ -1,7 +1,15 @@
 # TNE
 TutleNeck Escape App
 # BiofeedBackApp 개발 프로젝트 소스
- 태그 [1] : 회사 노트북 개발 [2] : 집 노트북 개발 [3] : 기타 등등
+
+*근전도를 활용한 거북목 탈출 앱 만들기 (TurtleNeck Escape App)
+
+*개발 기간 : 2021.12.01 ~ 현재
+
+*개발 목적 : 근전도를 활용한 사용자의 자세 교정 어플 연구
+
+*개발 환경 : Android Studio , SqlLite, Google firebase
+
  
 # 목업
 
@@ -12,3 +20,7 @@ TutleNeck Escape App
 <img width="50%" src="https://user-images.githubusercontent.com/62639477/154952613-6638bc8d-557f-45a7-a72f-eb326b4894b0.jpg"/>
 
 
+
+# 개발 태그 
+[1] : 회사 노트북 개발 [2] : 집 노트북 개발 [3] : 기타 등등
+ 
