@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.solmi.biobrainexample.mainslide.ViewPagerAdapter;
@@ -33,20 +35,24 @@ public class HomeFrag extends Fragment {
     private View view;
 
     String TAG ="TEST<<<<<";
+    Timer timer;
+    Handler handler;
+    Runnable Update;
 
-    @BindView(R.id.btn_go_measure)
+    //@BindView(R.id.btn_go_measure)
     Button btnMeasure;
 
     private FragmentPagerAdapter fragmentPagerAdapter;
     private FragmentManager fragmentManager;
+    private FragmentTransaction ft;
 
     final long DELAY_MS = 3000;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
     int currentPage = 0;
 
 
-    @BindView(R.id.viewPager)
-       ViewPager viewPager;
+  //  @BindView(R.id.viewPager)
+     ViewPager viewPager;
 
 
     @Nullable
@@ -54,17 +60,13 @@ public class HomeFrag extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
 
-       fragmentManager = getActivity().getSupportFragmentManager();
-
-       view = inflater.inflate(R.layout.frag_home,container,false);
-       ButterKnife.bind(this,view);
+        Log.i(TAG, "onCreateView: ");
+        view = inflater.inflate(R.layout.frag_home,container,false);
+       viewPager = view.findViewById(R.id.viewPager);
        btnMeasure = view.findViewById(R.id.btn_go_measure);
-        Log.i("gogogogo<<<<<<", "onCreateView: "+"adgagagag");
-
-        setSlideViewPager();
-
-
-
+       ButterKnife.bind(this,view);
+       //setSlideViewPager();
+       fragmentManager = getChildFragmentManager();//getActivity().getSupportFragmentManager();
        return view;
     }
 
@@ -78,32 +80,59 @@ public class HomeFrag extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        Log.i(TAG, "onResume: ");
+        super.onResume();
+        setSlideViewPager();
+
+    }
+
+    @Override
     public void onPause() {
         Log.i(TAG, "onPause: ");
-        currentPage=0;
         super.onPause();
+        timer.cancel();
+        timer.purge();
+        handler=null;
+        Update=null;
+
     }
 
     @Override
     public void onDestroy() {
-        Log.i(TAG, "onDestroy: ");
-        currentPage=0;
         super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
+        /*currentPage=0;
+        viewPager.setCurrentItem(0);*/
+        timer.cancel();
+        timer.purge();
+        handler=null;
+        Update=null;
+
 
     }
 
     private void setSlideViewPager() {
 
         //1페이지 메인 슬라이드 배너 뷰페이저 설정
-        fragmentPagerAdapter = new ViewPagerAdapter(fragmentManager);
-        viewPager.setAdapter(fragmentPagerAdapter);
+        if(fragmentPagerAdapter==null) {
+            fragmentPagerAdapter = new ViewPagerAdapter(fragmentManager);
+            viewPager.setAdapter(fragmentPagerAdapter);
+        }
+
+        moveSlide();
+
+    }
+
+    private void moveSlide(){
+
         currentPage=0;
-        viewPager.setCurrentItem(0);
-       // viewPager.setOffscreenPageLimit(fragmentPagerAdapte);
+        //viewPager.setCurrentItem(0);
+        // viewPager.setOffscreenPageLimit(fragmentPagerAdapte);
 
         //자동 슬라이드 기능
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
+        if(handler==null) handler = new Handler();
+        if(Update==null) Update = new Runnable() {
             @Override
             public void run() {
                 if(currentPage >= fragmentPagerAdapter.getCount()) {
@@ -113,11 +142,9 @@ public class HomeFrag extends Fragment {
                 Log.i("timer", "run: "+currentPage);
                 currentPage++;
             }
-
-
         };
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -131,7 +158,6 @@ public class HomeFrag extends Fragment {
                 return super.cancel();
             }
         }, DELAY_MS, PERIOD_MS);
-
 
     }
 

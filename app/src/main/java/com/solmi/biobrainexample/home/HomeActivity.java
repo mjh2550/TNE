@@ -116,6 +116,7 @@ public class HomeActivity extends AppCompatActivity {
     public void setFrag(int n)
     {
         fm = getSupportFragmentManager();
+        //fm = getChildFragmentManager();
         ft = fm.beginTransaction();
         switch (n)
         {
