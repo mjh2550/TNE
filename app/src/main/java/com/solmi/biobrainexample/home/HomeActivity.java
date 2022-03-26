@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     Toolbar toolbar;
 
 
-    ViewPager viewPager;
+    //ViewPager viewPager;
 
     private HomeFrag homeFrag;
     private ResultFrag resultFrag;
@@ -50,12 +50,12 @@ public class HomeActivity extends AppCompatActivity {
     private FragmentTransaction ft;
   //  private BioStart1Fragment b1f;
 
-    private FragmentPagerAdapter fragmentPagerAdapter;
+   // private FragmentPagerAdapter fragmentPagerAdapter;
 
 
-   int currentPage = 0;
-    final long DELAY_MS = 3000;//delay in milliseconds before task is to be executed
-    final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
+    //int currentPage = 0;
+    //final long DELAY_MS = 3000;//delay in milliseconds before task is to be executed
+    //final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
 
 
     @Override
@@ -160,7 +160,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.logout:
-                //select logout item
+                //select logout itemㄱ
                 break;
             case R.id.account:
                 //select account item

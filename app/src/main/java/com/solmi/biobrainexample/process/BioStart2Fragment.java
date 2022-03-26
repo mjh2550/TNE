@@ -40,8 +40,6 @@ public class BioStart2Fragment extends Fragment {
 
         if(instance==null){
             instance = new BioStart2Fragment();
-        }else{
-
         }
         return instance;
     }

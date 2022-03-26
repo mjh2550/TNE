@@ -6,6 +6,7 @@
     <string name="button_stop">측정 멈추기</string>
     <!--<string name="button_disconnect">Disconnect</string>-->
     <string name="button_disconnect">연결 끊기</string>
+    <string name="radio_button_125SPS">125 SPS</string>
     <string name="radio_button_250SPS">250 SPS</string>
     <string name="radio_button_500SPS">500 SPS</string>
     <string name="main_connect_check">블루투스 연결 확인</string>

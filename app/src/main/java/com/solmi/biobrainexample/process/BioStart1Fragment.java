@@ -46,8 +46,6 @@ public class BioStart1Fragment extends Fragment {
     public static BioStart1Fragment getInstance(){
         if(instance==null){
             instance = new BioStart1Fragment();
-        }else{
-
         }
         return instance;
     }

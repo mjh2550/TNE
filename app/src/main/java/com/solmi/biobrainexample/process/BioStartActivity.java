@@ -2,9 +2,7 @@ package com.solmi.biobrainexample.process;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
@@ -18,37 +16,29 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.solmi.biobrainexample.DeviceListAdapter;
-import com.solmi.biobrainexample.MainActivity;
 import com.solmi.biobrainexample.R;
 import com.solmi.biobrainexample.Simple1ChannelGraph;
 import com.solmi.biobrainexample.Simple3ChannelGraph;
 import com.solmi.ble.BLECommManager;
 import com.solmi.ble.BLEDefine;
-import com.solmi.ble.BLEService;
 import com.solmi.ble.BTScanEvent;
 import com.solmi.ble.BTStateEvent;
 import com.solmi.bluetoothlibrary.common.BTDataDefine;
@@ -74,7 +64,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
     /**
      * 로그 출력을 위한 태그
      */
-    private final String TAG = MainActivity.class.getSimpleName();
+    private final String TAG = BioStartActivity.class.getSimpleName();
 
     /**
      * CONTEXT를 전역변수화
@@ -885,7 +875,14 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         if(tv_a_log_5==null){
             setFragmentBind(bioStart1Fragment);
         }
-        if (mRGSamplingRate.getCheckedRadioButtonId() == R.id.rb_mainSamplingRate250) {
+        if (mRGSamplingRate.getCheckedRadioButtonId() == R.id.rb_mainSamplingRate125) {
+            mSGEMGGraph.setSamplingRate(125);
+            mSGAccGraph.setSamplingRate(15.625f);
+            mSGGyroGraph.setSamplingRate(15.625f);
+            mSGMagnetoGraph.setSamplingRate(15.625f);
+            mTVLogTextView.append("\nonClickStart: Send start command 125 SPS");
+            mBLEManager.start(UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET, UxProtocol.SAMPLINGRATE_125);
+        }else if (mRGSamplingRate.getCheckedRadioButtonId() == R.id.rb_mainSamplingRate250) {
             mSGEMGGraph.setSamplingRate(250);
             mSGAccGraph.setSamplingRate(31.25f);
             mSGGyroGraph.setSamplingRate(31.25f);
@@ -900,6 +897,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
             mTVLogTextView.append("\nonClickStart: Send start command 500 SPS");
             mBLEManager.start(UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET, UxProtocol.SAMPLINGRATE_500);
         }
+
 
     }
     
@@ -1068,25 +1066,25 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         switch (n)
         {
             case 0:
-                ft.replace(R.id.bio_content_layout,bioStartFragment);
-               // ft.setCustomAnimations(R.anim.back,R.anim.next);
-                ft.commit();
                 frameContentView.setVisibility(View.GONE);
+                ft.setCustomAnimations(R.anim.horizon_exit,R.anim.none);
+                ft.replace(R.id.bio_content_layout,bioStartFragment);
+                ft.commit();
                 linearContentView.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                ft.setCustomAnimations(R.anim.next,R.anim.back);
+                linearContentView.setVisibility(View.GONE);
+                ft.setCustomAnimations(R.anim.horizon_exit,R.anim.none);
                 ft.replace(R.id.bio_content_layout,bioStart1Fragment);
                 ft.commit();
                 frameContentView.setVisibility(View.VISIBLE);
-                linearContentView.setVisibility(View.GONE);
                 break;
             case 2:
-                ft.setCustomAnimations(R.anim.next,R.anim.back);
+                linearContentView.setVisibility(View.GONE);
+                ft.setCustomAnimations(R.anim.horizon_exit,R.anim.none);
                 ft.replace(R.id.bio_content_layout,bioStart2Fragment);
                 ft.commit();
                 frameContentView.setVisibility(View.VISIBLE);
-                linearContentView.setVisibility(View.GONE);
                 break;
         }
     }
@@ -1108,7 +1106,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
     @Override
     public void onNextAnim() {
         //새로 나타나는 화면, 이전화면 에니메이션 설정
-        overridePendingTransition(R.anim.next,R.anim.back);
+        overridePendingTransition(R.anim.horizon_exit,R.anim.none);
     }
 
     @Override

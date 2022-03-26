@@ -16,12 +16,30 @@
         android:layout_height="match_parent"
         android:weightSum="1"
         android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_vertical_margin" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_connect_check"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold|normal" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+
         <!--프레임(프래그먼트 교체부분)-->
+
         <FrameLayout
             android:id="@+id/bio_content_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
             android:layout_gravity="center"
             android:visibility="gone"
             >
@@ -33,23 +51,13 @@
             android:id="@+id/bio_content_l_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
             android:orientation="vertical"
             >
-            <Space
+
+           <!-- <Space
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/activity_vertical_margin" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/main_connect_check"
-                android:textSize="24sp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textStyle="bold|normal" />
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/activity_vertical_margin" />
+                android:layout_height="@dimen/activity_vertical_margin" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,9 +65,42 @@
                 android:orientation="vertical"
                 android:padding="@dimen/activity_vertical_margin">
 
-                <Space
+                <!--<Space
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"/>
+                    android:layout_height="20dp"/>-->
+
+                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+    <RadioGroup
+        android:id="@+id/rg_mainSamplingRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:checkedButton="@id/rb_mainSamplingRate250">
+
+        <RadioButton
+            android:id="@+id/rb_mainSamplingRate125"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_125SPS" />
+
+        <RadioButton
+            android:id="@+id/rb_mainSamplingRate250"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_250SPS" />
+
+        <RadioButton
+            android:id="@+id/rb_mainSamplingRate500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_500SPS" />
+    </RadioGroup>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -284,15 +325,6 @@
             >
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="기기 배터리 정보"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
-                android:textSize="20dp"
-                />
-            <TextView
                 android:id="@+id/tv_battery"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -317,6 +349,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
+                android:visibility="gone"
                 >
 
                 <Button
@@ -325,6 +358,15 @@
                     android:layout_height="wrap_content"
                     android:text="alarm"
                     android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="기기 배터리 정보"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20dp" />
 
                 <Button
                     android:id="@+id/btn_battery"
@@ -374,11 +416,11 @@
 
 
     <!--그래프 가리는 영역-->
-    <LinearLayout
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        >
 
     <RadioGroup
         android:id="@+id/rg_mainSamplingRate"
@@ -387,6 +429,12 @@
         android:layout_gravity="center_vertical"
         android:orientation="horizontal"
         android:checkedButton="@id/rb_mainSamplingRate250">
+
+        <RadioButton
+            android:id="@+id/rb_mainSamplingRate125"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_125SPS" />
 
         <RadioButton
             android:id="@+id/rb_mainSamplingRate250"
@@ -399,7 +447,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/radio_button_500SPS" />
-    </RadioGroup>
+    </RadioGroup>-->
 
 
 
@@ -472,7 +520,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/main_log"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold|italic"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_mainLogTextView"
@@ -481,18 +530,21 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:scrollbars="vertical"
-        android:gravity="bottom" />
+        android:gravity="bottom"
+        android:visibility="gone"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:visibility="gone"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:layout_width="match_parent"

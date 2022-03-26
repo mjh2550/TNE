@@ -34,6 +34,8 @@
         android:layout_height="0dp"
         android:layout_weight="0.1"
         android:orientation="horizontal"
+        android:gravity="bottom"
+
         >
         <Button
             android:id="@+id/btn_frag2_go_prev"

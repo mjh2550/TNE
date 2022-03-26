@@ -36,6 +36,7 @@ public class HomeFrag extends Fragment {
 
     String TAG ="TEST<<<<<";
     Timer timer;
+    TimerTask timerTask;
     Handler handler;
     Runnable Update;
 
@@ -91,10 +92,12 @@ public class HomeFrag extends Fragment {
     public void onPause() {
         Log.i(TAG, "onPause: ");
         super.onPause();
-        timer.cancel();
-        timer.purge();
-        handler=null;
-        Update=null;
+        if(timerTask!=null){
+            timer.cancel();
+            timer.purge();
+            handler=null;
+            Update=null;
+        }
 
     }
 
@@ -104,10 +107,13 @@ public class HomeFrag extends Fragment {
         Log.i(TAG, "onDestroy: ");
         /*currentPage=0;
         viewPager.setCurrentItem(0);*/
-        timer.cancel();
-        timer.purge();
-        handler=null;
-        Update=null;
+        if(timerTask!=null){
+            timer.cancel();
+            timer.purge();
+            handler=null;
+            Update=null;
+        }
+
 
 
     }
@@ -145,7 +151,7 @@ public class HomeFrag extends Fragment {
         };
 
         timer = new Timer();
-        timer.schedule(new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 Log.i(TAG, "run: ");
@@ -157,7 +163,10 @@ public class HomeFrag extends Fragment {
                 Log.i(TAG, "cancel: ");
                 return super.cancel();
             }
-        }, DELAY_MS, PERIOD_MS);
+        };
+
+        timer.schedule(timerTask, DELAY_MS, PERIOD_MS);
+
 
     }
 
