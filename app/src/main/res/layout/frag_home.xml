@@ -15,13 +15,14 @@
             android:id="@+id/viewPager"/>
     </LinearLayout>
 
-   <!-- <TextView
-        android:id="@+id/tv_mainTitle"
+    <TextView
+        android:id="@+id/tv_BleState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="main page"
+        android:text="DisConnect"
         android:textSize="20dp"
-        android:gravity="center"/>-->
+        android:gravity="left"
+        android:paddingLeft="20sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

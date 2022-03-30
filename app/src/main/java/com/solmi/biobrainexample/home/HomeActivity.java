@@ -64,6 +64,10 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
+        /*if(savedInstanceState != null) {
+         //   tabIndex = savedInstanceState.getInt("tabIndex");
+        }*/
+
         //상단 툴바 설정
         //  toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);//패키지 명 주의, 2개인데 여기서는 androidx꺼를 사용함
@@ -160,7 +164,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.logout:
-                //select logout itemㄱ
+                //select logout item
                 break;
             case R.id.account:
                 //select account item

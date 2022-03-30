@@ -133,7 +133,7 @@ public class HomeFrag extends Fragment {
     private void moveSlide(){
 
         currentPage=0;
-        //viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(0);
         // viewPager.setOffscreenPageLimit(fragmentPagerAdapte);
 
         //자동 슬라이드 기능
