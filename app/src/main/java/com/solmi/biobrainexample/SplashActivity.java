@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.solmi.biobrainexample.kotlin.home.HomeKtActivity;
 import com.solmi.biobrainexample.ui.login.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -25,7 +26,8 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void run() {
            /* startActivity(new Intent(getApplication(),MainActivity.class));*/
-            startActivity(new Intent(getApplication(), LoginActivity.class));
+//            startActivity(new Intent(getApplication(), LoginActivity.class));
+            startActivity(new Intent(getApplication(), HomeKtActivity.class));
             SplashActivity.this.finish();
 
         }

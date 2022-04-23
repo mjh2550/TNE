@@ -25,28 +25,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".kotlin.home.HomeKtActivity"
+            android:exported="true" />
         <receiver
             android:name=".process.MyBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
                 <action android:name="android.intent.action.BATTERY_CHANGED" />
             </intent-filter>
-        </receiver>
-        <!-- android:launchMode="singleInstance"-->
+        </receiver> <!-- android:launchMode="singleInstance" -->
         <activity
             android:name=".process.BioStartActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-
             android:taskAffinity="com.solme.biobrainexample" />
         <activity
             android:name=".home.HomeActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
@@ -54,6 +55,7 @@
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -61,7 +63,7 @@
         <service
             android:name="com.solmi.ble.BLEService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>
