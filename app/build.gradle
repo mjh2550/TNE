@@ -1,9 +1,16 @@
-plugins {
+/*plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
-}
+}*/
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+//apply plugin: 'kotlin-android-extensions' // 'kotlin-android-extensions' 없어질 예정
+apply plugin: 'kotlin-parcelize'
+
+
 
 android {
     compileSdkVersion 30
@@ -26,6 +33,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures{
+        viewBinding true
+        dataBinding true
+    }
+
+    sourceSets {
+        main {
+            java {
+                jniLibs.srcDirs = ["libs"]
+                srcDirs += 'src/main/kotlin'
+            }
+        }
+    }
+
     // Butterknife requires Java 8.
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -54,4 +76,14 @@ dependencies {
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     implementation files('libs/BioBrainLibrary_v1.0.0.jar')
+
+    def nav_version = "2.4.2"
+
+    // Java language implementation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 }
