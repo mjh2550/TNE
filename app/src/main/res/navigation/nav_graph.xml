@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/fragment_home">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/fragment_home"
         android:name="com.solmi.biobrainexample.kotlin.home.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/infoFragment"
+        android:id="@+id/fragment_info"
         android:name="com.solmi.biobrainexample.kotlin.home.fragment.InfoFragment"
         android:label="fragment_info"
         tools:layout="@layout/fragment_info" />
     <fragment
-        android:id="@+id/resultFragment"
+        android:id="@+id/fragment_result"
         android:name="com.solmi.biobrainexample.kotlin.home.fragment.ResultFragment"
         android:label="fragment_result"
         tools:layout="@layout/fragment_result" />
     <fragment
-        android:id="@+id/settingFragment"
+        android:id="@+id/fragment_setting"
         android:name="com.solmi.biobrainexample.kotlin.home.fragment.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
