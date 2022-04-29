@@ -2,9 +2,10 @@
   <library name="Gradle: com.google.firebase:firebase-analytics:17.2.3@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a2d09754436fb5aaf112aca81c395804/firebase-analytics-17.2.3/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d8a8bb304c55936719c20d7c6a72fa3d/jetified-firebase-analytics-17.2.3/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d8a8bb304c55936719c20d7c6a72fa3d/jetified-firebase-analytics-17.2.3/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d8a8bb304c55936719c20d7c6a72fa3d/jetified-firebase-analytics-17.2.3/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bc8cfb26c23f065f3623047c8c5e8221/jetified-firebase-analytics-17.2.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bc8cfb26c23f065f3623047c8c5e8221/jetified-firebase-analytics-17.2.3/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bc8cfb26c23f065f3623047c8c5e8221/jetified-firebase-analytics-17.2.3/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-analytics/17.2.3/4231dabe95aa1e3ee5305dc4b69fc11fda97bc1c/firebase-analytics-17.2.3-javadoc.jar!/" />

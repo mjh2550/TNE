@@ -92,7 +92,7 @@ public class BioStart1Fragment extends Fragment {
         btn_go_next = (Button) v.findViewById(R.id.btn_frag1_go_next);
         btn_go_prev = (Button) v.findViewById(R.id.btn_frag1_go_prev);
 
-        btn_start.setOnClickListener(new View.OnClickListener(){
+      /*  btn_start.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 ((BioStartActivity)BioStartActivity.mContext).onClickStart();
@@ -116,7 +116,7 @@ public class BioStart1Fragment extends Fragment {
             public void onClick(View v) {
                 ((BioStartActivity)BioStartActivity.mContext).setFrag(0);
             }
-        });
+        });*/
 
         return v;
     }

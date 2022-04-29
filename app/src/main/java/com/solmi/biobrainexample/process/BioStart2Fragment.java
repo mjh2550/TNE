@@ -79,7 +79,7 @@ public class BioStart2Fragment extends Fragment {
         btn_go_next = (Button) v.findViewById(R.id.btn_frag2_go_next);
         btn_go_prev = (Button) v.findViewById(R.id.btn_frag2_go_prev);
 
-
+/*
         btn_go_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +91,7 @@ public class BioStart2Fragment extends Fragment {
             public void onClick(View v) {
                 ((BioStartActivity)BioStartActivity.mContext).setFrag(1);
             }
-        });
+        });*/
 
         // Inflate the layout for this fragment
         return v;

@@ -26,8 +26,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".kotlin.bio.StartActivity"
+            android:exported="false" />
+        <activity
             android:name=".kotlin.home.HomeKtActivity"
             android:exported="true" />
+
         <receiver
             android:name=".process.MyBroadcastReceiver"
             android:enabled="true"

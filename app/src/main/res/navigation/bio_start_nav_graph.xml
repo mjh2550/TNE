@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bio_start_nav_graph"
+    app:startDestination="@id/bioStartFragment">
+
+    <fragment
+        android:id="@+id/bioStartFragment"
+        android:name="com.solmi.biobrainexample.process.BioStartFragment"
+        android:label="frag_bio_start"
+        tools:layout="@layout/frag_bio_start" >
+        <action
+            android:id="@+id/action_bioStartFragment_to_bioStart1Fragment"
+            app:destination="@id/bioStart1Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bioStart1Fragment"
+        android:name="com.solmi.biobrainexample.process.BioStart1Fragment"
+        android:label="frag_bio_start1"
+        tools:layout="@layout/frag_bio_start1" >
+        <action
+            android:id="@+id/action_bioStart1Fragment_to_bioStart2Fragment"
+            app:destination="@id/bioStart2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bioStart2Fragment"
+        android:name="com.solmi.biobrainexample.process.BioStart2Fragment"
+        android:label="frag_bio_start2"
+        tools:layout="@layout/frag_bio_start2" />
+</navigation>

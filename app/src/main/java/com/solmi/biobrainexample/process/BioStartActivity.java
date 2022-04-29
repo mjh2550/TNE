@@ -76,36 +76,35 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
      * 필요한 권한 요청 상수
      */
     private final int PERMISSION_REQUEST_CODE = 100;
-
-    @BindView(R.id.tv_mainLogTextView)
+//    @BindView(R.id.tv_mainLogTextView)
     protected TextView mTVLogTextView;
-    @BindView(R.id.btn_Scan)
+//    @BindView(R.id.btn_Scan)
     protected Button mBtnScan;
-    @BindView(R.id.btn_Disconnect)
+//    @BindView(R.id.btn_Disconnect)
     protected Button mBtnDisconnect;
-    @BindView(R.id.lv_DeviceList)
+//    @BindView(R.id.lv_DeviceList)
     protected ListView mLVDeviceList;
-    @BindView(R.id.sg_mainEMGGraph)
+//    @BindView(R.id.sg_mainEMGGraph)
     protected Simple1ChannelGraph mSGEMGGraph;
-    @BindView(R.id.sg_mainAccGraph)
+//    @BindView(R.id.sg_mainAccGraph)
     protected Simple3ChannelGraph mSGAccGraph;
-    @BindView(R.id.sg_mainGyroGraph)
+//    @BindView(R.id.sg_mainGyroGraph)
     protected Simple3ChannelGraph mSGGyroGraph;
-    @BindView(R.id.sg_mainMagnetoGraph)
+//    @BindView(R.id.sg_mainMagnetoGraph)
     protected Simple3ChannelGraph mSGMagnetoGraph;
-    @BindView(R.id.rg_mainSamplingRate)
+//    @BindView(R.id.rg_mainSamplingRate)
     protected RadioGroup mRGSamplingRate;
-    @BindView(R.id.tv_connect_device)
+//    @BindView(R.id.tv_connect_device)
     protected TextView tv_connect_device;
-    @BindView(R.id.tv_battery)
+//    @BindView(R.id.tv_battery)
     protected TextView tv_battery;
-    @BindView(R.id.btn_alram)
+//    @BindView(R.id.btn_alram)
     protected Button btn_alram;
-    @BindView(R.id.btn_battery)
+//    @BindView(R.id.btn_battery)
     protected Button btn_battery;
-    @BindView(R.id.btn_tray)
+//    @BindView(R.id.btn_tray)
     protected Button btn_tray;
-    @BindView(R.id.btn_dataCnt)
+//    @BindView(R.id.btn_dataCnt)
     protected Button btn_dataCnt;
     /**
      * 블루투스 검색 이벤트 핸들러
@@ -185,31 +184,31 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
     View linearContentView;
 
 
-    @BindView(R.id.tv_log_01)
+//    @BindView(R.id.tv_log_01)
     protected TextView tv_01;
-    @BindView(R.id.tv_log_02)
+//    @BindView(R.id.tv_log_02)
     protected TextView tv_02;
-    @BindView(R.id.tv_log_03)
+//    @BindView(R.id.tv_log_03)
     protected TextView tv_03;
-    @BindView(R.id.tv_log_04)
+//    @BindView(R.id.tv_log_04)
     protected TextView tv_04;
 
-    @BindView(R.id.tv_log_05)
+//    @BindView(R.id.tv_log_05)
     protected TextView tv_05;
-    @BindView(R.id.tv_log_06)
+//    @BindView(R.id.tv_log_06)
     protected TextView tv_06;
-    @BindView(R.id.tv_log_07)
+//    @BindView(R.id.tv_log_07)
     protected TextView tv_07;
-    @BindView(R.id.tv_log_08)
+//    @BindView(R.id.tv_log_08)
     protected TextView tv_08;
 
     //protected Button btn_start;
     //protected Button btn_stop;
 
-    @BindView(R.id.btn_1frag)
+//    @BindView(R.id.btn_1frag)
     protected Button btn_1frag;
 
-    @BindView(R.id.btn_2frag)
+//    @BindView(R.id.btn_2frag)
     protected Button btn_2frag;
 
     BioStartFragment bioStartFragment;
@@ -250,8 +249,8 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         ButterKnife.bind(this);
         mContext = this;
 
-        frameContentView = findViewById(R.id.bio_content_layout);
-        linearContentView = findViewById(R.id.bio_content_l_layout);
+//        frameContentView = findViewById(R.id.bio_content_layout);
+//        linearContentView = findViewById(R.id.bio_content_l_layout);
 
         //TODO:프래그먼트 변수 액티비티에 가져오기
         //fragment bind
@@ -263,7 +262,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         bioStartFragment = BioStartFragment.getInstance();
         bioStart1Fragment = BioStart1Fragment.getInstance();
         bioStart2Fragment = BioStart2Fragment.getInstance();
-        setFrag(0);
+//        setFrag(0);
 
 
        // bioStart1Fragment = (BioStart1Fragment)fm.findFragmentById(R.id.b1f);
@@ -856,7 +855,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         ActivityCompat.requestPermissions(this, needPermissions, PERMISSION_REQUEST_CODE);
     }
 
-    @OnClick(R.id.btn_Scan)
+//    @OnClick(R.id.btn_Scan)
     public void onClickScan() {
         mDeviceListAdapter.reset();
         /*
@@ -875,7 +874,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         if(tv_a_log_5==null){
             setFragmentBind(bioStart1Fragment);
         }
-        if (mRGSamplingRate.getCheckedRadioButtonId() == R.id.rb_mainSamplingRate125) {
+        /*if (mRGSamplingRate.getCheckedRadioButtonId() == R.id.rb_mainSamplingRate125) {
             mSGEMGGraph.setSamplingRate(125);
             mSGAccGraph.setSamplingRate(15.625f);
             mSGGyroGraph.setSamplingRate(15.625f);
@@ -897,11 +896,11 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
             mTVLogTextView.append("\nonClickStart: Send start command 500 SPS");
             mBLEManager.start(UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET, UxProtocol.SAMPLINGRATE_500);
         }
-
+*/
 
     }
     
-    @OnClick(R.id.btn_tray)
+//    @OnClick(R.id.btn_tray)
     public void onClickTray(){
         //홈버튼 효과
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
@@ -910,7 +909,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         startActivity(homeIntent);
     }
 
-    @OnClick(R.id.btn_dataCnt)
+//    @OnClick(R.id.btn_dataCnt)
     public void onClickBtnDataCnt(){
         tv_05.setText(Integer.toString(mEMGCount));
         tv_06.setText(Integer.toString(mAccCount));
@@ -939,7 +938,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         mBLEManager.stop();
     }
 
-    @OnClick(R.id.btn_Disconnect)
+//    @OnClick(R.id.btn_Disconnect)
     public void onClickDisconnect() {
         if (mBLEManager.getBluetoothState() == BLEDefine.BluetoothState.STATE_CONNECTED) {
             mBLEManager.stop();
@@ -953,7 +952,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
 
 
     }
-    @OnClick(R.id.btn_alram)
+//    @OnClick(R.id.btn_alram)
     public void onClickAlram(){
         //showNoti();
         sendMyBroadcast(MyBroadcastReceiver.Myaction);
@@ -1051,14 +1050,17 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
             }
         }
 
-        @OnClick(R.id.btn_battery)
+//        @OnClick(R.id.btn_battery)
         public void onClickBtnBattery(){
             mBLEManager.getBatteryInfo();
         }
+/*
 
-    /**
+    */
+/**
      *프래그먼트 교체 함수
-     * */
+     * *//*
+
     public void setFrag(int n)
     {
       //  fm = getSupportFragmentManager();
@@ -1102,6 +1104,7 @@ public class BioStartActivity extends AppCompatActivity implements BioStart,Anim
         public void onClickBtn2Frag(){
             setFrag(2);
         }
+*/
 
     @Override
     public void onNextAnim() {
