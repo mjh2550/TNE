@@ -9,11 +9,14 @@
     tools:context=".kotlin.bio.StartActivity">
 
 
-   <!-- <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
 
@@ -174,7 +177,7 @@
     </ScrollView>
 
 
-    </LinearLayout>-->
+    </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bio_start_nav_host_fragment"
@@ -186,7 +189,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/bio_start_nav_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".kotlin.DemoActivity"
+            android:exported="false" />
+        <activity
             android:name=".kotlin.bio.StartActivity"
             android:exported="false" />
         <activity

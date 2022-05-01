@@ -20,6 +20,7 @@ import com.solmi.biobrainexample.DeviceListAdapter
 import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.Simple1ChannelGraph
 import com.solmi.biobrainexample.Simple3ChannelGraph
+import com.solmi.biobrainexample.kotlin.data.MesureData
 import com.solmi.ble.BLECommManager
 import com.solmi.ble.BLEDefine.BluetoothState
 import com.solmi.ble.BTScanEvent
@@ -32,14 +33,16 @@ import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
 
-class StartActivity : AppCompatActivity() {
+class StartActivity : AppCompatActivity() ,View.OnClickListener {
 
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
 
     private val PERMISSION_REQUEST_CODE :Int = 100
 
-    var mTVLogTextView: TextView? = null
+    lateinit var mesureData: MesureData
+
+    /*var  mesureData.mTVLogTextView: TextView? = null
     var mBtnScan: Button? = null
     var mBtnStart: Button? = null
     var mBtnStop: Button? = null
@@ -52,7 +55,7 @@ class StartActivity : AppCompatActivity() {
     var mSGMagnetoGraph: Simple3ChannelGraph? = null
     var mRGSamplingRate: RadioGroup? = null
 
-    /**
+    *//**
      * 블루투스 검색 이벤트 핸들러
      */
     private var mBTScanEventHandler: BTScanEvent? = null
@@ -74,63 +77,63 @@ class StartActivity : AppCompatActivity() {
 
     /**
      * 블루투스 통신 클래스
-     */
+     *//*
     private var mBLEManager: BLECommManager? = null
 
-    /**
+    *//**
      * 검색된 디바이스 리스트 뷰 어댑터
      */
     private var mDeviceListAdapter: DeviceListAdapter? = null
 
     /**
      * EMG 데이터 버퍼
-     */
+     *//*
     private var mEMGBuffer: Queue<IntArray>? = null
 
-    /**
+    *//**
      * Acc 데이터 버퍼
-     */
+     *//*
     private var mAccBuffer: Queue<IntArray>? = null
 
-    /**
+    *//**
      * Gyro 데이터 버퍼
-     */
+     *//*
     private var mGyroBuffer: Queue<IntArray>? = null
 
-    /**
+    *//**
      * Magneto 데이터 버퍼
-     */
+     *//*
     private var mMagnetoBuffer: Queue<IntArray>? = null
 
-    /**
+    *//**
      * 데이터 업데이트 타이머
-     */
+     *//*
     private var mDataUpdateTimer: Timer? = null
 
-    /**
+    *//**
      * 측정 시작 시간
-     */
+     *//*
     private var mStartTime: Long = 0
 
-    /**
+    *//**
      * 수신한 EMG 데이터 수
-     */
+     *//*
     private var mEMGCount = 0
 
-    /**
+    *//**
      * 수신한 Acc 데이터 수
-     */
+     *//*
     private var mAccCount = 0
 
-    /**
+    *//**
      * 수신한 Gyro 데이터 수
-     */
+     *//*
     private var mGyroCount = 0
 
-    /**
+    *//**
      * 수신한 Magneto 데이터 수
-     */
-    private var mMagnetoCount = 0
+     *//*
+    private var mMagnetoCount = 0*/
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -140,18 +143,17 @@ class StartActivity : AppCompatActivity() {
         navHostFragment = supportFragmentManager.findFragmentById(R.id.bio_start_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.findNavController()
 
-    /*    initHandler()
+        initHandler()
         initComponent()
 
         val isPermissionGranted : Boolean = checkPermission()
         if(isPermissionGranted == false){
             requestPermission()
         }
-*/
     }
 
 
-    /*private fun requestPermission() {
+    private fun requestPermission() {
 
         val needPermissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -162,10 +164,10 @@ class StartActivity : AppCompatActivity() {
 
     }
 
-    *//**
+    /**
      * 권한 설정되었는지 확인하는 함수
      * @return 권한 설정 여부
-     *//*
+    */
     private fun checkPermission(): Boolean {
         var locationPermissionCheck =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -179,60 +181,72 @@ class StartActivity : AppCompatActivity() {
 
         return true
     }
-
-    *//**
+    /**
      * 구성 요소들 초기화하는 함수
-     *//*
+     */
     private fun initComponent() {
+        mesureData = MesureData (
+            mTVLogTextView    = findViewById(R.id.tv_mainLogTextView),
+            mBtnScan          = findViewById(R.id.btn_mainScan),
+            mBtnStart         = findViewById(R.id.btn_mainStart),
+            mBtnStop          = findViewById(R.id.btn_mainStop),
+            mBtnDisconnect    = findViewById(R.id.btn_mainDisconnect),
+            mLVDeviceList     = findViewById(R.id.lv_mainDeviceList),
+            mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph),
+            mSGAccGraph       = findViewById(R.id.sg_mainAccGraph),
+            mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph),
+            mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph),
+            mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate),
+            mEMGBuffer = null,
+            mAccBuffer = null,
+            mGyroBuffer = null,
+            mMagnetoBuffer =null,
+            mBTScanEventHandler =  null,
+            mBTStateEventHandler =  null,
+            mUxParserEventHandler =  null,
+            mItemClickListener =  null,
+            mBLEManager =  null,
+            mDataUpdateTimer =  null,
+            mStartTime =  0,
+            mEMGCount =  0,
+            mAccCount =  0,
+            mGyroCount =  0,
+            mMagnetoCount =  0,
 
-          mTVLogTextView    = findViewById(R.id.tv_mainLogTextView)
-          mBtnScan          = findViewById(R.id.btn_mainScan)
-          mBtnStart         = findViewById(R.id.btn_mainStart)
-          mBtnStop          = findViewById(R.id.btn_Stop)
-          mBtnDisconnect    = findViewById(R.id.btn_mainDisconnect)
-          mLVDeviceList     = findViewById(R.id.lv_mainDeviceList)
-          mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph)
-          mSGAccGraph       = findViewById(R.id.sg_mainAccGraph)
-          mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph)
-          mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph)
-          mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate)
-          mBtnScan!!.setOnClickListener(this)
-          mBtnStart!!.setOnClickListener(this)
-          mBtnDisconnect!!.setOnClickListener(this)
-          mBtnStop!!.setOnClickListener(this)
+                )
+            mesureData.mBtnScan!!.setOnClickListener(this)
+            mesureData.mBtnStart!!.setOnClickListener(this)
+            mesureData.mBtnDisconnect!!.setOnClickListener(this)
+            mesureData.mBtnStop!!.setOnClickListener(this)
 
-        mBLEManager = BLECommManager(this)
-        mBLEManager!!.registerBTScanEventHandler(mBTScanEventHandler)
-        mBLEManager!!.registerBTStateEventHandler(mBTStateEventHandler)
-        mBLEManager!!.registerParserEventHandler(mUxParserEventHandler)
-        val isBLESupport: Boolean = mBLEManager!!.checkIsBLESupport()
-        if (isBLESupport) {
-            if (mBLEManager!!.startBLEService() == false) {
-                Toast.makeText(
-                    applicationContext,
-                    R.string.error_ble_start_service,
-                    Toast.LENGTH_SHORT
-                ).show()
-                mBLEManager = null
-                return
+            mesureData.mBLEManager = BLECommManager(this)
+            mesureData.mBLEManager!!.registerBTScanEventHandler(mBTScanEventHandler)
+            mesureData.mBLEManager!!.registerBTStateEventHandler(mBTStateEventHandler)
+            mesureData.mBLEManager!!.registerParserEventHandler(mUxParserEventHandler)
+            val isBLESupport: Boolean = mesureData.mBLEManager!!.checkIsBLESupport()
+            if (isBLESupport) {
+                if (mesureData.mBLEManager!!.startBLEService() == false) {
+                    Toast.makeText(
+                        applicationContext,
+                        R.string.error_ble_start_service,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    mesureData.mBLEManager = null
+                    return
+                }
+            } else {
+                Toast.makeText(applicationContext, R.string.error_not_support_ble, Toast.LENGTH_SHORT)
+                    .show()
             }
-        } else {
-            Toast.makeText(applicationContext, R.string.error_not_support_ble, Toast.LENGTH_SHORT)
-                .show()
-        }
-        mLVDeviceList!!.setOnItemClickListener(mItemClickListener)
-        mDeviceListAdapter = DeviceListAdapter(this)
-        mLVDeviceList!!.setAdapter(mDeviceListAdapter)
-        mTVLogTextView!!.setMovementMethod(ScrollingMovementMethod())
-        mEMGBuffer = LinkedBlockingQueue<IntArray>()
-        mAccBuffer = LinkedBlockingQueue<IntArray>()
-        mGyroBuffer = LinkedBlockingQueue<IntArray>()
-        mMagnetoBuffer = LinkedBlockingQueue<IntArray>()
+            mesureData.mLVDeviceList!!.setOnItemClickListener(mItemClickListener)
+            mesureData.mLVDeviceList!!.setAdapter(mDeviceListAdapter)
+            mesureData.mTVLogTextView!!.setMovementMethod(ScrollingMovementMethod())
+            mDeviceListAdapter = DeviceListAdapter(this)
     }
 
-    *//**
+   /**
      * 이벤트 핸들러들 초기화하는 함수
-     *//*
+     */
     private fun initHandler() {
         initBTScanEventHandler()
         initBTStateEventHandler()
@@ -240,13 +254,13 @@ class StartActivity : AppCompatActivity() {
         initItemClickListener()
     }
 
-    *//**
+    /**
      * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러 초기화하는 함수
-     *//*
+     */
     private fun initItemClickListener() {
         mItemClickListener =
             OnItemClickListener { adapterView, view, index, l ->
-                if (mBLEManager!!.bluetoothState == BluetoothState.STATE_CONNECTED) {
+                if ( mesureData.mBLEManager!!.bluetoothState == BluetoothState.STATE_CONNECTED) {
                     Toast.makeText(
                         applicationContext,
                         R.string.error_device_connected,
@@ -254,28 +268,28 @@ class StartActivity : AppCompatActivity() {
                     ).show()
                     return@OnItemClickListener
                 }
-                mBLEManager!!.stopScanDevice()
+                mesureData.mBLEManager!!.stopScanDevice()
                 val device = mDeviceListAdapter!!.getItem(index)
-                mTVLogTextView!!.text = "device name: " + device.name
-                mBLEManager!!.setDeviceType(BTDataDefine.DeviceType.SHC_U4)
-                mBLEManager!!.setReconnectCount(3)
-                mBLEManager!!.connect(device)
+                mesureData.mTVLogTextView!!.text = "device name: " + device.name
+                mesureData.mBLEManager!!.setDeviceType(BTDataDefine.DeviceType.SHC_U4)
+                mesureData.mBLEManager!!.setReconnectCount(3)
+                mesureData.mBLEManager!!.connect(device)
             }
     }
 
-    *//**
+    /**
      * 데이터 파싱 이벤트 핸들러 초기화하는 함수
-     *//*
+     */
     private fun initUxParserEventHandler() {
         mUxParserEventHandler = object : UxParserEvent {
             override fun onParserHeaderPacket(headerPacket: HeaderPacket) {
                 when (headerPacket.packetType) {
                     UxProtocol.RES_DAQ_STOP -> runOnUiThread {
-                        mTVLogTextView!!.append("\nRES_DAQ_STOP")
+                        mesureData.mTVLogTextView!!.append("\nRES_DAQ_STOP")
                         stopDataUpdateTimer()
                     }
                     UxProtocol.RES_DAQ -> runOnUiThread {
-                        mTVLogTextView!!.append("\nRES_DAQ")
+                        mesureData.mTVLogTextView!!.append("\nRES_DAQ")
                         startDataUpdateTimer()
                     }
                     UxProtocol.RES_SCALE_SET -> runOnUiThread {
@@ -288,7 +302,7 @@ class StartActivity : AppCompatActivity() {
                             UxProtocol.SCALE_4X -> log =
                                 String.format("\nRES_SCALE_SET: Scale: 4X")
                         }
-                        mTVLogTextView!!.append(log)
+                        mesureData.mTVLogTextView!!.append(log)
                     }
                     UxProtocol.RES_BATT_INFO -> runOnUiThread {
                         val batteryInfo = headerPacket.batteryInfo
@@ -297,7 +311,7 @@ class StartActivity : AppCompatActivity() {
                             batteryInfo.maximumVoltage,
                             batteryInfo.currentVoltage
                         )
-                        mTVLogTextView!!.append(log)
+                        mesureData.mTVLogTextView!!.append(log)
                     }
                     UxProtocol.RES_FIRM_INFO -> runOnUiThread {
                         val deviceInfo = headerPacket.deviceInfo
@@ -307,7 +321,7 @@ class StartActivity : AppCompatActivity() {
                             deviceInfo.minorVersion,
                             deviceInfo.buildVersion
                         )
-                        mTVLogTextView!!.append(log)
+                         mesureData.mTVLogTextView!!.append(log)
                     }
                 }
             }
@@ -315,28 +329,28 @@ class StartActivity : AppCompatActivity() {
             override fun onParserSpecialPacket(type: Byte, value: Byte) {
                 runOnUiThread {
                     val log = String.format("SpecialPacket %02X %02X", type, value)
-                    mTVLogTextView!!.append(log)
+                     mesureData.mTVLogTextView!!.append(log)
                 }
             }
 
             override fun onParserECG(channels: IntArray) {
-                mEMGCount++
-                mEMGBuffer!!.offer(channels.clone())
+                mesureData.mEMGCount++
+                mesureData.mEMGBuffer!!.offer(channels.clone())
             }
 
             override fun onParserACC(channels: IntArray) {
-                mAccCount++
-                mAccBuffer!!.offer(channels.clone())
+                mesureData.mAccCount++
+                mesureData.mAccBuffer!!.offer(channels.clone())
             }
 
             override fun onParserGYRO(channels: IntArray) {
-                mGyroCount++
-                mGyroBuffer!!.offer(channels.clone())
+                mesureData.mGyroCount++
+                mesureData.mGyroBuffer!!.offer(channels.clone())
             }
 
             override fun onParserMAGNETO(channels: IntArray) {
-                mMagnetoCount++
-                mMagnetoBuffer!!.offer(channels.clone())
+                mesureData.mMagnetoCount++
+                mesureData.mMagnetoBuffer!!.offer(channels.clone())
             }
 
             override fun onParserTEMP(temperature: Int) {
@@ -357,64 +371,64 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    *//**
+    /**
      * 데이터 업데이트 타이머 시작하는 함수
-     *//*
+     */
     private fun startDataUpdateTimer() {
-        if (mDataUpdateTimer == null) {
-            mStartTime = System.currentTimeMillis()
-            mDataUpdateTimer = Timer("Data update Timer")
-            mDataUpdateTimer!!.schedule(getDataUpdateTimerTask(), 0, 25)
+        if (mesureData.mDataUpdateTimer == null) {
+            mesureData.mStartTime = System.currentTimeMillis()
+            mesureData.mDataUpdateTimer = Timer("Data update Timer")
+            mesureData.mDataUpdateTimer!!.schedule(getDataUpdateTimerTask(), 0, 25)
         }
     }
 
-    *//**
+    /**
      * 데이터 업데이트 타이머 태스크 반환하는 함수
      * @return 타이머 태스크
-     *//*
+     */
     private fun getDataUpdateTimerTask(): TimerTask? {
         return object : TimerTask() {
             override fun run() {
                 runOnUiThread {
-                    val emgSize = mEMGBuffer!!.size
+                    val emgSize = mesureData.mEMGBuffer!!.size
                     for (count in 0 until emgSize) {
-                        val channels = mEMGBuffer!!.poll()
+                        val channels = mesureData.mEMGBuffer!!.poll()
                         if (channels != null) {
                             val value = channels[0] / 2047f * 7.4f
-                            mSGEMGGraph!!.putValue(value)
+                            mesureData.mSGEMGGraph!!.putValue(value)
                         }
                     }
-                    val accSize = mAccBuffer!!.size
+                    val accSize = mesureData.mAccBuffer!!.size
                     for (count in 0 until accSize) {
-                        val channels = mAccBuffer!!.poll()
+                        val channels = mesureData.mAccBuffer!!.poll()
                         if (channels != null) {
                             val valueArray = FloatArray(3)
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
                             }
-                            mSGAccGraph!!.putValueArray(valueArray)
+                            mesureData.mSGAccGraph!!.putValueArray(valueArray)
                         }
                     }
-                    val gyroSize = mGyroBuffer!!.size
+                    val gyroSize =mesureData.mGyroBuffer!!.size
                     for (count in 0 until gyroSize) {
-                        val channels = mGyroBuffer!!.poll()
+                        val channels = mesureData.mGyroBuffer!!.poll()
                         if (channels != null) {
                             val valueArray = FloatArray(3)
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
                             }
-                            mSGGyroGraph!!.putValueArray(valueArray)
+                            mesureData.mSGGyroGraph!!.putValueArray(valueArray)
                         }
                     }
-                    val magnetoSize = mMagnetoBuffer!!.size
+                    val magnetoSize = mesureData.mMagnetoBuffer!!.size
                     for (count in 0 until magnetoSize) {
-                        val channels = mMagnetoBuffer!!.poll()
+                        val channels = mesureData.mMagnetoBuffer!!.poll()
                         if (channels != null) {
                             val valueArray = FloatArray(3)
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
                             }
-                            mSGMagnetoGraph!!.putValueArray(valueArray)
+                            mesureData.mSGMagnetoGraph!!.putValueArray(valueArray)
                         }
                     }
                 }
@@ -422,35 +436,35 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    *//**
+    /**
      * 데이터 업데이트 타이머 종료하는 함수
-     *//*
+     */
     private fun stopDataUpdateTimer() {
-        if (mDataUpdateTimer == null) {
+        if (mesureData.mDataUpdateTimer == null) {
             return
         }
-        mTVLogTextView!!.append(
+         mesureData.mTVLogTextView!!.append(
             String.format(
                 "\nRun time: %.3f(s)",
-                (System.currentTimeMillis() - mStartTime) / 1000f
+                (System.currentTimeMillis() - mesureData.mStartTime) / 1000f
             )
         )
-        mTVLogTextView!!.append(
+         mesureData.mTVLogTextView!!.append(
             String.format(
                 "\nEMG: %d Acc: %d Gyro: %d Magneto: %d",
-                mEMGCount,
-                mAccCount,
-                mGyroCount,
-                mMagnetoCount
+                mesureData.mEMGCount,
+                mesureData.mAccCount,
+                mesureData.mGyroCount,
+                mesureData.mMagnetoCount
             )
         )
-        mDataUpdateTimer!!.cancel()
-        mDataUpdateTimer = null
+        mesureData.mDataUpdateTimer!!.cancel()
+        mesureData.mDataUpdateTimer = null
     }
 
-    *//**
+    /**
      * 블루투스 상태 변화 이벤트 핸들러 초기화하는 함수
-     *//*
+     */
     private fun initBTStateEventHandler() {
         mBTStateEventHandler = object : BTStateEvent {
             override fun onStateChanged(bluetoothState: BluetoothState) {
@@ -461,8 +475,8 @@ class StartActivity : AppCompatActivity() {
                             "onStateChanged: STATE_DISCONNECTED",
                             Toast.LENGTH_SHORT
                         ).show()
-                        mTVLogTextView!!.append("\nonStateChanged: STATE_DISCONNECTED")
-                        mBtnDisconnect!!.isEnabled = false
+                         mesureData.mTVLogTextView!!.append("\nonStateChanged: STATE_DISCONNECTED")
+                        mesureData.mBtnDisconnect!!.isEnabled = false
                         stopDataUpdateTimer()
                     }
                     BluetoothState.STATE_CONNECTING -> runOnUiThread {
@@ -471,7 +485,7 @@ class StartActivity : AppCompatActivity() {
                             "onStateChanged: STATE_CONNECTING",
                             Toast.LENGTH_SHORT
                         ).show()
-                        mTVLogTextView!!.append("\nonStateChanged: STATE_CONNECTING")
+                         mesureData.mTVLogTextView!!.append("\nonStateChanged: STATE_CONNECTING")
                     }
                     BluetoothState.STATE_CONNECTED -> runOnUiThread {
                         Toast.makeText(
@@ -479,8 +493,8 @@ class StartActivity : AppCompatActivity() {
                             "onStateChanged: STATE_CONNECTED",
                             Toast.LENGTH_SHORT
                         ).show()
-                        mTVLogTextView!!.append("\nonStateChanged: STATE_CONNECTED")
-                        mBtnDisconnect!!.isEnabled = true
+                         mesureData.mTVLogTextView!!.append("\nonStateChanged: STATE_CONNECTED")
+                        mesureData.mBtnDisconnect!!.isEnabled = true
                     }
                     BluetoothState.STATE_CONNECT_FAIL -> runOnUiThread {
                         Toast.makeText(
@@ -488,7 +502,7 @@ class StartActivity : AppCompatActivity() {
                             "onStateChanged: STATE_CONNECT_FAIL",
                             Toast.LENGTH_SHORT
                         ).show()
-                        mTVLogTextView!!.append("\nonStateChanged: STATE_CONNECT_FAIL")
+                         mesureData.mTVLogTextView!!.append("\nonStateChanged: STATE_CONNECT_FAIL")
                     }
                     BluetoothState.STATE_CONNECTION_LOST -> runOnUiThread {
                         Toast.makeText(
@@ -496,7 +510,7 @@ class StartActivity : AppCompatActivity() {
                             "onStateChanged: STATE_CONNECTION_LOST",
                             Toast.LENGTH_SHORT
                         ).show()
-                        mTVLogTextView!!.append("\nonStateChanged: STATE_CONNECTION_LOST")
+                         mesureData.mTVLogTextView!!.append("\nonStateChanged: STATE_CONNECTION_LOST")
                     }
                 }
             }
@@ -508,7 +522,7 @@ class StartActivity : AppCompatActivity() {
                         String.format("onReconnect: %d", reconnectCount),
                         Toast.LENGTH_SHORT
                     ).show()
-                    mTVLogTextView!!.append(String.format("\nonReconnect: %d", reconnectCount))
+                     mesureData.mTVLogTextView!!.append(String.format("\nonReconnect: %d", reconnectCount))
                 }
             }
 
@@ -516,8 +530,8 @@ class StartActivity : AppCompatActivity() {
                 runOnUiThread {
                     Toast.makeText(applicationContext, "onReconnectStop: ", Toast.LENGTH_SHORT)
                         .show()
-                    mTVLogTextView!!.append("\nonReconnectStop: ")
-                    mBtnDisconnect!!.isEnabled = false
+                     mesureData.mTVLogTextView!!.append("\nonReconnectStop: ")
+                    mesureData.mBtnDisconnect!!.isEnabled = false
                     stopDataUpdateTimer()
                 }
             }
@@ -526,9 +540,9 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    *//**
+    /**
      * 블루투스 검색 이벤트 핸들러 초기화하는 함수
-     *//*
+     */
     private fun initBTScanEventHandler() {
         mBTScanEventHandler = object : BTScanEvent {
             override fun onScanDevice(bluetoothDevice: BluetoothDevice) {
@@ -555,8 +569,8 @@ class StartActivity : AppCompatActivity() {
 
             override fun onScanFinished() {
                 runOnUiThread {
-                    mBtnScan!!.isEnabled = true
-                    mBtnScan!!.setText(R.string.button_scan)
+                    mesureData.mBtnScan!!.isEnabled = true
+                    mesureData.mBtnScan!!.setText(R.string.button_scan)
                     Toast.makeText(applicationContext, R.string.scan_complete, Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -566,11 +580,11 @@ class StartActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mBLEManager != null) {
-            mBLEManager!!.stopScanDevice()
-            mBLEManager!!.stop()
-            mBLEManager!!.disconnect()
-            mBLEManager!!.stopBLEService()
+        if (mesureData.mBLEManager != null) {
+            mesureData.mBLEManager!!.stopScanDevice()
+            mesureData.mBLEManager!!.stop()
+            mesureData.mBLEManager!!.disconnect()
+            mesureData.mBLEManager!!.stopBLEService()
         }
     }
 
@@ -597,74 +611,85 @@ class StartActivity : AppCompatActivity() {
 
     private fun onClickScan() {
         mDeviceListAdapter!!.reset()
-        mBtnScan!!.setText(R.string.button_scanning)
-        mBtnScan!!.isEnabled = false
-        mBLEManager!!.startScanDevice(20 * 1000)
+        mesureData.mBtnScan!!.setText(R.string.button_scanning)
+        mesureData.mBtnScan!!.isEnabled = false
+        mesureData.mBLEManager!!.startScanDevice(20 * 1000)
     }
 
     private fun onClickStart() {
         resetComponent()
-        if (mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate250) {
-            mSGEMGGraph!!.setSamplingRate(250f)
-            mSGAccGraph!!.setSamplingRate(31.25f)
-            mSGGyroGraph!!.setSamplingRate(31.25f)
-            mSGMagnetoGraph!!.setSamplingRate(31.25f)
-            mTVLogTextView!!.append("\nonClickStart: Send start command 250 SPS")
-            mBLEManager!!.start(
+        if (mesureData.mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate250) {
+            mesureData.mSGEMGGraph!!.setSamplingRate(250f)
+            mesureData.mSGAccGraph!!.setSamplingRate(31.25f)
+            mesureData.mSGGyroGraph!!.setSamplingRate(31.25f)
+            mesureData.mSGMagnetoGraph!!.setSamplingRate(31.25f)
+            mesureData.mTVLogTextView!!.append("\nonClickStart: Send start command 250 SPS")
+            mesureData.mBLEManager!!.start(
                 UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET,
                 UxProtocol.SAMPLINGRATE_250
             )
-        } else if (mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate500) {
-            mSGEMGGraph!!.setSamplingRate(500f)
-            mSGAccGraph!!.setSamplingRate(62.5f)
-            mSGGyroGraph!!.setSamplingRate(62.5f)
-            mSGMagnetoGraph!!.setSamplingRate(62.5f)
-            mTVLogTextView!!.append("\nonClickStart: Send start command 500 SPS")
-            mBLEManager!!.start(
+        } else if (mesureData.mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate500) {
+            mesureData.mSGEMGGraph!!.setSamplingRate(500f)
+            mesureData.mSGAccGraph!!.setSamplingRate(62.5f)
+            mesureData.mSGGyroGraph!!.setSamplingRate(62.5f)
+            mesureData.mSGMagnetoGraph!!.setSamplingRate(62.5f)
+             mesureData.mTVLogTextView!!.append("\nonClickStart: Send start command 500 SPS")
+            mesureData.mBLEManager!!.start(
                 UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET,
                 UxProtocol.SAMPLINGRATE_500
             )
         }
     }
 
-    *//**
+    /**
      * 구성요소 초기화하는 함수
-     *//*
+     */
     private fun resetComponent() {
-        mEMGBuffer!!.clear()
-        mAccBuffer!!.clear()
-        mGyroBuffer!!.clear()
-        mMagnetoBuffer!!.clear()
-        mStartTime = 0
-        mEMGCount = 0
-        mAccCount = 0
-        mGyroCount = 0
-        mMagnetoCount = 0
+        mesureData.mEMGBuffer!!.clear()
+        mesureData.mAccBuffer!!.clear()
+        mesureData.mGyroBuffer!!.clear()
+        mesureData.mMagnetoBuffer!!.clear()
+        mesureData.mStartTime = 0
+        mesureData.mEMGCount = 0
+        mesureData.mAccCount = 0
+        mesureData.mGyroCount = 0
+        mesureData.mMagnetoCount = 0
     }
 
     private fun onClickStop() {
-        mTVLogTextView!!.append("\nonClickStop: Send stop command")
-        mBLEManager!!.stop()
+         mesureData.mTVLogTextView!!.append("\nonClickStop: Send stop command")
+        mesureData. mBLEManager!!.stop()
     }
 
     private fun onClickDisconnect() {
-        if (mBLEManager!!.bluetoothState == BluetoothState.STATE_CONNECTED) {
-            mBLEManager!!.stop()
-            mBLEManager!!.disconnect()
+        if (mesureData.mBLEManager!!.bluetoothState == BluetoothState.STATE_CONNECTED) {
+            mesureData.mBLEManager!!.stop()
+            mesureData.mBLEManager!!.disconnect()
         } else {
-            mBLEManager!!.stop()
-            mBLEManager!!.disconnect()
-            mBtnDisconnect!!.isEnabled = false
+            mesureData.mBLEManager!!.stop()
+            mesureData.mBLEManager!!.disconnect()
+            mesureData.mBtnDisconnect!!.isEnabled = false
             stopDataUpdateTimer()
         }
     }
 
     override fun onClick(v: View?) {
+
+        when(v?.id){
+            R.id.btn_mainScan -> onClickBleBtn(v)
+            R.id.btn_mainStart -> onClickBleBtn(v)
+            R.id.btn_mainStop -> onClickBleBtn(v)
+            R.id.btn_mainDisconnect -> onClickBleBtn(v)
+        }
+    }
+
+     fun onClickBleBtn (v:View?){
         when(v?.id){
             R.id.btn_mainScan -> onClickScan()
             R.id.btn_mainStart -> onClickStart()
             R.id.btn_mainStop -> onClickStop()
             R.id.btn_mainDisconnect -> onClickDisconnect()
         }
-    }*/
+
+    }
 }
