@@ -40,7 +40,11 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
 
     private val PERMISSION_REQUEST_CODE :Int = 100
 
-    lateinit var mesureData: MesureData
+    companion object{
+        lateinit var mesureData : MesureData
+    }
+
+//    lateinit var mesureData: MesureData
 
     /*var  mesureData.mTVLogTextView: TextView? = null
     var mBtnScan: Button? = null
@@ -645,10 +649,10 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
      * 구성요소 초기화하는 함수
      */
     private fun resetComponent() {
-        mesureData.mEMGBuffer!!.clear()
-        mesureData.mAccBuffer!!.clear()
-        mesureData.mGyroBuffer!!.clear()
-        mesureData.mMagnetoBuffer!!.clear()
+        mesureData?.mEMGBuffer?.clear()
+        mesureData?.mAccBuffer?.clear()
+        mesureData?.mGyroBuffer?.clear()
+        mesureData?.mMagnetoBuffer?.clear()
         mesureData.mStartTime = 0
         mesureData.mEMGCount = 0
         mesureData.mAccCount = 0

@@ -1,6 +1,7 @@
 package com.solmi.biobrainexample.kotlin.bio.fragment
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,7 +27,7 @@ import java.util.*
 class StartOneFragment : Fragment(),View.OnClickListener{
 
     lateinit var navController : NavController
-   // lateinit var mesureData : MesureData
+    lateinit var mesureData : MesureData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,12 @@ class StartOneFragment : Fragment(),View.OnClickListener{
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
+        mesureData = StartActivity.mesureData
+
+        mesureData.mTVLogTextView = view.findViewById(R.id.tv_fragLogTextView)
+        mesureData.mTVLogTextView!!.setMovementMethod(
+            ScrollingMovementMethod()
+        )
         //initBinding(view)
     }
 

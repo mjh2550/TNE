@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,10 +54,10 @@
             android:text="@string/button_scan"
             android:textSize="12sp" />
 
-        <Space
+        <!--<Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1" />-->
 
         <Button
             android:id="@+id/btn_mainStart"
@@ -65,10 +66,10 @@
             android:text="@string/button_start"
             android:textSize="12sp" />
 
-        <Space
+        <!--<Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1" />-->
 
         <Button
             android:id="@+id/btn_mainStop"
@@ -77,10 +78,10 @@
             android:text="@string/button_stop"
             android:textSize="12sp" />
 
-        <Space
+    <!--    <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1" />-->
 
         <Button
             android:id="@+id/btn_mainDisconnect"

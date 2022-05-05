@@ -10,30 +10,61 @@ import com.solmi.uxprotocol.UxParserEvent
 import java.util.*
 
 data class MesureData(
-    val mTVLogTextView: TextView?,
-    val mBtnScan: Button?,
-    val mBtnStart: Button?,
-    val mBtnStop: Button?,
-    val mBtnDisconnect: Button?,
+    var mTVLogTextView: TextView?,
+    var mBtnScan: Button?,
+    var mBtnStart: Button?,
+    var mBtnStop: Button?,
+    var mBtnDisconnect: Button?,
     var mLVDeviceList: ListView?,
-    val mSGEMGGraph: Simple1ChannelGraph?,
-    val mSGAccGraph: Simple3ChannelGraph?,
-    val mSGGyroGraph: Simple3ChannelGraph?,
-    val mSGMagnetoGraph: Simple3ChannelGraph?,
-    val mRGSamplingRate: RadioGroup?,
-    val mBTScanEventHandler: BTScanEvent?,
-    val mBTStateEventHandler: BTStateEvent?,
-    val mUxParserEventHandler: UxParserEvent?,
-    val mItemClickListener: AdapterView.OnItemClickListener?,
+    var mSGEMGGraph: Simple1ChannelGraph?,
+    var mSGAccGraph: Simple3ChannelGraph?,
+    var mSGGyroGraph: Simple3ChannelGraph?,
+    var mSGMagnetoGraph: Simple3ChannelGraph?,
+    var mRGSamplingRate: RadioGroup?,
+    var mBTScanEventHandler: BTScanEvent?,
+    var mBTStateEventHandler: BTStateEvent?,
+    var mUxParserEventHandler: UxParserEvent?,
+    var mItemClickListener: AdapterView.OnItemClickListener?,
     var mBLEManager: BLECommManager?,
-    val mEMGBuffer: Queue<IntArray>?,
-    val mAccBuffer: Queue<IntArray>?,
-    val mGyroBuffer: Queue<IntArray>?,
-    val mMagnetoBuffer: Queue<IntArray>?,
+    var mEMGBuffer: Queue<IntArray>?,
+    var mAccBuffer: Queue<IntArray>?,
+    var mGyroBuffer: Queue<IntArray>?,
+    var mMagnetoBuffer: Queue<IntArray>?,
     var mDataUpdateTimer: Timer?,
     var mStartTime: Long =0,
     var mEMGCount: Int =0,
     var mAccCount: Int =0,
     var mGyroCount: Int =0,
     var mMagnetoCount: Int =0
-                      )
+                      ){
+
+
+    fun setClearData(){
+        mTVLogTextView         = null
+        mBtnScan               = null
+        mBtnStart              = null
+        mBtnStop               = null
+        mBtnDisconnect         = null
+        mLVDeviceList          = null
+        mSGEMGGraph            = null
+        mSGAccGraph            = null
+        mSGGyroGraph           = null
+        mSGMagnetoGraph        = null
+        mRGSamplingRate        = null
+        mBTScanEventHandler    = null
+        mBTStateEventHandler   = null
+        mUxParserEventHandler  = null
+        mItemClickListener     = null
+        mBLEManager            = null
+        mEMGBuffer             = null
+        mAccBuffer             = null
+        mGyroBuffer            = null
+        mMagnetoBuffer         = null
+        mDataUpdateTimer       = null
+        mStartTime             =0
+        mEMGCount              =0
+        mAccCount              =0
+        mGyroCount             =0
+        mMagnetoCount          =0
+    }
+}
