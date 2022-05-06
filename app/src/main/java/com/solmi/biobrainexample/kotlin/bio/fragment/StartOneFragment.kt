@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.solmi.biobrainexample.R
@@ -48,47 +50,27 @@ class StartOneFragment : Fragment(),View.OnClickListener{
 
         mesureData = StartActivity.mesureData
 
+        initBinding(view)
+    }
+
+    private fun initBinding(view: View) {
+
+        Log.d("isnull?? >>>>",mesureData.mBtnScan!!.id.toString())
+        val fmBtnScan = view.findViewById(R.id.btnScanFrag) as Button
+        val fmBtnStart = view.findViewById(R.id.btnStartFrag) as Button
+        val fmBtnStop = view.findViewById(R.id.btnStopFrag) as Button
+        val fmBtnDisconnect = view.findViewById(R.id.btnDisconnectFrag) as Button
+//        val fmTVLogTextView = view.findViewById(R.id.tv_fragLogTextView) as TextView
+
+        fmBtnScan!!.setOnClickListener(this)
+        fmBtnStart!!.setOnClickListener(this)
+        fmBtnStop!!.setOnClickListener(this)
+        fmBtnDisconnect!!.setOnClickListener(this)
+
         mesureData.mTVLogTextView = view.findViewById(R.id.tv_fragLogTextView)
         mesureData.mTVLogTextView!!.setMovementMethod(
             ScrollingMovementMethod()
         )
-        //initBinding(view)
-    }
-
-    private fun initBinding(view: View) {
-        /*mesureData = MesureData (
-            mTVLogTextView = view.findViewById(R.id.tv_fragLogTextView),
-            mBtnScan = view.findViewById(R.id.btnScanFrag),
-            mBtnStart = view.findViewById(R.id.btnStartFrag),
-            mBtnStop = view.findViewById(R.id.btnStopFrag),
-            mBtnDisconnect = view.findViewById(R.id.btnDisconnectFrag),
-            mLVDeviceList = view.findViewById(R.id.lv_fragDeviceList),
-            mSGEMGGraph = view.findViewById(R.id.sg_mainEMGGraph),
-            mSGAccGraph = view.findViewById(R.id.sg_mainAccGraph),
-            mSGGyroGraph = view.findViewById(R.id.sg_mainGyroGraph),
-            mSGMagnetoGraph = view.findViewById(R.id.sg_mainMagnetoGraph),
-            mRGSamplingRate = view.findViewById(R.id.rg_mainSamplingRate),
-            mBTScanEventHandler =  null,
-            mBTStateEventHandler =  null,
-            mUxParserEventHandler =  null,
-            mItemClickListener =  null,
-            mBLEManager =  null,
-            mEMGBuffer =  null,
-            mAccBuffer =  null,
-            mGyroBuffer =  null,
-            mMagnetoBuffer =  null,
-            mDataUpdateTimer =  null,
-            mStartTime =  0,
-            mEMGCount =  0,
-            mAccCount =  0,
-            mGyroCount =  0,
-            mMagnetoCount =  0
-        )*/
-
-      /*  mesureData.mBtnStop?.setOnClickListener(this)
-        mesureData.mBtnScan?.setOnClickListener(this)
-        mesureData.mBtnStart?.setOnClickListener(this)
-        mesureData.mBtnDisconnect?.setOnClickListener(this)*/
 
 
 
@@ -96,6 +78,12 @@ class StartOneFragment : Fragment(),View.OnClickListener{
 
     override fun onClick(v: View?) {
         Log.d("fragOnclick",v?.id.toString())
-        (activity as StartActivity).onClickBleBtn(v)
+        when(v?.id){
+            R.id.btnScanFrag -> (activity as StartActivity).onClickBleBtn(mesureData.mBtnScan)
+            R.id.btnStartFrag -> (activity as StartActivity).onClickBleBtn(mesureData.mBtnStart)
+            R.id.btnStopFrag -> (activity as StartActivity).onClickBleBtn(mesureData.mBtnStop)
+            R.id.btnDisconnectFrag -> (activity as StartActivity).onClickBleBtn(mesureData.mBtnDisconnect)
+        }
+
     }
 }

@@ -1,6 +1,9 @@
 package com.solmi.biobrainexample.kotlin.data
 
+import android.os.Parcel
+import android.os.Parcelable
 import android.widget.*
+import com.solmi.biobrainexample.DeviceListAdapter
 import com.solmi.biobrainexample.Simple1ChannelGraph
 import com.solmi.biobrainexample.Simple3ChannelGraph
 import com.solmi.ble.BLECommManager
@@ -35,9 +38,10 @@ data class MesureData(
     var mEMGCount: Int =0,
     var mAccCount: Int =0,
     var mGyroCount: Int =0,
-    var mMagnetoCount: Int =0
-                      ){
-
+    var mMagnetoCount: Int =0,
+    var mDeviceListAdapter: DeviceListAdapter?
+                      )
+    {
 
     fun setClearData(){
         mTVLogTextView         = null
@@ -66,5 +70,8 @@ data class MesureData(
         mAccCount              =0
         mGyroCount             =0
         mMagnetoCount          =0
+        mDeviceListAdapter     = null
     }
+
+
 }

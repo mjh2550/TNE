@@ -41,25 +41,40 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
     private val PERMISSION_REQUEST_CODE :Int = 100
 
     companion object{
-        lateinit var mesureData : MesureData
+       val mesureData : MesureData by lazy {
+            MesureData(
+                mTVLogTextView    = null,
+                mBtnScan          = null,
+                mBtnStart         = null,
+                mBtnStop          = null,
+                mBtnDisconnect    = null,
+                mLVDeviceList     = null,
+                mSGEMGGraph       = null,
+                mSGAccGraph       = null,
+                mSGGyroGraph      = null,
+                mSGMagnetoGraph   = null,
+                mRGSamplingRate   = null,
+                mEMGBuffer = null,
+                mAccBuffer = null,
+                mGyroBuffer = null,
+                mMagnetoBuffer =null,
+                mBTScanEventHandler =  null,
+                mBTStateEventHandler =  null,
+                mUxParserEventHandler =  null,
+                mItemClickListener =  null,
+                mBLEManager =  null,
+                mDataUpdateTimer =  null,
+                mStartTime =  0,
+                mEMGCount =  0,
+                mAccCount =  0,
+                mGyroCount =  0,
+                mMagnetoCount =  0,
+                mDeviceListAdapter = null)
+        }
     }
 
-//    lateinit var mesureData: MesureData
 
-    /*var  mesureData.mTVLogTextView: TextView? = null
-    var mBtnScan: Button? = null
-    var mBtnStart: Button? = null
-    var mBtnStop: Button? = null
-    var mBtnDisconnect: Button? = null
-    var mLVDeviceList: ListView? = null
-
-    var mSGEMGGraph: Simple1ChannelGraph? = null
-    var mSGAccGraph: Simple3ChannelGraph? = null
-    var mSGGyroGraph: Simple3ChannelGraph? = null
-    var mSGMagnetoGraph: Simple3ChannelGraph? = null
-    var mRGSamplingRate: RadioGroup? = null
-
-    *//**
+    /**
      * 블루투스 검색 이벤트 핸들러
      */
     private var mBTScanEventHandler: BTScanEvent? = null
@@ -73,71 +88,6 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
      * 데이터 파싱 이벤트 핸들러
      */
     private var mUxParserEventHandler: UxParserEvent? = null
-
-    /**
-     * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러
-     */
-    private var mItemClickListener: OnItemClickListener? = null
-
-    /**
-     * 블루투스 통신 클래스
-     *//*
-    private var mBLEManager: BLECommManager? = null
-
-    *//**
-     * 검색된 디바이스 리스트 뷰 어댑터
-     */
-    private var mDeviceListAdapter: DeviceListAdapter? = null
-
-    /**
-     * EMG 데이터 버퍼
-     *//*
-    private var mEMGBuffer: Queue<IntArray>? = null
-
-    *//**
-     * Acc 데이터 버퍼
-     *//*
-    private var mAccBuffer: Queue<IntArray>? = null
-
-    *//**
-     * Gyro 데이터 버퍼
-     *//*
-    private var mGyroBuffer: Queue<IntArray>? = null
-
-    *//**
-     * Magneto 데이터 버퍼
-     *//*
-    private var mMagnetoBuffer: Queue<IntArray>? = null
-
-    *//**
-     * 데이터 업데이트 타이머
-     *//*
-    private var mDataUpdateTimer: Timer? = null
-
-    *//**
-     * 측정 시작 시간
-     *//*
-    private var mStartTime: Long = 0
-
-    *//**
-     * 수신한 EMG 데이터 수
-     *//*
-    private var mEMGCount = 0
-
-    *//**
-     * 수신한 Acc 데이터 수
-     *//*
-    private var mAccCount = 0
-
-    *//**
-     * 수신한 Gyro 데이터 수
-     *//*
-    private var mGyroCount = 0
-
-    *//**
-     * 수신한 Magneto 데이터 수
-     *//*
-    private var mMagnetoCount = 0*/
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -189,35 +139,18 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
      * 구성 요소들 초기화하는 함수
      */
     private fun initComponent() {
-        mesureData = MesureData (
-            mTVLogTextView    = findViewById(R.id.tv_mainLogTextView),
-            mBtnScan          = findViewById(R.id.btn_mainScan),
-            mBtnStart         = findViewById(R.id.btn_mainStart),
-            mBtnStop          = findViewById(R.id.btn_mainStop),
-            mBtnDisconnect    = findViewById(R.id.btn_mainDisconnect),
-            mLVDeviceList     = findViewById(R.id.lv_mainDeviceList),
-            mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph),
-            mSGAccGraph       = findViewById(R.id.sg_mainAccGraph),
-            mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph),
-            mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph),
-            mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate),
-            mEMGBuffer = null,
-            mAccBuffer = null,
-            mGyroBuffer = null,
-            mMagnetoBuffer =null,
-            mBTScanEventHandler =  null,
-            mBTStateEventHandler =  null,
-            mUxParserEventHandler =  null,
-            mItemClickListener =  null,
-            mBLEManager =  null,
-            mDataUpdateTimer =  null,
-            mStartTime =  0,
-            mEMGCount =  0,
-            mAccCount =  0,
-            mGyroCount =  0,
-            mMagnetoCount =  0,
+            mesureData.mTVLogTextView    = findViewById(R.id.tv_mainLogTextView)
+            mesureData.mBtnScan          = findViewById(R.id.btn_mainScan)
+            mesureData.mBtnStart         = findViewById(R.id.btn_mainStart)
+            mesureData.mBtnStop          = findViewById(R.id.btn_mainStop)
+            mesureData.mBtnDisconnect    = findViewById(R.id.btn_mainDisconnect)
+            mesureData.mLVDeviceList     = findViewById(R.id.lv_mainDeviceList)
+            mesureData.mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph)
+            mesureData.mSGAccGraph       = findViewById(R.id.sg_mainAccGraph)
+            mesureData.mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph)
+            mesureData.mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph)
+            mesureData.mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate)
 
-                )
             mesureData.mBtnScan!!.setOnClickListener(this)
             mesureData.mBtnStart!!.setOnClickListener(this)
             mesureData.mBtnDisconnect!!.setOnClickListener(this)
@@ -227,6 +160,7 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
             mesureData.mBLEManager!!.registerBTScanEventHandler(mBTScanEventHandler)
             mesureData.mBLEManager!!.registerBTStateEventHandler(mBTStateEventHandler)
             mesureData.mBLEManager!!.registerParserEventHandler(mUxParserEventHandler)
+
             val isBLESupport: Boolean = mesureData.mBLEManager!!.checkIsBLESupport()
             if (isBLESupport) {
                 if (mesureData.mBLEManager!!.startBLEService() == false) {
@@ -242,10 +176,10 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
                 Toast.makeText(applicationContext, R.string.error_not_support_ble, Toast.LENGTH_SHORT)
                     .show()
             }
-            mesureData.mLVDeviceList!!.setOnItemClickListener(mItemClickListener)
-            mesureData.mLVDeviceList!!.setAdapter(mDeviceListAdapter)
+            mesureData.mLVDeviceList!!.setOnItemClickListener(mesureData.mItemClickListener)
+            mesureData.mLVDeviceList!!.setAdapter(mesureData.mDeviceListAdapter)
             mesureData.mTVLogTextView!!.setMovementMethod(ScrollingMovementMethod())
-            mDeviceListAdapter = DeviceListAdapter(this)
+        mesureData.mDeviceListAdapter = DeviceListAdapter(this)
     }
 
    /**
@@ -262,7 +196,7 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
      * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러 초기화하는 함수
      */
     private fun initItemClickListener() {
-        mItemClickListener =
+        mesureData.mItemClickListener =
             OnItemClickListener { adapterView, view, index, l ->
                 if ( mesureData.mBLEManager!!.bluetoothState == BluetoothState.STATE_CONNECTED) {
                     Toast.makeText(
@@ -273,7 +207,7 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
                     return@OnItemClickListener
                 }
                 mesureData.mBLEManager!!.stopScanDevice()
-                val device = mDeviceListAdapter!!.getItem(index)
+                val device = mesureData.mDeviceListAdapter!!.getItem(index)
                 mesureData.mTVLogTextView!!.text = "device name: " + device.name
                 mesureData.mBLEManager!!.setDeviceType(BTDataDefine.DeviceType.SHC_U4)
                 mesureData.mBLEManager!!.setReconnectCount(3)
@@ -555,7 +489,7 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
                 }
                 val name = bluetoothDevice.name ?: return
                 if (name.contains("SHC") || name.contains("i8")) {
-                    mDeviceListAdapter!!.addItem(bluetoothDevice)
+                    mesureData.mDeviceListAdapter!!.addItem(bluetoothDevice)
                 }
             }
 
@@ -566,7 +500,7 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
                     }
                     val name = bluetoothDevice.name ?: continue
                     if (name.contains("SHC")) {
-                        mDeviceListAdapter!!.addItem(bluetoothDevice)
+                        mesureData.mDeviceListAdapter!!.addItem(bluetoothDevice)
                     }
                 }
             }
@@ -614,7 +548,7 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
     }
 
     private fun onClickScan() {
-        mDeviceListAdapter!!.reset()
+        mesureData.mDeviceListAdapter!!.reset()
         mesureData.mBtnScan!!.setText(R.string.button_scanning)
         mesureData.mBtnScan!!.isEnabled = false
         mesureData.mBLEManager!!.startScanDevice(20 * 1000)
@@ -688,6 +622,7 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
     }
 
      fun onClickBleBtn (v:View?){
+         Log.d("Activity Onclick >>>>>",v?.id.toString())
         when(v?.id){
             R.id.btn_mainScan -> onClickScan()
             R.id.btn_mainStart -> onClickStart()

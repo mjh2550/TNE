@@ -77,6 +77,12 @@
         <entry key="..\:/dev/app/TNE/app/src/main/res/layout/titlebar.xml" value="0.25" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/menu/bottom_nav.xml" value="0.3619791666666667" />
         <entry key="..\:/dev/app/TNE/app/src/main/res/menu/top_toolbar.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/layout/activity_bio_start.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_home_kt.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_start.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_start_one.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_start_two.xml" value="0.13541666666666666" />
       </map>
     </option>
   </component>
