@@ -179,13 +179,13 @@ class StartActivity : AppCompatActivity() ,View.OnClickListener {
             mesureData.mLVDeviceList!!.setOnItemClickListener(mesureData.mItemClickListener)
             mesureData.mLVDeviceList!!.setAdapter(mesureData.mDeviceListAdapter)
             mesureData.mTVLogTextView!!.setMovementMethod(ScrollingMovementMethod())
-        mesureData.mDeviceListAdapter = DeviceListAdapter(this)
+            mesureData.mDeviceListAdapter = DeviceListAdapter(this)
     }
 
    /**
      * 이벤트 핸들러들 초기화하는 함수
      */
-    private fun initHandler() {
+    fun initHandler() {
         initBTScanEventHandler()
         initBTStateEventHandler()
         initUxParserEventHandler()

@@ -7,11 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RadioGroup
-import android.widget.TextView
+import android.widget.*
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.solmi.biobrainexample.DeviceListAdapter
 import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.Simple1ChannelGraph
 import com.solmi.biobrainexample.Simple3ChannelGraph
@@ -49,11 +48,14 @@ class StartOneFragment : Fragment(),View.OnClickListener{
         navController = Navigation.findNavController(view)
 
         mesureData = StartActivity.mesureData
-
         initBinding(view)
     }
 
     private fun initBinding(view: View) {
+
+        /**
+         * 버튼은 액티비티의 컴포넌트를 써야 하고, 로그와 리스트는 프래그먼트에 출력해야 한다
+         */
 
         Log.d("isnull?? >>>>",mesureData.mBtnScan!!.id.toString())
         val fmBtnScan = view.findViewById(R.id.btnScanFrag) as Button
@@ -67,10 +69,20 @@ class StartOneFragment : Fragment(),View.OnClickListener{
         fmBtnStop!!.setOnClickListener(this)
         fmBtnDisconnect!!.setOnClickListener(this)
 
+        (activity as StartActivity).initHandler()
+
         mesureData.mTVLogTextView = view.findViewById(R.id.tv_fragLogTextView)
         mesureData.mTVLogTextView!!.setMovementMethod(
             ScrollingMovementMethod()
         )
+        mesureData.mLVDeviceList = view.findViewById(R.id.lv_mainDeviceList)
+
+//        val fmLvDeviceList = view.findViewById<ListView>(R.id.lv_mainDeviceList)
+//        val fmLvDeviceList = mesureData.mLVDeviceList
+
+        mesureData.mLVDeviceList!!.setOnItemClickListener(mesureData.mItemClickListener)
+        mesureData.mLVDeviceList!!.setAdapter(mesureData.mDeviceListAdapter)
+        mesureData.mDeviceListAdapter = DeviceListAdapter(context)
 
 
 
