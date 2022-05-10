@@ -8,18 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="bioStart1Fragment">
+                  <entry key="startOneFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-16" />
-                            <option name="y" value="27" />
+                            <option name="x" value="3" />
+                            <option name="y" value="48" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_bioStart1Fragment_to_bioStart2Fragment">
+                            <entry key="action_startOneFragment_to_startTwoFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -29,35 +29,14 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="bioStart2Fragment">
+                  <entry key="startTwoFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="173" />
-                            <option name="y" value="28" />
+                            <option name="x" value="215" />
+                            <option name="y" value="41" />
                           </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="bioStartFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-204" />
-                            <option name="y" value="28" />
-                          </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_bioStartFragment_to_bioStart1Fragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

@@ -32,10 +32,14 @@ import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
 
-class StartActivity : AppCompatActivity() {
+class StartActivity : AppCompatActivity() , View.OnClickListener {
 
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
+    companion object {
+        lateinit var mainBLEView : View
+    }
+
 
     private val PERMISSION_REQUEST_CODE :Int = 100
 
@@ -137,21 +141,21 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
+        mainBLEView = findViewById( R.id.main_BLEView)
         navHostFragment = supportFragmentManager.findFragmentById(R.id.bio_start_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.findNavController()
 
-    /*    initHandler()
+        initHandler()
         initComponent()
 
         val isPermissionGranted : Boolean = checkPermission()
         if(isPermissionGranted == false){
             requestPermission()
         }
-*/
     }
 
 
-    /*private fun requestPermission() {
+    private fun requestPermission() {
 
         val needPermissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -162,10 +166,10 @@ class StartActivity : AppCompatActivity() {
 
     }
 
-    *//**
+    /**
      * 권한 설정되었는지 확인하는 함수
      * @return 권한 설정 여부
-     *//*
+     */
     private fun checkPermission(): Boolean {
         var locationPermissionCheck =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -180,15 +184,15 @@ class StartActivity : AppCompatActivity() {
         return true
     }
 
-    *//**
+    /**
      * 구성 요소들 초기화하는 함수
-     *//*
+     */
     private fun initComponent() {
 
           mTVLogTextView    = findViewById(R.id.tv_mainLogTextView)
           mBtnScan          = findViewById(R.id.btn_mainScan)
           mBtnStart         = findViewById(R.id.btn_mainStart)
-          mBtnStop          = findViewById(R.id.btn_Stop)
+          mBtnStop          = findViewById(R.id.btn_mainStop)
           mBtnDisconnect    = findViewById(R.id.btn_mainDisconnect)
           mLVDeviceList     = findViewById(R.id.lv_mainDeviceList)
           mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph)
@@ -230,19 +234,20 @@ class StartActivity : AppCompatActivity() {
         mMagnetoBuffer = LinkedBlockingQueue<IntArray>()
     }
 
-    *//**
+    /**
      * 이벤트 핸들러들 초기화하는 함수
-     *//*
+     */
     private fun initHandler() {
         initBTScanEventHandler()
         initBTStateEventHandler()
         initUxParserEventHandler()
         initItemClickListener()
+       Log.d("Call InitHandler>>>>>","")
     }
 
-    *//**
+    /**
      * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러 초기화하는 함수
-     *//*
+     */
     private fun initItemClickListener() {
         mItemClickListener =
             OnItemClickListener { adapterView, view, index, l ->
@@ -263,9 +268,9 @@ class StartActivity : AppCompatActivity() {
             }
     }
 
-    *//**
+    /**
      * 데이터 파싱 이벤트 핸들러 초기화하는 함수
-     *//*
+     */
     private fun initUxParserEventHandler() {
         mUxParserEventHandler = object : UxParserEvent {
             override fun onParserHeaderPacket(headerPacket: HeaderPacket) {
@@ -357,9 +362,9 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    *//**
+    /**
      * 데이터 업데이트 타이머 시작하는 함수
-     *//*
+     */
     private fun startDataUpdateTimer() {
         if (mDataUpdateTimer == null) {
             mStartTime = System.currentTimeMillis()
@@ -368,10 +373,10 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    *//**
+    /**
      * 데이터 업데이트 타이머 태스크 반환하는 함수
      * @return 타이머 태스크
-     *//*
+     */
     private fun getDataUpdateTimerTask(): TimerTask? {
         return object : TimerTask() {
             override fun run() {
@@ -422,9 +427,9 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    *//**
+    /**
      * 데이터 업데이트 타이머 종료하는 함수
-     *//*
+     */
     private fun stopDataUpdateTimer() {
         if (mDataUpdateTimer == null) {
             return
@@ -448,9 +453,9 @@ class StartActivity : AppCompatActivity() {
         mDataUpdateTimer = null
     }
 
-    *//**
+    /**
      * 블루투스 상태 변화 이벤트 핸들러 초기화하는 함수
-     *//*
+     */
     private fun initBTStateEventHandler() {
         mBTStateEventHandler = object : BTStateEvent {
             override fun onStateChanged(bluetoothState: BluetoothState) {
@@ -526,9 +531,9 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    *//**
+    /**
      * 블루투스 검색 이벤트 핸들러 초기화하는 함수
-     *//*
+     */
     private fun initBTScanEventHandler() {
         mBTScanEventHandler = object : BTScanEvent {
             override fun onScanDevice(bluetoothDevice: BluetoothDevice) {
@@ -554,6 +559,7 @@ class StartActivity : AppCompatActivity() {
             }
 
             override fun onScanFinished() {
+                Log.d("Call scanFinished",">>>>>")
                 runOnUiThread {
                     mBtnScan!!.isEnabled = true
                     mBtnScan!!.setText(R.string.button_scan)
@@ -627,9 +633,9 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    *//**
+    /**
      * 구성요소 초기화하는 함수
-     *//*
+     */
     private fun resetComponent() {
         mEMGBuffer!!.clear()
         mAccBuffer!!.clear()
@@ -665,6 +671,10 @@ class StartActivity : AppCompatActivity() {
             R.id.btn_mainStart -> onClickStart()
             R.id.btn_mainStop -> onClickStop()
             R.id.btn_mainDisconnect -> onClickDisconnect()
+          /*  R.id.btnScanFrag -> onClickScan()
+            R.id.btnStartFrag -> onClickStart()
+            R.id.btnStopFrag -> onClickStop()
+            R.id.btnDisconnectFrag -> onClickDisconnect()*/
         }
-    }*/
+    }
 }

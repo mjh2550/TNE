@@ -3,29 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bio_start_nav_graph"
-    app:startDestination="@id/bioStartFragment">
+    app:startDestination="@id/startOneFragment">
+
 
     <fragment
-        android:id="@+id/bioStartFragment"
-        android:name="com.solmi.biobrainexample.process.BioStartFragment"
-        android:label="frag_bio_start"
-        tools:layout="@layout/frag_bio_start" >
+        android:id="@+id/startOneFragment"
+        android:name="com.solmi.biobrainexample.kotlin.bio.fragment.StartOneFragment"
+        android:label="fragment_start_one"
+        tools:layout="@layout/fragment_start_one" >
         <action
-            android:id="@+id/action_bioStartFragment_to_bioStart1Fragment"
-            app:destination="@id/bioStart1Fragment" />
+            android:id="@+id/action_startOneFragment_to_startTwoFragment"
+            app:destination="@id/startTwoFragment" />
     </fragment>
     <fragment
-        android:id="@+id/bioStart1Fragment"
-        android:name="com.solmi.biobrainexample.process.BioStart1Fragment"
-        android:label="frag_bio_start1"
-        tools:layout="@layout/frag_bio_start1" >
-        <action
-            android:id="@+id/action_bioStart1Fragment_to_bioStart2Fragment"
-            app:destination="@id/bioStart2Fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/bioStart2Fragment"
-        android:name="com.solmi.biobrainexample.process.BioStart2Fragment"
-        android:label="frag_bio_start2"
-        tools:layout="@layout/frag_bio_start2" />
+        android:id="@+id/startTwoFragment"
+        android:name="com.solmi.biobrainexample.kotlin.bio.fragment.StartTwoFragment"
+        android:label="fragment_start_two"
+        tools:layout="@layout/fragment_start_two" />
 </navigation>
