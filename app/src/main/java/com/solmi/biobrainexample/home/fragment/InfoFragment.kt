@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.kotlin.home.fragment
+package com.solmi.biobrainexample.home.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,10 +13,11 @@ import com.solmi.biobrainexample.R
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ResultFragment.newInstance] factory method to
+ * Use the [InfoFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ResultFragment : Fragment() ,View.OnClickListener{
+class InfoFragment : Fragment() ,View.OnClickListener{
+
 
     lateinit var navController: NavController
 
@@ -30,7 +31,7 @@ class ResultFragment : Fragment() ,View.OnClickListener{
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false)
+        return inflater.inflate(R.layout.fragment_info, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

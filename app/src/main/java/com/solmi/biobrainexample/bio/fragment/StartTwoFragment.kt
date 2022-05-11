@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.kotlin.bio.fragment
+package com.solmi.biobrainexample.bio.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

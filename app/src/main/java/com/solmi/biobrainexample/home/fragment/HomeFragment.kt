@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.kotlin.home.fragment
+package com.solmi.biobrainexample.home.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import android.widget.Button
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.solmi.biobrainexample.R
-import com.solmi.biobrainexample.kotlin.bio.StartActivity
+import com.solmi.biobrainexample.bio.StartActivity
 
 
 /**

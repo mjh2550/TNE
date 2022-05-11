@@ -27,10 +27,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".kotlin.bio.StartActivity"
+            android:name="com.solmi.biobrainexample.bio.StartActivity"
             android:exported="false" />
         <activity
-            android:name=".kotlin.home.HomeKtActivity"
+            android:name="com.solmi.biobrainexample.home.HomeKtActivity"
             android:exported="true" />
 
         <receiver

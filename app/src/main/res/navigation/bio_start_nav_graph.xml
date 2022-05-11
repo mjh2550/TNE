@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/startOneFragment"
-        android:name="com.solmi.biobrainexample.kotlin.bio.fragment.StartOneFragment"
+        android:name="com.solmi.biobrainexample.bio.fragment.StartOneFragment"
         android:label="fragment_start_one"
         tools:layout="@layout/fragment_start_one" >
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/startTwoFragment"
-        android:name="com.solmi.biobrainexample.kotlin.bio.fragment.StartTwoFragment"
+        android:name="com.solmi.biobrainexample.bio.fragment.StartTwoFragment"
         android:label="fragment_start_two"
         tools:layout="@layout/fragment_start_two" />
 </navigation>

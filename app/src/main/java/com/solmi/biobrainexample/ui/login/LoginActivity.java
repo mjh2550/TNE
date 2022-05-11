@@ -27,7 +27,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.solmi.biobrainexample.home.HomeActivity;
 import com.solmi.biobrainexample.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -140,8 +139,8 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
         // TODO : 성공, 메인화면으로 넘어가야 함
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, HomeActivity.class);
+//        startActivity(intent);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {

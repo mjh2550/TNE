@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.kotlin.bio
+package com.solmi.biobrainexample.bio
 
 import android.Manifest
 import android.bluetooth.BluetoothDevice
