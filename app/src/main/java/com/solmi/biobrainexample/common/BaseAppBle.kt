@@ -1,10 +1,20 @@
 package com.solmi.biobrainexample.common
 
+import android.content.Context
 import java.util.*
 
 interface BaseAppBle {
     companion object{
-        var bleSetData = BleSetData()
+        private var bleSetData : BleSetData? = null
+        private lateinit var context: Context
+        fun getInstance(_context : Context):BleSetData{
+            return bleSetData ?: synchronized(this){
+                bleSetData ?: BleSetData().also {
+                    context = _context
+                    bleSetData = it
+                }
+            }
+        }
     }
     /**
      * 이벤트 핸들러들 초기화하는 함수
@@ -56,14 +66,14 @@ interface BaseAppBle {
      * 구성요소 초기화하는 함수
      */
     fun resetComponent() {
-        bleSetData.mEMGBuffer!!.clear()
-        bleSetData.mAccBuffer!!.clear()
-        bleSetData.mGyroBuffer!!.clear()
-        bleSetData.mMagnetoBuffer!!.clear()
-        bleSetData.mStartTime = 0
-        bleSetData.mEMGCount = 0
-        bleSetData.mAccCount = 0
-        bleSetData.mGyroCount = 0
-        bleSetData.mMagnetoCount = 0
+        bleSetData?.mEMGBuffer!!.clear()
+        bleSetData?.mAccBuffer!!.clear()
+        bleSetData?.mGyroBuffer!!.clear()
+        bleSetData?.mMagnetoBuffer!!.clear()
+        bleSetData?.mStartTime = 0
+        bleSetData?.mEMGCount = 0
+        bleSetData?.mAccCount = 0
+        bleSetData?.mGyroCount = 0
+        bleSetData?.mMagnetoCount = 0
     }
 }

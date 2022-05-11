@@ -35,8 +35,8 @@ import java.util.concurrent.LinkedBlockingQueue
 class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
     companion object {
-        lateinit var mainBLEView : View
-        var bleSetData = BaseAppBle.bleSetData
+       lateinit var mainBLEView : View
+       lateinit var bleSetData : BleSetData
     }
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
@@ -57,6 +57,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         mainBLEView = findViewById( R.id.main_BLEView)
         navHostFragment = supportFragmentManager.findFragmentById(R.id.bio_start_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.findNavController()
+        bleSetData = BaseAppBle.getInstance(this)
 
         initHandler()
         initComponent()
@@ -148,16 +149,6 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
 
     }
-
-    /**
-     * 이벤트 핸들러들 초기화하는 함수
-     */
-    /*override fun initHandler() {
-        initBTScanEventHandler()
-        initBTStateEventHandler()
-        initUxParserEventHandler()
-        initItemClickListener()
-    }*/
 
     /**
      * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러 초기화하는 함수
@@ -570,10 +561,6 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
             R.id.btn_mainStart -> onClickStart()
             R.id.btn_mainStop -> onClickStop()
             R.id.btn_mainDisconnect -> onClickDisconnect()
-          /*  R.id.btnScanFrag -> onClickScan()
-            R.id.btnStartFrag -> onClickStart()
-            R.id.btnStopFrag -> onClickStop()
-            R.id.btnDisconnectFrag -> onClickDisconnect()*/
         }
     }
 }
