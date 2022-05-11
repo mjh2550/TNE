@@ -1,6 +1,8 @@
 package com.solmi.ble;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 
 import java.util.List;
 
@@ -28,4 +30,6 @@ public interface BTScanEvent {
      * BLE 검색 종료 이벤트
      */
     void onScanFinished();
+
+
 }

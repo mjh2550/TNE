@@ -1,5 +1,8 @@
 package com.solmi.ble;
 
+import android.app.Activity;
+import android.content.Context;
+
 /**
  * BioBrainExample
  * Class: BTStateEvent

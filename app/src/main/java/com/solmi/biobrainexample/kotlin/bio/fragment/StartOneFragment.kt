@@ -24,13 +24,13 @@ import java.util.*
  */
 class StartOneFragment : Fragment(),View.OnClickListener{
 
-    lateinit var navController : NavController
-    lateinit var mainBLEView : View
-    lateinit var btn_test: Button
-    lateinit var tv_ble_info01 : TextView
-    lateinit var tv_ble_info02 : TextView
-    lateinit var infoMsgFadeIn01 : AlphaAnimation
-    lateinit var infoMsgFadeIn02 : AlphaAnimation
+    private lateinit var navController : NavController
+    private lateinit var mainBLEView : View
+    private lateinit var btn_test: Button
+    private lateinit var tv_ble_info01 : TextView
+    private lateinit var tv_ble_info02 : TextView
+    private lateinit var infoMsgFadeIn01 : AlphaAnimation
+    private lateinit var infoMsgFadeIn02 : AlphaAnimation
     lateinit var fadeOut : AlphaAnimation
     
 
@@ -54,16 +54,18 @@ class StartOneFragment : Fragment(),View.OnClickListener{
         navController = Navigation.findNavController(view)
 
         initBinding(view)
-        
-        
-        
-
 
     }
 
     private fun initBinding(view: View) {
         //메인 블루투스 뷰
         mainBLEView = StartActivity.mainBLEView
+
+        //컴포넌트
+        btn_test = view.findViewById(R.id.btn_test01)
+        tv_ble_info01 = view.findViewById(R.id.tv_BLE_info_01)
+        tv_ble_info02 = view.findViewById(R.id.tv_BLE_info_02)
+        btn_test.setOnClickListener(this)
         
         //애니메이션
         infoMsgFadeIn01 = AlphaAnimation(0.0f, 1.0f)
@@ -82,11 +84,6 @@ class StartOneFragment : Fragment(),View.OnClickListener{
         fadeOut.fillAfter = true
         fadeOut.startOffset = 4200 + infoMsgFadeIn01.startOffset
 
-        //컴포넌트
-        btn_test = view.findViewById(R.id.btn_test01)
-        tv_ble_info01 = view.findViewById(R.id.tv_BLE_info_01)
-        tv_ble_info02 = view.findViewById(R.id.tv_BLE_info_02)
-        btn_test.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {

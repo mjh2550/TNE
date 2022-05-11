@@ -18,8 +18,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.solmi.biobrainexample.DeviceListAdapter
 import com.solmi.biobrainexample.R
-import com.solmi.biobrainexample.Simple1ChannelGraph
-import com.solmi.biobrainexample.Simple3ChannelGraph
+import com.solmi.biobrainexample.common.BaseAppBle
+import com.solmi.biobrainexample.common.BleSetData
 import com.solmi.ble.BLECommManager
 import com.solmi.ble.BLEDefine.BluetoothState
 import com.solmi.ble.BTScanEvent
@@ -32,14 +32,14 @@ import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
 
-class StartActivity : AppCompatActivity() , View.OnClickListener {
+class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
     companion object {
         lateinit var mainBLEView : View
+        var bleSetData = BaseAppBle.bleSetData
     }
-
 
     private val PERMISSION_REQUEST_CODE :Int = 100
 
@@ -49,92 +49,92 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
     var mBtnStop: Button? = null
     var mBtnDisconnect: Button? = null
     var mLVDeviceList: ListView? = null
-
-    var mSGEMGGraph: Simple1ChannelGraph? = null
-    var mSGAccGraph: Simple3ChannelGraph? = null
-    var mSGGyroGraph: Simple3ChannelGraph? = null
-    var mSGMagnetoGraph: Simple3ChannelGraph? = null
-    var mRGSamplingRate: RadioGroup? = null
-
-    /**
-     * 블루투스 검색 이벤트 핸들러
-     */
-    private var mBTScanEventHandler: BTScanEvent? = null
-
-    /**
-     * 블루투스 상태 변화 이벤트 핸들러
-     */
-    private var mBTStateEventHandler: BTStateEvent? = null
-
-    /**
-     * 데이터 파싱 이벤트 핸들러
-     */
-    private var mUxParserEventHandler: UxParserEvent? = null
-
-    /**
-     * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러
-     */
-    private var mItemClickListener: OnItemClickListener? = null
-
-    /**
-     * 블루투스 통신 클래스
-     */
-    private var mBLEManager: BLECommManager? = null
-
-    /**
-     * 검색된 디바이스 리스트 뷰 어댑터
-     */
-    private var mDeviceListAdapter: DeviceListAdapter? = null
-
-    /**
-     * EMG 데이터 버퍼
-     */
-    private var mEMGBuffer: Queue<IntArray>? = null
-
-    /**
-     * Acc 데이터 버퍼
-     */
-    private var mAccBuffer: Queue<IntArray>? = null
-
-    /**
-     * Gyro 데이터 버퍼
-     */
-    private var mGyroBuffer: Queue<IntArray>? = null
-
-    /**
-     * Magneto 데이터 버퍼
-     */
-    private var mMagnetoBuffer: Queue<IntArray>? = null
-
-    /**
-     * 데이터 업데이트 타이머
-     */
-    private var mDataUpdateTimer: Timer? = null
-
-    /**
-     * 측정 시작 시간
-     */
-    private var mStartTime: Long = 0
-
-    /**
-     * 수신한 EMG 데이터 수
-     */
-    private var mEMGCount = 0
-
-    /**
-     * 수신한 Acc 데이터 수
-     */
-    private var mAccCount = 0
-
-    /**
-     * 수신한 Gyro 데이터 수
-     */
-    private var mGyroCount = 0
-
-    /**
-     * 수신한 Magneto 데이터 수
-     */
-    private var mMagnetoCount = 0
+//
+//    var mSGEMGGraph: Simple1ChannelGraph? = null
+//    var mSGAccGraph: Simple3ChannelGraph? = null
+//    var mSGGyroGraph: Simple3ChannelGraph? = null
+//    var mSGMagnetoGraph: Simple3ChannelGraph? = null
+//    var mRGSamplingRate: RadioGroup? = null
+//
+//    /**
+//     * 블루투스 검색 이벤트 핸들러
+//     */
+//    private var mBTScanEventHandler: BTScanEvent? = null
+//
+//    /**
+//     * 블루투스 상태 변화 이벤트 핸들러
+//     */
+//    private var mBTStateEventHandler: BTStateEvent? = null
+//
+//    /**
+//     * 데이터 파싱 이벤트 핸들러
+//     */
+//    private var mUxParserEventHandler: UxParserEvent? = null
+//
+//    /**
+//     * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러
+//     */
+//    private var mItemClickListener: OnItemClickListener? = null
+//
+//    /**
+//     * 블루투스 통신 클래스
+//     */
+//    private var mBLEManager: BLECommManager? = null
+//
+//    /**
+//     * 검색된 디바이스 리스트 뷰 어댑터
+//     */
+//    private var mDeviceListAdapter: DeviceListAdapter? = null
+//
+//    /**
+//     * EMG 데이터 버퍼
+//     */
+//    private var mEMGBuffer: Queue<IntArray>? = null
+//
+//    /**
+//     * Acc 데이터 버퍼
+//     */
+//    private var mAccBuffer: Queue<IntArray>? = null
+//
+//    /**
+//     * Gyro 데이터 버퍼
+//     */
+//    private var mGyroBuffer: Queue<IntArray>? = null
+//
+//    /**
+//     * Magneto 데이터 버퍼
+//     */
+//    private var mMagnetoBuffer: Queue<IntArray>? = null
+//
+//    /**
+//     * 데이터 업데이트 타이머
+//     */
+//    private var mDataUpdateTimer: Timer? = null
+//
+//    /**
+//     * 측정 시작 시간
+//     */
+//    private var mStartTime: Long = 0
+//
+//    /**
+//     * 수신한 EMG 데이터 수
+//     */
+//    private var mEMGCount = 0
+//
+//    /**
+//     * 수신한 Acc 데이터 수
+//     */
+//    private var mAccCount = 0
+//
+//    /**
+//     * 수신한 Gyro 데이터 수
+//     */
+//    private var mGyroCount = 0
+//
+//    /**
+//     * 수신한 Magneto 데이터 수
+//     */
+//    private var mMagnetoCount = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -195,62 +195,64 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
         mBtnStop          = findViewById(R.id.btn_mainStop)
         mBtnDisconnect    = findViewById(R.id.btn_mainDisconnect)
         mLVDeviceList     = findViewById(R.id.lv_mainDeviceList)
-        mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph)
-        mSGAccGraph       = findViewById(R.id.sg_mainAccGraph)
-        mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph)
-        mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph)
-        mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate)
+        bleSetData.mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph)
+        bleSetData.mSGAccGraph       = findViewById(R.id.sg_mainAccGraph)
+        bleSetData.mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph)
+        bleSetData.mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph)
+        bleSetData.mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate)
         mBtnScan!!.setOnClickListener(this)
         mBtnStart!!.setOnClickListener(this)
         mBtnDisconnect!!.setOnClickListener(this)
         mBtnStop!!.setOnClickListener(this)
 
-        mBLEManager = BLECommManager(this)
-        mBLEManager!!.registerBTScanEventHandler(mBTScanEventHandler)
-        mBLEManager!!.registerBTStateEventHandler(mBTStateEventHandler)
-        mBLEManager!!.registerParserEventHandler(mUxParserEventHandler)
-        val isBLESupport: Boolean = mBLEManager!!.checkIsBLESupport()
+        bleSetData.mBLEManager= BLECommManager(this)
+        bleSetData.mBLEManager!!.registerBTScanEventHandler(bleSetData.mBTScanEventHandler)
+        bleSetData.mBLEManager!!.registerBTStateEventHandler(bleSetData.mBTStateEventHandler)
+        bleSetData.mBLEManager!!.registerParserEventHandler(bleSetData.mUxParserEventHandler)
+        val isBLESupport: Boolean = bleSetData.mBLEManager!!.checkIsBLESupport()
         if (isBLESupport) {
-            if (mBLEManager!!.startBLEService() == false) {
+            if (bleSetData.mBLEManager!!.startBLEService() == false) {
                 Toast.makeText(
                     applicationContext,
                     R.string.error_ble_start_service,
                     Toast.LENGTH_SHORT
                 ).show()
-                mBLEManager = null
+                bleSetData.mBLEManager = null
                 return
             }
         } else {
             Toast.makeText(applicationContext, R.string.error_not_support_ble, Toast.LENGTH_SHORT)
                 .show()
         }
-        mLVDeviceList!!.setOnItemClickListener(mItemClickListener)
-        mDeviceListAdapter = DeviceListAdapter(this)
-        mLVDeviceList!!.setAdapter(mDeviceListAdapter)
+        mLVDeviceList!!.setOnItemClickListener(bleSetData.mItemClickListener)
+        bleSetData.mDeviceListAdapter = DeviceListAdapter(this)
+        mLVDeviceList!!.setAdapter(bleSetData.mDeviceListAdapter)
         mTVLogTextView!!.setMovementMethod(ScrollingMovementMethod())
-        mEMGBuffer = LinkedBlockingQueue<IntArray>()
-        mAccBuffer = LinkedBlockingQueue<IntArray>()
-        mGyroBuffer = LinkedBlockingQueue<IntArray>()
-        mMagnetoBuffer = LinkedBlockingQueue<IntArray>()
+        bleSetData.mEMGBuffer = LinkedBlockingQueue<IntArray>()
+        bleSetData.mAccBuffer= LinkedBlockingQueue<IntArray>()
+        bleSetData.mGyroBuffer = LinkedBlockingQueue<IntArray>()
+        bleSetData.mMagnetoBuffer = LinkedBlockingQueue<IntArray>()
+
+
     }
 
     /**
      * 이벤트 핸들러들 초기화하는 함수
      */
-    private fun initHandler() {
+    /*override fun initHandler() {
         initBTScanEventHandler()
         initBTStateEventHandler()
         initUxParserEventHandler()
         initItemClickListener()
-    }
+    }*/
 
     /**
      * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러 초기화하는 함수
      */
-    private fun initItemClickListener() {
-        mItemClickListener =
+    override fun initItemClickListener() {
+        bleSetData.mItemClickListener =
             OnItemClickListener { adapterView, view, index, l ->
-                if (mBLEManager!!.bluetoothState == BluetoothState.STATE_CONNECTED) {
+                if (bleSetData.mBLEManager!!.bluetoothState == BluetoothState.STATE_CONNECTED) {
                     Toast.makeText(
                         applicationContext,
                         R.string.error_device_connected,
@@ -258,20 +260,20 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
                     ).show()
                     return@OnItemClickListener
                 }
-                mBLEManager!!.stopScanDevice()
-                val device = mDeviceListAdapter!!.getItem(index)
+                bleSetData.mBLEManager!!.stopScanDevice()
+                val device = bleSetData.mDeviceListAdapter!!.getItem(index)
                 mTVLogTextView!!.text = "device name: " + device.name
-                mBLEManager!!.setDeviceType(BTDataDefine.DeviceType.SHC_U4)
-                mBLEManager!!.setReconnectCount(3)
-                mBLEManager!!.connect(device)
+                bleSetData.mBLEManager!!.setDeviceType(BTDataDefine.DeviceType.SHC_U4)
+                bleSetData.mBLEManager!!.setReconnectCount(3)
+                bleSetData.mBLEManager!!.connect(device)
             }
     }
 
     /**
      * 데이터 파싱 이벤트 핸들러 초기화하는 함수
      */
-    private fun initUxParserEventHandler() {
-        mUxParserEventHandler = object : UxParserEvent {
+    override fun initUxParserEventHandler() {
+        bleSetData.mUxParserEventHandler = object : UxParserEvent {
             override fun onParserHeaderPacket(headerPacket: HeaderPacket) {
                 when (headerPacket.packetType) {
                     UxProtocol.RES_DAQ_STOP -> runOnUiThread {
@@ -324,23 +326,23 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
             }
 
             override fun onParserECG(channels: IntArray) {
-                mEMGCount++
-                mEMGBuffer!!.offer(channels.clone())
+                bleSetData.mEMGCount++
+                bleSetData.mEMGBuffer!!.offer(channels.clone())
             }
 
             override fun onParserACC(channels: IntArray) {
-                mAccCount++
-                mAccBuffer!!.offer(channels.clone())
+                bleSetData.mAccCount++
+                bleSetData.mAccBuffer!!.offer(channels.clone())
             }
 
             override fun onParserGYRO(channels: IntArray) {
-                mGyroCount++
-                mGyroBuffer!!.offer(channels.clone())
+                bleSetData.mGyroCount++
+                bleSetData.mGyroBuffer!!.offer(channels.clone())
             }
 
             override fun onParserMAGNETO(channels: IntArray) {
-                mMagnetoCount++
-                mMagnetoBuffer!!.offer(channels.clone())
+                bleSetData.mMagnetoCount++
+                bleSetData.mMagnetoBuffer!!.offer(channels.clone())
             }
 
             override fun onParserTEMP(temperature: Int) {
@@ -364,11 +366,11 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
     /**
      * 데이터 업데이트 타이머 시작하는 함수
      */
-    private fun startDataUpdateTimer() {
-        if (mDataUpdateTimer == null) {
-            mStartTime = System.currentTimeMillis()
-            mDataUpdateTimer = Timer("Data update Timer")
-            mDataUpdateTimer!!.schedule(getDataUpdateTimerTask(), 0, 25)
+    override fun startDataUpdateTimer() {
+        if (bleSetData.mDataUpdateTimer == null) {
+            bleSetData.mStartTime = System.currentTimeMillis()
+            bleSetData.mDataUpdateTimer = Timer("Data update Timer")
+            bleSetData.mDataUpdateTimer!!.schedule(getDataUpdateTimerTask(), 0, 25)
         }
     }
 
@@ -376,49 +378,49 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
      * 데이터 업데이트 타이머 태스크 반환하는 함수
      * @return 타이머 태스크
      */
-    private fun getDataUpdateTimerTask(): TimerTask? {
+    override fun getDataUpdateTimerTask(): TimerTask? {
         return object : TimerTask() {
             override fun run() {
                 runOnUiThread {
-                    val emgSize = mEMGBuffer!!.size
+                    val emgSize = bleSetData.mEMGBuffer!!.size
                     for (count in 0 until emgSize) {
-                        val channels = mEMGBuffer!!.poll()
+                        val channels = bleSetData.mEMGBuffer!!.poll()
                         if (channels != null) {
                             val value = channels[0] / 2047f * 7.4f
-                            mSGEMGGraph!!.putValue(value)
+                            bleSetData.mSGEMGGraph!!.putValue(value)
                         }
                     }
-                    val accSize = mAccBuffer!!.size
+                    val accSize = bleSetData.mAccBuffer!!.size
                     for (count in 0 until accSize) {
-                        val channels = mAccBuffer!!.poll()
+                        val channels = bleSetData.mAccBuffer!!.poll()
                         if (channels != null) {
                             val valueArray = FloatArray(3)
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
                             }
-                            mSGAccGraph!!.putValueArray(valueArray)
+                            bleSetData.mSGAccGraph!!.putValueArray(valueArray)
                         }
                     }
-                    val gyroSize = mGyroBuffer!!.size
+                    val gyroSize = bleSetData.mGyroBuffer!!.size
                     for (count in 0 until gyroSize) {
-                        val channels = mGyroBuffer!!.poll()
+                        val channels = bleSetData.mGyroBuffer!!.poll()
                         if (channels != null) {
                             val valueArray = FloatArray(3)
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
                             }
-                            mSGGyroGraph!!.putValueArray(valueArray)
+                            bleSetData.mSGGyroGraph!!.putValueArray(valueArray)
                         }
                     }
-                    val magnetoSize = mMagnetoBuffer!!.size
+                    val magnetoSize = bleSetData.mMagnetoBuffer!!.size
                     for (count in 0 until magnetoSize) {
-                        val channels = mMagnetoBuffer!!.poll()
+                        val channels =bleSetData.mMagnetoBuffer!!.poll()
                         if (channels != null) {
                             val valueArray = FloatArray(3)
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
                             }
-                            mSGMagnetoGraph!!.putValueArray(valueArray)
+                            bleSetData.mSGMagnetoGraph!!.putValueArray(valueArray)
                         }
                     }
                 }
@@ -429,34 +431,34 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
     /**
      * 데이터 업데이트 타이머 종료하는 함수
      */
-    private fun stopDataUpdateTimer() {
-        if (mDataUpdateTimer == null) {
+    override fun stopDataUpdateTimer() {
+        if (bleSetData.mDataUpdateTimer == null) {
             return
         }
         mTVLogTextView!!.append(
             String.format(
                 "\nRun time: %.3f(s)",
-                (System.currentTimeMillis() - mStartTime) / 1000f
+                (System.currentTimeMillis() - bleSetData.mStartTime) / 1000f
             )
         )
         mTVLogTextView!!.append(
             String.format(
                 "\nEMG: %d Acc: %d Gyro: %d Magneto: %d",
-                mEMGCount,
-                mAccCount,
-                mGyroCount,
-                mMagnetoCount
+                bleSetData.mEMGCount,
+                bleSetData.mAccCount,
+                bleSetData.mGyroCount,
+                bleSetData.mMagnetoCount
             )
         )
-        mDataUpdateTimer!!.cancel()
-        mDataUpdateTimer = null
+        bleSetData.mDataUpdateTimer!!.cancel()
+        bleSetData.mDataUpdateTimer = null
     }
 
     /**
      * 블루투스 상태 변화 이벤트 핸들러 초기화하는 함수
      */
-    private fun initBTStateEventHandler() {
-        mBTStateEventHandler = object : BTStateEvent {
+    override fun initBTStateEventHandler() {
+        bleSetData.mBTStateEventHandler = object : BTStateEvent {
             override fun onStateChanged(bluetoothState: BluetoothState) {
                 when (bluetoothState) {
                     BluetoothState.STATE_DISCONNECTED -> runOnUiThread {
@@ -533,15 +535,15 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
     /**
      * 블루투스 검색 이벤트 핸들러 초기화하는 함수
      */
-    private fun initBTScanEventHandler() {
-        mBTScanEventHandler = object : BTScanEvent {
+    override fun initBTScanEventHandler() {
+        bleSetData.mBTScanEventHandler = object : BTScanEvent {
             override fun onScanDevice(bluetoothDevice: BluetoothDevice) {
                 if (bluetoothDevice == null) {
                     return
                 }
                 val name = bluetoothDevice.name ?: return
                 if (name.contains("SHC") || name.contains("i8")) {
-                    mDeviceListAdapter!!.addItem(bluetoothDevice)
+                    bleSetData.mDeviceListAdapter!!.addItem(bluetoothDevice)
                 }
             }
 
@@ -552,7 +554,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
                     }
                     val name = bluetoothDevice.name ?: continue
                     if (name.contains("SHC")) {
-                        mDeviceListAdapter!!.addItem(bluetoothDevice)
+                        bleSetData.mDeviceListAdapter!!.addItem(bluetoothDevice)
                     }
                 }
             }
@@ -571,11 +573,11 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mBLEManager != null) {
-            mBLEManager!!.stopScanDevice()
-            mBLEManager!!.stop()
-            mBLEManager!!.disconnect()
-            mBLEManager!!.stopBLEService()
+        if (bleSetData.mBLEManager != null) {
+            bleSetData.mBLEManager!!.stopScanDevice()
+            bleSetData.mBLEManager!!.stop()
+            bleSetData.mBLEManager!!.disconnect()
+            bleSetData.mBLEManager!!.stopBLEService()
         }
     }
 
@@ -601,64 +603,49 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
     }
 
     private fun onClickScan() {
-        mDeviceListAdapter!!.reset()
+        bleSetData.mDeviceListAdapter!!.reset()
         mBtnScan!!.setText(R.string.button_scanning)
         mBtnScan!!.isEnabled = false
-        mBLEManager!!.startScanDevice(20 * 1000)
+        bleSetData.mBLEManager!!.startScanDevice(20 * 1000)
     }
 
     private fun onClickStart() {
         resetComponent()
-        if (mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate250) {
-            mSGEMGGraph!!.setSamplingRate(250f)
-            mSGAccGraph!!.setSamplingRate(31.25f)
-            mSGGyroGraph!!.setSamplingRate(31.25f)
-            mSGMagnetoGraph!!.setSamplingRate(31.25f)
+        if (bleSetData.mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate250) {
+            bleSetData.mSGEMGGraph!!.setSamplingRate(250f)
+            bleSetData.mSGAccGraph!!.setSamplingRate(31.25f)
+            bleSetData.mSGGyroGraph!!.setSamplingRate(31.25f)
+            bleSetData.mSGMagnetoGraph!!.setSamplingRate(31.25f)
             mTVLogTextView!!.append("\nonClickStart: Send start command 250 SPS")
-            mBLEManager!!.start(
+            bleSetData.mBLEManager!!.start(
                 UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET,
                 UxProtocol.SAMPLINGRATE_250
             )
-        } else if (mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate500) {
-            mSGEMGGraph!!.setSamplingRate(500f)
-            mSGAccGraph!!.setSamplingRate(62.5f)
-            mSGGyroGraph!!.setSamplingRate(62.5f)
-            mSGMagnetoGraph!!.setSamplingRate(62.5f)
+        } else if (bleSetData.mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate500) {
+            bleSetData.mSGEMGGraph!!.setSamplingRate(500f)
+            bleSetData.mSGAccGraph!!.setSamplingRate(62.5f)
+            bleSetData.mSGGyroGraph!!.setSamplingRate(62.5f)
+            bleSetData.mSGMagnetoGraph!!.setSamplingRate(62.5f)
             mTVLogTextView!!.append("\nonClickStart: Send start command 500 SPS")
-            mBLEManager!!.start(
+            bleSetData.mBLEManager!!.start(
                 UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET,
                 UxProtocol.SAMPLINGRATE_500
             )
         }
     }
 
-    /**
-     * 구성요소 초기화하는 함수
-     */
-    private fun resetComponent() {
-        mEMGBuffer!!.clear()
-        mAccBuffer!!.clear()
-        mGyroBuffer!!.clear()
-        mMagnetoBuffer!!.clear()
-        mStartTime = 0
-        mEMGCount = 0
-        mAccCount = 0
-        mGyroCount = 0
-        mMagnetoCount = 0
-    }
-
     private fun onClickStop() {
         mTVLogTextView!!.append("\nonClickStop: Send stop command")
-        mBLEManager!!.stop()
+        bleSetData.mBLEManager!!.stop()
     }
 
     private fun onClickDisconnect() {
-        if (mBLEManager!!.bluetoothState == BluetoothState.STATE_CONNECTED) {
-            mBLEManager!!.stop()
-            mBLEManager!!.disconnect()
+        if (bleSetData.mBLEManager!!.bluetoothState == BluetoothState.STATE_CONNECTED) {
+            bleSetData.mBLEManager!!.stop()
+            bleSetData.mBLEManager!!.disconnect()
         } else {
-            mBLEManager!!.stop()
-            mBLEManager!!.disconnect()
+            bleSetData.mBLEManager!!.stop()
+            bleSetData.mBLEManager!!.disconnect()
             mBtnDisconnect!!.isEnabled = false
             stopDataUpdateTimer()
         }
