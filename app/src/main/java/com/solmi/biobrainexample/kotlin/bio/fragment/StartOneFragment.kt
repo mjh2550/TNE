@@ -1,7 +1,9 @@
 package com.solmi.biobrainexample.kotlin.bio.fragment
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
-import android.text.Layout
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +11,10 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.widget.Button
 import android.widget.TextView
-import androidx.annotation.ContentView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.kotlin.bio.StartActivity
-import org.w3c.dom.Text
 import java.util.*
 
 /**
@@ -30,7 +30,6 @@ class StartOneFragment : Fragment(),View.OnClickListener{
     private lateinit var tv_ble_info01 : TextView
     private lateinit var tv_ble_info02 : TextView
     private lateinit var infoMsgFadeIn01 : AlphaAnimation
-    private lateinit var infoMsgFadeIn02 : AlphaAnimation
     lateinit var fadeOut : AlphaAnimation
     
 
@@ -55,6 +54,7 @@ class StartOneFragment : Fragment(),View.OnClickListener{
 
         initBinding(view)
 
+
     }
 
     private fun initBinding(view: View) {
@@ -73,7 +73,7 @@ class StartOneFragment : Fragment(),View.OnClickListener{
         infoMsgFadeIn01.fillAfter = true
         tv_ble_info01.startAnimation(infoMsgFadeIn01)
 
-        infoMsgFadeIn02 = AlphaAnimation(0.0f, 1.0f)
+        val infoMsgFadeIn02 = AlphaAnimation(0.0f, 1.0f)
         infoMsgFadeIn02.duration = 1200
         infoMsgFadeIn02.fillAfter = true
         infoMsgFadeIn02.startOffset = 1500
@@ -82,17 +82,43 @@ class StartOneFragment : Fragment(),View.OnClickListener{
         fadeOut = AlphaAnimation(1.0f, 0.0f)
         fadeOut.duration = 1200
         fadeOut.fillAfter = true
-        fadeOut.startOffset = 4200 + infoMsgFadeIn01.startOffset
+        fadeOut.startOffset = 1000 + infoMsgFadeIn02.startOffset
+
+        val mainViewFadeIn = AlphaAnimation(0.0f, 1.0f)
+        mainViewFadeIn.duration = 1200
+        mainViewFadeIn.fillAfter = true
+        mainViewFadeIn.startOffset = 1000 + fadeOut.startOffset
+        mainBLEView.startAnimation(mainViewFadeIn)
+        mainBLEView.visibility = View.VISIBLE
+
+        val infoMsgFadeOut01 = AlphaAnimation(1.0f,0.0f)
+        infoMsgFadeOut01.duration = 1200
+        infoMsgFadeOut01.fillAfter = true
+
+
+        ObjectAnimator.ofFloat(mainBLEView,"translationY",400f).apply {
+            duration = 2000
+            start()
+        }
+
+
 
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_test01 -> {
-                if(mainBLEView.visibility == View.VISIBLE)
-                 mainBLEView.visibility = View.INVISIBLE
-                else
-                mainBLEView.visibility = View.VISIBLE
+
+                val tf = if (mainBLEView.visibility ==View.VISIBLE )"true" else "false"
+                Log.d("TEST>>>>",tf)
+                if(mainBLEView.visibility ==View.INVISIBLE){
+                   mainBLEView.startAnimation(infoMsgFadeIn01)
+                   mainBLEView.visibility = View.VISIBLE
+                   return
+                }
+                   fadeOut.startOffset = 0
+                   mainBLEView.startAnimation(fadeOut)
+                   mainBLEView.visibility =View.INVISIBLE
             }
         }
 

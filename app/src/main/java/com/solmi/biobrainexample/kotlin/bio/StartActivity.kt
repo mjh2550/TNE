@@ -34,107 +34,20 @@ import java.util.concurrent.LinkedBlockingQueue
 
 class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
-    lateinit var navController: NavController
-    lateinit var navHostFragment: NavHostFragment
     companion object {
         lateinit var mainBLEView : View
         var bleSetData = BaseAppBle.bleSetData
     }
+    lateinit var navController: NavController
+    lateinit var navHostFragment: NavHostFragment
 
     private val PERMISSION_REQUEST_CODE :Int = 100
-
     var mTVLogTextView: TextView? = null
     var mBtnScan: Button? = null
     var mBtnStart: Button? = null
     var mBtnStop: Button? = null
     var mBtnDisconnect: Button? = null
     var mLVDeviceList: ListView? = null
-//
-//    var mSGEMGGraph: Simple1ChannelGraph? = null
-//    var mSGAccGraph: Simple3ChannelGraph? = null
-//    var mSGGyroGraph: Simple3ChannelGraph? = null
-//    var mSGMagnetoGraph: Simple3ChannelGraph? = null
-//    var mRGSamplingRate: RadioGroup? = null
-//
-//    /**
-//     * 블루투스 검색 이벤트 핸들러
-//     */
-//    private var mBTScanEventHandler: BTScanEvent? = null
-//
-//    /**
-//     * 블루투스 상태 변화 이벤트 핸들러
-//     */
-//    private var mBTStateEventHandler: BTStateEvent? = null
-//
-//    /**
-//     * 데이터 파싱 이벤트 핸들러
-//     */
-//    private var mUxParserEventHandler: UxParserEvent? = null
-//
-//    /**
-//     * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러
-//     */
-//    private var mItemClickListener: OnItemClickListener? = null
-//
-//    /**
-//     * 블루투스 통신 클래스
-//     */
-//    private var mBLEManager: BLECommManager? = null
-//
-//    /**
-//     * 검색된 디바이스 리스트 뷰 어댑터
-//     */
-//    private var mDeviceListAdapter: DeviceListAdapter? = null
-//
-//    /**
-//     * EMG 데이터 버퍼
-//     */
-//    private var mEMGBuffer: Queue<IntArray>? = null
-//
-//    /**
-//     * Acc 데이터 버퍼
-//     */
-//    private var mAccBuffer: Queue<IntArray>? = null
-//
-//    /**
-//     * Gyro 데이터 버퍼
-//     */
-//    private var mGyroBuffer: Queue<IntArray>? = null
-//
-//    /**
-//     * Magneto 데이터 버퍼
-//     */
-//    private var mMagnetoBuffer: Queue<IntArray>? = null
-//
-//    /**
-//     * 데이터 업데이트 타이머
-//     */
-//    private var mDataUpdateTimer: Timer? = null
-//
-//    /**
-//     * 측정 시작 시간
-//     */
-//    private var mStartTime: Long = 0
-//
-//    /**
-//     * 수신한 EMG 데이터 수
-//     */
-//    private var mEMGCount = 0
-//
-//    /**
-//     * 수신한 Acc 데이터 수
-//     */
-//    private var mAccCount = 0
-//
-//    /**
-//     * 수신한 Gyro 데이터 수
-//     */
-//    private var mGyroCount = 0
-//
-//    /**
-//     * 수신한 Magneto 데이터 수
-//     */
-//    private var mMagnetoCount = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
