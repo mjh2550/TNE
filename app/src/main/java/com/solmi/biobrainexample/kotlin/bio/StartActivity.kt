@@ -189,21 +189,21 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
      */
     private fun initComponent() {
 
-          mTVLogTextView    = findViewById(R.id.tv_mainLogTextView)
-          mBtnScan          = findViewById(R.id.btn_mainScan)
-          mBtnStart         = findViewById(R.id.btn_mainStart)
-          mBtnStop          = findViewById(R.id.btn_mainStop)
-          mBtnDisconnect    = findViewById(R.id.btn_mainDisconnect)
-          mLVDeviceList     = findViewById(R.id.lv_mainDeviceList)
-          mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph)
-          mSGAccGraph       = findViewById(R.id.sg_mainAccGraph)
-          mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph)
-          mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph)
-          mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate)
-          mBtnScan!!.setOnClickListener(this)
-          mBtnStart!!.setOnClickListener(this)
-          mBtnDisconnect!!.setOnClickListener(this)
-          mBtnStop!!.setOnClickListener(this)
+        mTVLogTextView    = findViewById(R.id.tv_mainLogTextView)
+        mBtnScan          = findViewById(R.id.btn_mainScan)
+        mBtnStart         = findViewById(R.id.btn_mainStart)
+        mBtnStop          = findViewById(R.id.btn_mainStop)
+        mBtnDisconnect    = findViewById(R.id.btn_mainDisconnect)
+        mLVDeviceList     = findViewById(R.id.lv_mainDeviceList)
+        mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph)
+        mSGAccGraph       = findViewById(R.id.sg_mainAccGraph)
+        mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph)
+        mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph)
+        mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate)
+        mBtnScan!!.setOnClickListener(this)
+        mBtnStart!!.setOnClickListener(this)
+        mBtnDisconnect!!.setOnClickListener(this)
+        mBtnStop!!.setOnClickListener(this)
 
         mBLEManager = BLECommManager(this)
         mBLEManager!!.registerBTScanEventHandler(mBTScanEventHandler)
@@ -242,7 +242,6 @@ class StartActivity : AppCompatActivity() , View.OnClickListener {
         initBTStateEventHandler()
         initUxParserEventHandler()
         initItemClickListener()
-       Log.d("Call InitHandler>>>>>","")
     }
 
     /**

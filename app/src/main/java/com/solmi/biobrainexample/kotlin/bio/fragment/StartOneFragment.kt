@@ -29,7 +29,8 @@ class StartOneFragment : Fragment(),View.OnClickListener{
     lateinit var btn_test: Button
     lateinit var tv_ble_info01 : TextView
     lateinit var tv_ble_info02 : TextView
-    lateinit var fadeIn : AlphaAnimation
+    lateinit var infoMsgFadeIn01 : AlphaAnimation
+    lateinit var infoMsgFadeIn02 : AlphaAnimation
     lateinit var fadeOut : AlphaAnimation
     
 
@@ -65,24 +66,27 @@ class StartOneFragment : Fragment(),View.OnClickListener{
         mainBLEView = StartActivity.mainBLEView
         
         //애니메이션
-        fadeIn = AlphaAnimation(0.0f, 1.0f)
+        infoMsgFadeIn01 = AlphaAnimation(0.0f, 1.0f)
+        infoMsgFadeIn01.duration = 1200
+        infoMsgFadeIn01.fillAfter = true
+        tv_ble_info01.startAnimation(infoMsgFadeIn01)
+
+        infoMsgFadeIn02 = AlphaAnimation(0.0f, 1.0f)
+        infoMsgFadeIn02.duration = 1200
+        infoMsgFadeIn02.fillAfter = true
+        infoMsgFadeIn02.startOffset = 1500
+        tv_ble_info02.startAnimation(infoMsgFadeIn02)
+
         fadeOut = AlphaAnimation(1.0f, 0.0f)
-        fadeIn.duration = 1200
-        fadeIn.fillAfter = true
         fadeOut.duration = 1200
         fadeOut.fillAfter = true
-        fadeOut.startOffset = 4200 + fadeIn.startOffset
-
+        fadeOut.startOffset = 4200 + infoMsgFadeIn01.startOffset
 
         //컴포넌트
         btn_test = view.findViewById(R.id.btn_test01)
         tv_ble_info01 = view.findViewById(R.id.tv_BLE_info_01)
         tv_ble_info02 = view.findViewById(R.id.tv_BLE_info_02)
         btn_test.setOnClickListener(this)
-        tv_ble_info01.startAnimation(fadeIn)
-        tv_ble_info02.startAnimation(fadeIn)
-        tv_ble_info01.startAnimation(fadeOut)
-        tv_ble_info02.startAnimation(fadeOut)
     }
 
     override fun onClick(v: View?) {
