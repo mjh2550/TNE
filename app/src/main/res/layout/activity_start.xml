@@ -7,6 +7,9 @@
     android:orientation="vertical"
     tools:context=".bio.StartActivity">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/titlebar" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bio_start_nav_host_fragment"
@@ -16,22 +19,21 @@
 
         app:defaultNavHost="true"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/bio_start_nav_graph" />
-
 
     <LinearLayout
         android:id="@+id/main_BLEView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-
         app:layout_constraintBottom_toTopOf="@+id/main_logView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
         <RadioGroup
             android:id="@+id/rg_mainSamplingRate"
@@ -57,47 +59,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:weightSum="1"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_mainScan"
-                android:layout_width="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/button_scan"
                 android:textSize="12sp" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/btn_mainStart"
-                android:layout_width="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/button_start"
                 android:textSize="12sp" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
             <Button
                 android:id="@+id/btn_mainStop"
+                android:layout_weight="0.5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/button_stop"
                 android:textSize="12sp" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
             <Button
                 android:id="@+id/btn_mainDisconnect"
-                android:layout_width="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:text="@string/button_disconnect"
@@ -113,11 +108,23 @@
         <ListView
             android:id="@+id/lv_mainDeviceList"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="191dp"
             android:scrollbars="vertical">
 
         </ListView>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_GraphView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/main_logView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -180,7 +187,6 @@
 
         </ScrollView>
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -199,11 +205,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/main_log"
+            android:visibility="gone"
             android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/tv_mainLogTextView"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="150dp"
             android:gravity="bottom"
             android:paddingStart="10dp"
@@ -222,7 +230,7 @@
                 android:text="NEXT"/>-->
             <Button
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:text="다음"/>

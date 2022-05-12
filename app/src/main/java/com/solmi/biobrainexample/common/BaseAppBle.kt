@@ -3,6 +3,10 @@ package com.solmi.biobrainexample.common
 import android.content.Context
 import java.util.*
 
+/**
+ * BlueTooth Setting View Interface
+ * 2022.05.11
+ */
 interface BaseAppBle {
     companion object{
         private var bleSetData : BleSetData? = null

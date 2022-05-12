@@ -11,6 +11,10 @@ import com.solmi.ble.BTStateEvent
 import com.solmi.uxprotocol.UxParserEvent
 import java.util.*
 
+/**
+ * BlueTooth Setting View DataClass
+ * 2022.05.11
+ */
 data class BleSetData(var mBTScanEventHandler: BTScanEvent? = null,
                       var mBTStateEventHandler: BTStateEvent? = null,
                       var mUxParserEventHandler: UxParserEvent? = null,

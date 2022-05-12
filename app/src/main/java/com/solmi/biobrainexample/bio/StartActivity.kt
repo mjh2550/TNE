@@ -13,11 +13,13 @@ import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.solmi.biobrainexample.DeviceListAdapter
 import com.solmi.biobrainexample.R
+import com.solmi.biobrainexample.bio.viewmodel.BioViewModel
 import com.solmi.biobrainexample.common.BaseAppBle
 import com.solmi.biobrainexample.common.BleSetData
 import com.solmi.ble.BLECommManager
@@ -41,6 +43,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
 
+    lateinit var bioViewModel: BioViewModel
+
     private val PERMISSION_REQUEST_CODE :Int = 100
     var mTVLogTextView: TextView? = null
     var mBtnScan: Button? = null
@@ -54,10 +58,13 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
-        mainBLEView = findViewById( R.id.main_BLEView)
         navHostFragment = supportFragmentManager.findFragmentById(R.id.bio_start_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.findNavController()
+        mainBLEView = findViewById( R.id.main_BLEView)
         bleSetData = BaseAppBle.getInstance(this)
+
+        //https://javachoi.tistory.com/138
+        //bioViewModel = ViewModelProvider(this,NameViewModelFactory()).get(BioViewModel::class.java)
 
         initHandler()
         initComponent()
