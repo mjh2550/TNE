@@ -27,8 +27,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintBottom_toTopOf="@+id/main_logView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -118,20 +118,6 @@
 
         </ListView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/main_log"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/tv_mainLogTextView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:gravity="bottom"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:scrollbars="vertical" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -182,19 +168,69 @@
                     android:text="@string/main_magneto_graph"
                     android:textStyle="bold|italic" />
 
+                <com.solmi.biobrainexample.Simple3ChannelGraph
+                    android:id="@+id/sg_mainMagnetoGraph"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    tools:layout_editor_absoluteX="154dp"
+                    tools:layout_editor_absoluteY="83dp" />
+
             </LinearLayout>
 
 
         </ScrollView>
 
-        <com.solmi.biobrainexample.Simple3ChannelGraph
-            android:id="@+id/sg_mainMagnetoGraph"
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_logView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/log_info"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            tools:layout_editor_absoluteX="154dp"
-            tools:layout_editor_absoluteY="83dp" />
+            android:layout_height="wrap_content"
+            android:text="@string/main_log"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tv_mainLogTextView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="bottom"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:scrollbars="vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:weightSum="1"
+            android:orientation="horizontal">
+           <!-- <Button
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NEXT"/>-->
+            <Button
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="다음"/>
 
         </LinearLayout>
+
+
+    </LinearLayout>
 
 
 
