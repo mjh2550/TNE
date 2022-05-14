@@ -13,7 +13,6 @@ import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -37,8 +36,9 @@ import java.util.concurrent.LinkedBlockingQueue
 class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
     companion object {
-       lateinit var mainBLEView : View
-       lateinit var bleSetData : BleSetData
+        lateinit var viewMainBLE : View
+        lateinit var viewBottom : View
+        lateinit var bleSetData : BleSetData
     }
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
@@ -60,12 +60,12 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.bio_start_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.findNavController()
-        mainBLEView = findViewById( R.id.main_BLEView)
+        viewMainBLE = findViewById(R.id.view_mainBLE)
+        viewBottom = findViewById(R.id.view_bottom)
         bleSetData = BaseAppBle.getInstance(this)
 
-        //https://javachoi.tistory.com/138
-        //bioViewModel = ViewModelProvider(this,NameViewModelFactory()).get(BioViewModel::class.java)
 
+        setViewModel()
         initHandler()
         initComponent()
 
@@ -73,6 +73,36 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         if(isPermissionGranted == false){
             requestPermission()
         }
+    }
+
+    private fun setViewModel(){
+        //https://javachoi.tistory.com/138
+        //bioViewModel = ViewModelProvider(this,NameViewModelFactory()).get(BioViewModel::class.java)
+
+        //뷰모델 객체 생성
+//       bioViewModel = ViewModelProvider(this,BioViewModelFactory()).get(BioViewModel::class.java)
+
+
+        /*    //뷰모델 객체 생성
+            viewModel = ViewModelProvider(this, NameViewModelFactory())
+                .get(NameViewModel::class.java)
+
+            //옵저버 정의 - 데이터가 변하는 이벤트 발생시 처리할 핸들러(람다)
+            val nameObserver: Observer<String> = Observer { newName ->
+                nameTextView.setText(
+                    newName
+                )
+            }
+
+            //뷰모델에 옵저버 등록
+            viewModel.getCurrentName().observe(this, nameObserver)
+
+            //ui 이벤트 처리 - 뷰모델 이용
+            inputButton.setOnClickListener { view ->
+                val inputName: String = nameInputView.getText().toString()
+                viewModel.getCurrentName().setValue(inputName)
+            }*/
+
     }
 
 

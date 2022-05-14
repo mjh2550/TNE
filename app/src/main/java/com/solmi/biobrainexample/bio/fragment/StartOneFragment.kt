@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.bio.StartActivity
+import com.solmi.biobrainexample.bio.StartActivity.Companion.viewMainBLE
 import java.util.*
 
 /**
@@ -25,14 +26,15 @@ import java.util.*
 class StartOneFragment : Fragment(),View.OnClickListener{
 
     private lateinit var navController : NavController
-    private lateinit var mainBLEView : View
+    private lateinit var viewMainBLE : View
+    private lateinit var viewBottom : View
     private lateinit var btn_test: Button
     private lateinit var tv_ble_info01 : TextView
     private lateinit var tv_ble_info02 : TextView
     private lateinit var infoMsgFadeIn01 : AlphaAnimation
     private lateinit var infoMsgFadeIn02 : AlphaAnimation
     private lateinit var fadeOut : AlphaAnimation
-    
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,8 +64,10 @@ class StartOneFragment : Fragment(),View.OnClickListener{
      * 컴포넌트 바인딩
      */
     private fun initBinding(view: View) {
-        //메인 블루투스 뷰
-        mainBLEView = StartActivity.mainBLEView
+        //메인 뷰
+        viewMainBLE = StartActivity.viewMainBLE
+        viewBottom = StartActivity.viewBottom
+
 
         //컴포넌트
         tv_ble_info01 = view.findViewById(R.id.tv_BLE_info_01)
@@ -126,11 +130,11 @@ class StartOneFragment : Fragment(),View.OnClickListener{
             fillAfter = true
             startOffset = 1000 + fadeOut.startOffset
         }
-        mainBLEView.startAnimation(mainViewFadeIn)
-        mainBLEView.visibility = View.VISIBLE
+        viewMainBLE.startAnimation(mainViewFadeIn)
+        viewMainBLE.visibility = View.VISIBLE
 
 
-        /* ObjectAnimator.ofFloat(mainBLEView,"translationY",400f).apply {
+        /* ObjectAnimator.ofFloat(viewMainBLE,"translationY",400f).apply {
             duration = 2000
             start()
         }*/
@@ -139,14 +143,14 @@ class StartOneFragment : Fragment(),View.OnClickListener{
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_test01 -> {
-                if(mainBLEView.visibility ==View.INVISIBLE){
-                   mainBLEView.startAnimation(infoMsgFadeIn01)
-                   mainBLEView.visibility = View.VISIBLE
-                   return
+                if(viewMainBLE.visibility ==View.INVISIBLE){
+                    viewMainBLE.startAnimation(infoMsgFadeIn01)
+                    viewMainBLE.visibility = View.VISIBLE
+                    return
                 }
-                   fadeOut.startOffset = 0
-                   mainBLEView.startAnimation(fadeOut)
-                   mainBLEView.visibility =View.INVISIBLE
+                fadeOut.startOffset = 0
+                viewMainBLE.startAnimation(fadeOut)
+                viewMainBLE.visibility =View.INVISIBLE
             }
         }
 

@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/titlebar" />
+        layout="@layout/titlebar"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bio_start_nav_host_fragment"
@@ -26,11 +26,12 @@
         app:navGraph="@navigation/bio_start_nav_graph" />
 
     <LinearLayout
-        android:id="@+id/main_BLEView"
+        android:id="@+id/view_mainBLE"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/main_logView"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/view_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
@@ -59,41 +60,42 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <Button
                 android:id="@+id/btn_mainScan"
-                android:layout_weight="0.5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:text="@string/button_scan"
                 android:textSize="12sp" />
 
 
             <Button
                 android:id="@+id/btn_mainStart"
-                android:layout_weight="0.5"
+
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:layout_weight="0.5"
                 android:text="@string/button_start"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_mainStop"
-                android:layout_weight="0.5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:layout_weight="0.5"
                 android:text="@string/button_stop"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_mainDisconnect"
-                android:layout_weight="0.5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:enabled="false"
                 android:text="@string/button_disconnect"
                 android:textSize="12sp" />
@@ -121,7 +123,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/main_logView"
+        app:layout_constraintBottom_toTopOf="@+id/view_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
@@ -190,7 +192,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/main_logView"
+        android:id="@+id/view_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -199,6 +201,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         >
+
+        <LinearLayout
+            android:id="@+id/view_ble_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include"
+            >
+
+
+            <TextView
+                android:id="@+id/tv_ble_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bluetooth State"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tv_ble_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Device Name"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tv_ble_battery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Device Battery"
+                android:textSize="20dp" />
+
+
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/log_info"
@@ -223,11 +263,11 @@
             android:layout_height="50dp"
             android:weightSum="1"
             android:orientation="horizontal">
-           <!-- <Button
-                android:layout_weight="0.5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NEXT"/>-->
+            <!-- <Button
+                 android:layout_weight="0.5"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="NEXT"/>-->
             <Button
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -239,7 +279,6 @@
 
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
