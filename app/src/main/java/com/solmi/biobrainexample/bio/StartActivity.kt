@@ -38,6 +38,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     companion object {
         lateinit var viewMainBLE : View
         lateinit var viewBottom : View
+        lateinit var viewBLEState : View
+        lateinit var viewBottomBtnBar : View
         lateinit var bleSetData : BleSetData
     }
     lateinit var navController: NavController
@@ -46,6 +48,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     lateinit var bioViewModel: BioViewModel
 
     private val PERMISSION_REQUEST_CODE :Int = 100
+    var mBtnNext : Button? = null
+//    var mBtnPrev : Button? = null
     var mTVLogTextView: TextView? = null
     var mBtnScan: Button? = null
     var mBtnStart: Button? = null
@@ -62,6 +66,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         navController = navHostFragment.findNavController()
         viewMainBLE = findViewById(R.id.view_mainBLE)
         viewBottom = findViewById(R.id.view_bottom)
+        viewBottomBtnBar = findViewById(R.id.view_bottom_btn_bar)
+        viewBLEState = findViewById(R.id.view_ble_state)
         bleSetData = BaseAppBle.getInstance(this)
 
 
@@ -140,6 +146,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
      */
     private fun initComponent() {
 
+        mBtnNext          = findViewById(R.id.btn_next)
         mTVLogTextView    = findViewById(R.id.tv_mainLogTextView)
         mBtnScan          = findViewById(R.id.btn_mainScan)
         mBtnStart         = findViewById(R.id.btn_mainStart)
@@ -151,6 +158,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         bleSetData.mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph)
         bleSetData.mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph)
         bleSetData.mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate)
+        mBtnNext!!.setOnClickListener(this)
         mBtnScan!!.setOnClickListener(this)
         mBtnStart!!.setOnClickListener(this)
         mBtnDisconnect!!.setOnClickListener(this)
@@ -552,7 +560,17 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
     private fun onClickStart() {
         resetComponent()
-        if (bleSetData.mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate250) {
+        if (bleSetData.mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate125) {
+            bleSetData.mSGEMGGraph!!.setSamplingRate(125f)
+            bleSetData.mSGAccGraph!!.setSamplingRate(15.625f)
+            bleSetData.mSGGyroGraph!!.setSamplingRate(15.625f)
+            bleSetData.mSGMagnetoGraph!!.setSamplingRate(15.625f)
+            mTVLogTextView!!.append("\nonClickStart: Send start command 125 SPS")
+            bleSetData.mBLEManager!!.start(
+                UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET,
+                UxProtocol.SAMPLINGRATE_250
+            )
+        } else if (bleSetData.mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate250) {
             bleSetData.mSGEMGGraph!!.setSamplingRate(250f)
             bleSetData.mSGAccGraph!!.setSamplingRate(31.25f)
             bleSetData.mSGGyroGraph!!.setSamplingRate(31.25f)
@@ -598,6 +616,13 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
             R.id.btn_mainStart -> onClickStart()
             R.id.btn_mainStop -> onClickStop()
             R.id.btn_mainDisconnect -> onClickDisconnect()
+            R.id.btn_next -> onClickBottomNextBtn()
+//            R.id.btn_prev -> onClickBottomPrevBtn()
         }
+    }
+
+    //다음 버튼
+    fun onClickBottomNextBtn() {
+        navController.navigate(R.id.action_startOneFragment_to_startTwoFragment)
     }
 }

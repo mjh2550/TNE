@@ -28,6 +28,8 @@ class StartOneFragment : Fragment(),View.OnClickListener{
     private lateinit var navController : NavController
     private lateinit var viewMainBLE : View
     private lateinit var viewBottom : View
+    private lateinit var viewBleState : View
+    private lateinit var viewBottomBtnBar : View
     private lateinit var btn_test: Button
     private lateinit var tv_ble_info01 : TextView
     private lateinit var tv_ble_info02 : TextView
@@ -67,6 +69,8 @@ class StartOneFragment : Fragment(),View.OnClickListener{
         //메인 뷰
         viewMainBLE = StartActivity.viewMainBLE
         viewBottom = StartActivity.viewBottom
+        viewBleState = StartActivity.viewBLEState
+        viewBottomBtnBar = StartActivity.viewBottomBtnBar
 
 
         //컴포넌트
@@ -110,6 +114,16 @@ class StartOneFragment : Fragment(),View.OnClickListener{
                     tv_ble_info02.startAnimation(infoMsgFadeOut)
                     tv_ble_info01.visibility = View.INVISIBLE
                     tv_ble_info02.visibility = View.INVISIBLE
+
+                    val botFadeIn = AlphaAnimation(0.0f,1.0f).apply {
+                        duration = fadeDurSet
+                        fillAfter = true
+                        startOffset = infoMsgFadeIn02.startOffset
+                    }
+                    viewBleState.startAnimation(botFadeIn)
+                    viewBleState.visibility = View.VISIBLE
+                    viewBottomBtnBar.startAnimation(botFadeIn)
+                    viewBottomBtnBar.visibility = View.VISIBLE
                 }
 
                 override fun onAnimationRepeat(animation: Animation?) {

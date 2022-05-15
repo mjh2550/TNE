@@ -45,6 +45,12 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rb_mainSamplingRate125"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_button_125SPS" />
+
+            <RadioButton
                 android:id="@+id/rb_mainSamplingRate250"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -259,20 +265,23 @@
             android:scrollbars="vertical" />
 
         <LinearLayout
+            android:id="@+id/view_bottom_btn_bar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:visibility="invisible"
             android:weightSum="1"
             android:orientation="horizontal">
             <!-- <Button
+                android:id="@+id/btn_prev"
                  android:layout_weight="0.5"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:text="NEXT"/>-->
             <Button
+                android:id="@+id/btn_next"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:text="다음"/>
 
         </LinearLayout>
