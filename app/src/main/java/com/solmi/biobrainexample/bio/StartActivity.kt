@@ -40,6 +40,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         lateinit var viewBottom : View
         lateinit var viewBLEState : View
         lateinit var viewBottomBtnBar : View
+        lateinit var viewMainGraphView : View
         lateinit var bleSetData : BleSetData
     }
     lateinit var navController: NavController
@@ -68,6 +69,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         viewBottom = findViewById(R.id.view_bottom)
         viewBottomBtnBar = findViewById(R.id.view_bottom_btn_bar)
         viewBLEState = findViewById(R.id.view_ble_state)
+        viewMainGraphView = findViewById(R.id.main_GraphView)
         bleSetData = BaseAppBle.getInstance(this)
 
 
@@ -623,6 +625,17 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
     //다음 버튼
     fun onClickBottomNextBtn() {
+
+        //첫번째 프래그먼트
+        if(navController.currentDestination?.displayName.equals("${packageName}:id/startOneFragment"))
         navController.navigate(R.id.action_startOneFragment_to_startTwoFragment)
+
+        //두번째 프래그먼트
+        else if (navController.currentDestination?.displayName.equals("${packageName}:id/startTwoFragment")){
+
+        }
+//            navController.popBackStack()
+
+
     }
 }
