@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.ui.login;
+package com.solmi.biobrainexample.login;
 
 import androidx.annotation.Nullable;
 

@@ -1,6 +1,4 @@
-package com.solmi.biobrainexample.data;
-
-import com.solmi.biobrainexample.data.model.LoggedInUser;
+package com.solmi.biobrainexample.login;
 
 /**
  * Class that requests authentication and user information from the remote data source and

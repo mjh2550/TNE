@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.data;
+package com.solmi.biobrainexample.login;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

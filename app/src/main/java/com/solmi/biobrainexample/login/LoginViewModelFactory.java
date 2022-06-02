@@ -1,11 +1,11 @@
-package com.solmi.biobrainexample.ui.login;
+package com.solmi.biobrainexample.login;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import com.solmi.biobrainexample.data.LoginDataSource;
-import com.solmi.biobrainexample.data.LoginRepository;
+import com.solmi.biobrainexample.login.LoginDataSource;
+import com.solmi.biobrainexample.login.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

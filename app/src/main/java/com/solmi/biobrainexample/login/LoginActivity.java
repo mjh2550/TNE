@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.ui.login;
+package com.solmi.biobrainexample.login;
 
 import android.Manifest;
 import android.app.Activity;
@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.ui.login;
+package com.solmi.biobrainexample.login;
 
 /**
  * Class exposing authenticated user details to the UI.

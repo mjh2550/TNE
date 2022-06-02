@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.data.model;
+package com.solmi.biobrainexample.login;
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository

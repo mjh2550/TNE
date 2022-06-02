@@ -1,6 +1,4 @@
-package com.solmi.biobrainexample.data;
-
-import com.solmi.biobrainexample.data.model.LoggedInUser;
+package com.solmi.biobrainexample.login;
 
 import java.io.IOException;
 

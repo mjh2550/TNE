@@ -1,4 +1,4 @@
-package com.solmi.biobrainexample.ui.login;
+package com.solmi.biobrainexample.login;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,9 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.solmi.biobrainexample.data.LoginRepository;
-import com.solmi.biobrainexample.data.Result;
-import com.solmi.biobrainexample.data.model.LoggedInUser;
 import com.solmi.biobrainexample.R;
 
 public class LoginViewModel extends ViewModel {
