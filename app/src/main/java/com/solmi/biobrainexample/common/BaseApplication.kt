@@ -29,6 +29,6 @@ import com.solmi.uxprotocol.UxProtocol
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
-class BaseApplication {
+class BaseApplication : Application(){
 
 }

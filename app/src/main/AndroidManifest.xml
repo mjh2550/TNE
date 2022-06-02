@@ -31,9 +31,11 @@
             android:exported="false" />
         <activity
             android:name="com.solmi.biobrainexample.home.HomeKtActivity"
-            android:exported="true" />
+            android:exported="true" >
 
-        <receiver
+        </activity>
+
+       <!-- <receiver
             android:name=".process.MyBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
@@ -43,21 +45,10 @@
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
                 <action android:name="android.intent.action.BATTERY_CHANGED" />
             </intent-filter>
-        </receiver> <!-- android:launchMode="singleInstance" -->
-        <activity
-            android:name=".process.BioStartActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:taskAffinity="com.solme.biobrainexample" />
-        <activity
-            android:name=".home.HomeActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".login.ui.LoginActivity"
-            android:exported="true"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".SplashActivity">
+        </receiver> -->
+
+        <activity android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

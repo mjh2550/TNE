@@ -35,6 +35,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="database_name">bio_database</string>
+
     <string name="messageBleInfo01">블루투스 기기연결을 진행합니다.</string>
     <string name="messageBleInfo02">센서의 전원을 켜고,\n기기찾기 버튼을 눌러주세요.</string>
 </resources>
