@@ -83,7 +83,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         isBlePermissionGranted()
 
         val isPermissionGranted : Boolean = checkPermission()
-        if(isPermissionGranted == false){
+        if(!isPermissionGranted){
             requestPermission()
         }
     }
@@ -144,12 +144,10 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
         val needPermissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
         )
 
         ActivityCompat.requestPermissions(this, needPermissions, PERMISSION_REQUEST_CODE)
-
-
 
     }
 
