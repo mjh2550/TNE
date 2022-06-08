@@ -25,6 +25,7 @@ import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.bio.viewmodel.BioViewModel
 import com.solmi.biobrainexample.common.BaseAppBle
 import com.solmi.biobrainexample.common.BleSetData
+import com.solmi.biobrainexample.common.CircularQueue
 import com.solmi.ble.BLECommManager
 import com.solmi.ble.BLEDefine.BluetoothState
 import com.solmi.ble.BTScanEvent
@@ -33,6 +34,7 @@ import com.solmi.bluetoothlibrary.common.BTDataDefine
 import com.solmi.uxprotocol.HeaderPacket
 import com.solmi.uxprotocol.UxParserEvent
 import com.solmi.uxprotocol.UxProtocol
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
@@ -61,22 +63,13 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     var mBtnStop: Button? = null
     var mBtnDisconnect: Button? = null
     var mLVDeviceList: ListView? = null
-
+    var queue = CircularQueue()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.bio_start_nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.findNavController()
-        viewMainBLE = findViewById(R.id.view_mainBLE)
-        viewBottom = findViewById(R.id.view_bottom)
-        viewBottomBtnBar = findViewById(R.id.view_bottom_btn_bar)
-        viewBLEState = findViewById(R.id.view_ble_state)
-        viewMainGraphView = findViewById(R.id.main_GraphView)
-        bleSetData = BaseAppBle.getInstance(this)
-
-
+        initBinding()
         setViewModel()
         initHandler()
         initComponent()
@@ -86,6 +79,18 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         if(!isPermissionGranted){
             requestPermission()
         }
+    }
+
+    private fun initBinding() {
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.bio_start_nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.findNavController()
+        viewMainBLE = findViewById(R.id.view_mainBLE)
+        viewBottom = findViewById(R.id.view_bottom)
+        viewBottomBtnBar = findViewById(R.id.view_bottom_btn_bar)
+        viewBLEState = findViewById(R.id.view_ble_state)
+        viewMainGraphView = findViewById(R.id.main_GraphView)
+        bleSetData = BaseAppBle.getInstance(this)
     }
 
     private fun isBlePermissionGranted() {
@@ -137,6 +142,16 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 viewModel.getCurrentName().setValue(inputName)
             }*/
 
+    }
+
+    /**
+     * 시간초 구하는 함수
+     */
+    private fun getTime() : String{
+//        val now = System.currentTimeMillis();
+//        val date = Date(now)
+//        val dateFormat = SimpleDateFormat("hh:mm:ss")
+        return System.currentTimeMillis().toString()
     }
 
 
@@ -372,6 +387,10 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                         val channels = bleSetData.mEMGBuffer!!.poll()
                         if (channels != null) {
                             val value = channels[0] / 2047f * 7.4f
+                            Log.d("Emg",value.toString()+" Time : "+getTime())
+                            queue.insert(value)
+                            queue.printFront()
+                            queue.printTail()
                             bleSetData.mSGEMGGraph!!.putValue(value)
                         }
                     }
@@ -382,6 +401,12 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             val valueArray = FloatArray(3)
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
+                                when(index){
+                                    0->  Log.d("Acc","0 : "+valueArray[index].toString()+" Time : "+getTime())
+                                    1->  Log.d("Acc","1 : "+valueArray[index].toString()+" Time : "+getTime())
+                                    2->  Log.d("Acc","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                }
+
                             }
                             bleSetData.mSGAccGraph!!.putValueArray(valueArray)
                         }
@@ -393,6 +418,11 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             val valueArray = FloatArray(3)
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
+                                when(index){
+                                    0->  Log.d("Gyro","0 : "+valueArray[index].toString()+" Time : "+getTime())
+                                    1->  Log.d("Gyro","1 : "+valueArray[index].toString()+" Time : "+getTime())
+                                    2->  Log.d("Gyro","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                }
                             }
                             bleSetData.mSGGyroGraph!!.putValueArray(valueArray)
                         }
@@ -404,6 +434,11 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             val valueArray = FloatArray(3)
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
+                                when(index){
+                                    0->  Log.d("Mag","0 : "+valueArray[index].toString()+" Time : "+getTime())
+                                    1->  Log.d("Mag","1 : "+valueArray[index].toString()+" Time : "+getTime())
+                                    2->  Log.d("Mag","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                }
                             }
                             bleSetData.mSGMagnetoGraph!!.putValueArray(valueArray)
                         }
