@@ -4,12 +4,16 @@ import android.Manifest
 import android.bluetooth.BluetoothDevice
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.View
-import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.Button
+import android.widget.ListView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -76,10 +80,32 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         setViewModel()
         initHandler()
         initComponent()
+        isBlePermissionGranted()
 
         val isPermissionGranted : Boolean = checkPermission()
         if(isPermissionGranted == false){
             requestPermission()
+        }
+    }
+
+    private fun isBlePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.BLUETOOTH,
+                    Manifest.permission.BLUETOOTH_SCAN,
+                    Manifest.permission.BLUETOOTH_ADVERTISE,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ),
+                1
+            )
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.BLUETOOTH
+                ),
+                1
+            )
         }
     }
 
@@ -118,10 +144,12 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
         val needPermissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
         )
 
         ActivityCompat.requestPermissions(this, needPermissions, PERMISSION_REQUEST_CODE)
+
+
 
     }
 
@@ -213,6 +241,14 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 }
                 bleSetData.mBLEManager!!.stopScanDevice()
                 val device = bleSetData.mDeviceListAdapter!!.getItem(index)
+
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.BLUETOOTH_CONNECT
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    finish()
+                }
                 mTVLogTextView!!.text = "device name: " + device.name
                 bleSetData.mBLEManager!!.setDeviceType(BTDataDefine.DeviceType.SHC_U4)
                 bleSetData.mBLEManager!!.setReconnectCount(3)
@@ -492,7 +528,14 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 if (bluetoothDevice == null) {
                     return
                 }
-                val name = bluetoothDevice.name ?: return
+                if (ActivityCompat.checkSelfPermission(
+                        applicationContext,
+                        Manifest.permission.BLUETOOTH_CONNECT
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                   finish()
+                }
+                val name = bluetoothDevice.name ?: ""
                 if (name.contains("SHC") || name.contains("i8")) {
                     bleSetData.mDeviceListAdapter!!.addItem(bluetoothDevice)
                 }
@@ -503,6 +546,15 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                     if (bluetoothDevice == null) {
                         continue
                     }
+
+                    if (ActivityCompat.checkSelfPermission(
+                            applicationContext,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        finish()
+                    }
+
                     val name = bluetoothDevice.name ?: continue
                     if (name.contains("SHC")) {
                         bleSetData.mDeviceListAdapter!!.addItem(bluetoothDevice)
