@@ -7,6 +7,7 @@ class CircularQueue {
     private var head = 0
     private var tail = -1
     private var queueSize = 0
+    private val falseScore = -99999999f
 
     fun insert(value: Float) {
         list[(++tail % QUEUE_SIZE)] = value
@@ -14,33 +15,35 @@ class CircularQueue {
     }
 
     fun pop(): Float {
-        if(head >= 25000) {
+        if(head >= QUEUE_SIZE) {
             println("queue'size is overflow")
-            return -1f
+            return falseScore
         }
-        if(list[head] == -1f) {
+        if(list[head] == falseScore) {
             println("position $head is empty")
-            return -1f
+            return falseScore
         }
         println("front pop ${list[head]}")
         val result = list[head]
-        list[head] = -1f
+        list[head] = falseScore
         head = (head + 1) %  QUEUE_SIZE
         return result
     }
 
-    fun printFront() {
+    fun getFront() : Float {
 //        println("Queue Front ${list[head % QUEUE_SIZE]}")
         Log.d("Queue","Queue Front ${list[head % QUEUE_SIZE]}")
+        return list[head % QUEUE_SIZE]
     }
 
-    fun printTail() {
+    fun getTail(): Float{
 //        println("Queue Tail ${list[tail % QUEUE_SIZE]}")
         Log.d("Queue","Queue Tail ${list[tail % QUEUE_SIZE]}")
+        return list[tail % QUEUE_SIZE]
     }
 
     fun printAllElement() {
-        for (index in 0..9) {
+        for (index in 0 until QUEUE_SIZE) {
             println(list[index])
         }
     }

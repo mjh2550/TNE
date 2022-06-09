@@ -109,4 +109,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
+
+    //Gson
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.google.code.gson:gson:2.9.0'
 }

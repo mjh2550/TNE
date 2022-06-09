@@ -389,8 +389,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             val value = channels[0] / 2047f * 7.4f
                             Log.d("Emg",value.toString()+" Time : "+getTime())
                             queue.insert(value)
-                            queue.printFront()
-                            queue.printTail()
+//                            queue.printFront()
+//                            queue.printTail()
                             bleSetData.mSGEMGGraph!!.putValue(value)
                         }
                     }
