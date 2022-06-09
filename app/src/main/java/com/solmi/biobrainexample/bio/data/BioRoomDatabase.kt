@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.solmi.biobrainexample.common.CircularQueue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,10 +56,16 @@ abstract class BioRoomDatabase : RoomDatabase() {
 
         suspend fun populateDatabase(bioDao: BioDao){
             bioDao.deleteAll()
-            val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            val format_time: String = format.format(System.currentTimeMillis())
-            var bio = Bio(0,1.0F,1.0F,1.0F,1.0F,format_time)
-            bioDao.insert(bio)
+//            val bioDataQueue = CircularQueue()
+//            for(i in 0..10){
+//                bioDataQueue.insert(0.12522525f)
+//            }
+//
+//            val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//            val format_time: String = format.format(System.currentTimeMillis())
+////            var bio = Bio(0,1.0F,1.0F,1.0F,1.0F,format_time)
+//            var bio = Bio(0,bioDataQueue,format_time)
+//            bioDao.insert(bio)
         }
     }
 }
