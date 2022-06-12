@@ -122,7 +122,7 @@
                 android:id="@+id/btn_mainStart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:text="@string/button_start"
                 android:textSize="12sp"/>
 
@@ -130,8 +130,17 @@
                 android:id="@+id/btn_mainStop"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:text="@string/button_stop"
+                android:textSize="12sp"/>
+
+            <Button
+                android:id="@+id/btn_mainDataSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:enabled="true"
+                android:text="@string/button_data_save"
                 android:textSize="12sp"/>
 
         </LinearLayout>

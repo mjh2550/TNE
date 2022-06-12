@@ -14,16 +14,21 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.solmi.biobrainexample.DeviceListAdapter
 import com.solmi.biobrainexample.R
+import com.solmi.biobrainexample.bio.data.Bio
 import com.solmi.biobrainexample.bio.viewmodel.BioViewModel
+import com.solmi.biobrainexample.bio.viewmodel.BioViewModelFactory
 import com.solmi.biobrainexample.common.BaseAppBle
+import com.solmi.biobrainexample.common.BaseApplication
 import com.solmi.biobrainexample.common.BleSetData
 import com.solmi.biobrainexample.common.CircularQueue
 import com.solmi.ble.BLECommManager
@@ -34,6 +39,8 @@ import com.solmi.bluetoothlibrary.common.BTDataDefine
 import com.solmi.uxprotocol.HeaderPacket
 import com.solmi.uxprotocol.UxParserEvent
 import com.solmi.uxprotocol.UxProtocol
+import org.json.JSONArray
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
@@ -48,29 +55,31 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         lateinit var viewBottomBtnBar : View
         lateinit var viewMainGraphView : View
         lateinit var bleSetData : BleSetData
+        var queue = CircularQueue()
     }
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
 
-    lateinit var bioViewModel: BioViewModel
-
     private val PERMISSION_REQUEST_CODE :Int = 100
+    val bioViewModel : BioViewModel by viewModels {
+        BioViewModelFactory((application as BaseApplication).repository)
+    }
     var mBtnNext : Button? = null
 //    var mBtnPrev : Button? = null
     var mTVLogTextView: TextView? = null
     var mBtnScan: Button? = null
     var mBtnStart: Button? = null
     var mBtnStop: Button? = null
+    var mBtnDataSave : Button? = null
     var mBtnDisconnect: Button? = null
     var mLVDeviceList: ListView? = null
-    var queue = CircularQueue()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
         initBinding()
-        setViewModel()
         initHandler()
         initComponent()
         isBlePermissionGranted()
@@ -114,35 +123,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         }
     }
 
-    private fun setViewModel(){
-        //https://javachoi.tistory.com/138
-        //bioViewModel = ViewModelProvider(this,NameViewModelFactory()).get(BioViewModel::class.java)
 
-        //뷰모델 객체 생성
-//       bioViewModel = ViewModelProvider(this,BioViewModelFactory()).get(BioViewModel::class.java)
-
-
-        /*    //뷰모델 객체 생성
-            viewModel = ViewModelProvider(this, NameViewModelFactory())
-                .get(NameViewModel::class.java)
-
-            //옵저버 정의 - 데이터가 변하는 이벤트 발생시 처리할 핸들러(람다)
-            val nameObserver: Observer<String> = Observer { newName ->
-                nameTextView.setText(
-                    newName
-                )
-            }
-
-            //뷰모델에 옵저버 등록
-            viewModel.getCurrentName().observe(this, nameObserver)
-
-            //ui 이벤트 처리 - 뷰모델 이용
-            inputButton.setOnClickListener { view ->
-                val inputName: String = nameInputView.getText().toString()
-                viewModel.getCurrentName().setValue(inputName)
-            }*/
-
-    }
 
     /**
      * 시간초 구하는 함수
@@ -195,12 +176,14 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         mBtnStart         = findViewById(R.id.btn_mainStart)
         mBtnStop          = findViewById(R.id.btn_mainStop)
         mBtnDisconnect    = findViewById(R.id.btn_mainDisconnect)
+        mBtnDataSave      = findViewById(R.id.btn_mainDataSave)
         mLVDeviceList     = findViewById(R.id.lv_mainDeviceList)
         bleSetData.mSGEMGGraph       = findViewById(R.id.sg_mainEMGGraph)
         bleSetData.mSGAccGraph       = findViewById(R.id.sg_mainAccGraph)
         bleSetData.mSGGyroGraph      = findViewById(R.id.sg_mainGyroGraph)
         bleSetData.mSGMagnetoGraph   = findViewById(R.id.sg_mainMagnetoGraph)
         bleSetData.mRGSamplingRate   = findViewById(R.id.rg_mainSamplingRate)
+        mBtnDataSave!!.setOnClickListener(this)
         mBtnNext!!.setOnClickListener(this)
         mBtnScan!!.setOnClickListener(this)
         mBtnStart!!.setOnClickListener(this)
@@ -705,6 +688,34 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
             R.id.btn_mainDisconnect -> onClickDisconnect()
             R.id.btn_next -> onClickBottomNextBtn()
 //            R.id.btn_prev -> onClickBottomPrevBtn()
+            //데이터 저장
+            R.id.btn_mainDataSave ->{
+                /**
+                 * 1. queue 데이터 json 으로 변환
+                 * 2. JsonString으로 변환
+                 * 3. Bio 객체 생성후 데이터 바인딩
+                 * 4. dataInsert
+                 */
+                if(queue.getQueueSize()!=0){
+                    //1.2.
+                    //Bio Data
+                    val jsonString = getJsonString()
+
+                    //Current Time
+                    val now = System.currentTimeMillis();
+                    val date = Date(now)
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    //3.
+//                    val bioData = Bio(bioData= jsonString)
+                    val bioData = Bio(bioData= "testData")
+
+                    Log.d("bioData : ",jsonString)
+                    //4.
+                    //Data Tran
+                    bioViewModel.insert(bioData)
+                }
+
+            }
         }
     }
 
@@ -720,7 +731,22 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
         }
 //            navController.popBackStack()
+    }
 
-
+    private fun getJsonString() : String{
+        val jsonObj = JSONObject()
+        val jsonArray = JSONArray()
+        while(true){
+            val jsonObject = JSONObject()
+            var data = queue.pop()
+            if(data==-99999999f || queue.getQueueSize()<=0){
+                break
+            }
+            jsonObject.put("bioData", queue.pop())
+            jsonObject.put("Time",System.currentTimeMillis().toString())
+            jsonArray.put(jsonObject)
+        }
+        jsonObj.put("item",jsonArray)
+        return jsonObj.toString()
     }
 }

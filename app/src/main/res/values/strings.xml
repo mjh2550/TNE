@@ -4,6 +4,7 @@
     <string name="button_scanning">기기 찾는중..</string>
     <string name="button_start">측정 시작</string>
     <string name="button_stop">측정 멈추기</string>
+    <string name="button_data_save">데이터 저장</string>
     <!--<string name="button_disconnect">Disconnect</string>-->
     <string name="button_disconnect">연결 끊기</string>
     <string name="radio_button_125SPS">125 SPS</string>

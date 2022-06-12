@@ -28,14 +28,6 @@ class HomeKtActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home_kt)
 
         initNavBinding()
-//        test()
-        val scope = CoroutineScope(Dispatchers.Default)
-        scope.launch {
-//            test()
-            loop()
-        }
-
-
 
     }
 

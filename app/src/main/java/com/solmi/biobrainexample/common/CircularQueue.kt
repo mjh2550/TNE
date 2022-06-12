@@ -27,6 +27,7 @@ class CircularQueue {
         val result = list[head]
         list[head] = falseScore
         head = (head + 1) %  QUEUE_SIZE
+        queueSize--
         return result
     }
 
@@ -46,6 +47,9 @@ class CircularQueue {
         for (index in 0 until QUEUE_SIZE) {
             println(list[index])
         }
+    }
+    fun getQueueSize() : Int{
+        return queueSize
     }
 
     companion object {

@@ -15,7 +15,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.bio.StartActivity
+import com.solmi.biobrainexample.bio.StartActivity.Companion.queue
 import com.solmi.biobrainexample.bio.StartActivity.Companion.viewMainBLE
+import com.solmi.biobrainexample.bio.data.Bio
+import org.json.JSONArray
+import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -167,6 +172,5 @@ class StartOneFragment : Fragment(),View.OnClickListener{
                 viewMainBLE.visibility =View.INVISIBLE
             }
         }
-
     }
 }

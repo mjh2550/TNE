@@ -11,15 +11,11 @@ import com.solmi.biobrainexample.common.CircularQueue
 class Bio (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "bio_id") var bioId : Long?,
-    @ColumnInfo(name = "bio_data") var bioData : String,
-    @ColumnInfo(name = "reg_time") var regTime : String
+    @ColumnInfo(name = "bio_data") var bioData : String
 ){
 
-
-    constructor(bioData: String ,regTime: String)
-    :this(
+    constructor(bioData: String):this(
         null,
-        bioData,
-        regTime
+        bioData
     )
 }

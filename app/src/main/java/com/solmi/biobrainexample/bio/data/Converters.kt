@@ -29,8 +29,8 @@ class Converters {
         }
         jsonObj.put("item",jsonArray)
 
-        val gson = Gson()
-        gson.toJson(jsonObj)
+//        val gson = Gson()
+//        gson.toJson(jsonObj)
 
         return ""
     }
