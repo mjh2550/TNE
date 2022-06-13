@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
-@Database(entities = [Bio::class] , version = 2)
+@Database(entities = [Bio::class] , version = 3)
 abstract class BioRoomDatabase : RoomDatabase() {
 
     abstract fun bioDao() : BioDao

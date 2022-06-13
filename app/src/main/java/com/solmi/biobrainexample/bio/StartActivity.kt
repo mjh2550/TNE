@@ -18,7 +18,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -61,7 +60,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     lateinit var navHostFragment: NavHostFragment
 
     private val PERMISSION_REQUEST_CODE :Int = 100
-    val bioViewModel : BioViewModel by viewModels {
+    private val bioViewModel : BioViewModel by viewModels {
         BioViewModelFactory((application as BaseApplication).repository)
     }
     var mBtnNext : Button? = null
@@ -79,15 +78,22 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
+        initPermission()
         initBinding()
         initHandler()
         initComponent()
-        isBlePermissionGranted()
 
-        val isPermissionGranted : Boolean = checkPermission()
-        if(!isPermissionGranted){
+
+
+    }
+
+    private fun initPermission() {
+        val isPermissionGranted: Boolean = checkPermission()
+//        val isBlePermissionGranted: Boolean = checkBlePermission()
+        if (!isPermissionGranted) {
             requestPermission()
         }
+
     }
 
     private fun initBinding() {
@@ -102,23 +108,27 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         bleSetData = BaseAppBle.getInstance(this)
     }
 
-    private fun isBlePermissionGranted() {
+    private fun requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             requestPermissions(
                 arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.BLUETOOTH,
+                    Manifest.permission.BLUETOOTH_CONNECT,
                     Manifest.permission.BLUETOOTH_SCAN,
-                    Manifest.permission.BLUETOOTH_ADVERTISE,
-                    Manifest.permission.BLUETOOTH_CONNECT
+                    Manifest.permission.BLUETOOTH_ADVERTISE
                 ),
-                1
+                PERMISSION_REQUEST_CODE
             )
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(
                 arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.BLUETOOTH
                 ),
-                1
+                PERMISSION_REQUEST_CODE
             )
         }
     }
@@ -136,7 +146,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     }
 
 
-    private fun requestPermission() {
+/*    private fun requestPermission() {
 
         val needPermissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -145,7 +155,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
         ActivityCompat.requestPermissions(this, needPermissions, PERMISSION_REQUEST_CODE)
 
-    }
+    }*/
 
     /**
      * 권한 설정되었는지 확인하는 함수
@@ -162,6 +172,34 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         if(locationPermissionCheck == PackageManager.PERMISSION_DENIED)
             return false
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            var blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+            blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+            blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+            blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADVERTISE)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            var blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+        }
+
+
+        return true
+    }
+
+    private fun checkBlePermission() : Boolean{
+        var blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
+        if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+            return false
         return true
     }
 
@@ -196,7 +234,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         bleSetData.mBLEManager!!.registerParserEventHandler(bleSetData.mUxParserEventHandler)
         val isBLESupport: Boolean = bleSetData.mBLEManager!!.checkIsBLESupport()
         if (isBLESupport) {
-            if (bleSetData.mBLEManager!!.startBLEService() == false) {
+            if (!bleSetData.mBLEManager!!.startBLEService()) {
                 Toast.makeText(
                     applicationContext,
                     R.string.error_ble_start_service,
@@ -209,10 +247,10 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
             Toast.makeText(applicationContext, R.string.error_not_support_ble, Toast.LENGTH_SHORT)
                 .show()
         }
-        mLVDeviceList!!.setOnItemClickListener(bleSetData.mItemClickListener)
+        mLVDeviceList!!.onItemClickListener = bleSetData.mItemClickListener
         bleSetData.mDeviceListAdapter = DeviceListAdapter(this)
-        mLVDeviceList!!.setAdapter(bleSetData.mDeviceListAdapter)
-        mTVLogTextView!!.setMovementMethod(ScrollingMovementMethod())
+        mLVDeviceList!!.adapter = bleSetData.mDeviceListAdapter
+        mTVLogTextView!!.movementMethod = ScrollingMovementMethod()
         bleSetData.mEMGBuffer = LinkedBlockingQueue<IntArray>()
         bleSetData.mAccBuffer= LinkedBlockingQueue<IntArray>()
         bleSetData.mGyroBuffer = LinkedBlockingQueue<IntArray>()
@@ -238,13 +276,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 bleSetData.mBLEManager!!.stopScanDevice()
                 val device = bleSetData.mDeviceListAdapter!!.getItem(index)
 
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.BLUETOOTH_CONNECT
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    finish()
-                }
+                if(!checkBlePermission())requestPermission()
+
                 mTVLogTextView!!.text = "device name: " + device.name
                 bleSetData.mBLEManager!!.setDeviceType(BTDataDefine.DeviceType.SHC_U4)
                 bleSetData.mBLEManager!!.setReconnectCount(3)
@@ -544,13 +577,9 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 if (bluetoothDevice == null) {
                     return
                 }
-                if (ActivityCompat.checkSelfPermission(
-                        applicationContext,
-                        Manifest.permission.BLUETOOTH_CONNECT
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                   finish()
-                }
+
+                if(!checkBlePermission())requestPermission()
+
                 val name = bluetoothDevice.name ?: ""
                 if (name.contains("SHC") || name.contains("i8")) {
                     bleSetData.mDeviceListAdapter!!.addItem(bluetoothDevice)
@@ -563,13 +592,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                         continue
                     }
 
-                    if (ActivityCompat.checkSelfPermission(
-                            applicationContext,
-                            Manifest.permission.BLUETOOTH_CONNECT
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        finish()
-                    }
+                    if(!checkBlePermission())requestPermission()
 
                     val name = bluetoothDevice.name ?: continue
                     if (name.contains("SHC")) {
@@ -612,7 +635,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     isPermissionGranted = true
                 }
-                if (isPermissionGranted == false) {
+                if (!isPermissionGranted) {
                     requestPermission()
                 }
             } else {
@@ -720,7 +743,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     }
 
     //다음 버튼
-    fun onClickBottomNextBtn() {
+    private fun onClickBottomNextBtn() {
 
         //첫번째 프래그먼트
         if(navController.currentDestination?.displayName.equals("${packageName}:id/startOneFragment"))

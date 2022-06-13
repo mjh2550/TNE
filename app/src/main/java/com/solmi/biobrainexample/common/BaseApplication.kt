@@ -10,9 +10,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
 class BaseApplication : Application(){
-    val applicationScope = CoroutineScope(SupervisorJob())
+    private val applicationScope = CoroutineScope(SupervisorJob())
 
-    val database by lazy { BioRoomDatabase.getDatabase(this,applicationScope) }
+    private val database by lazy { BioRoomDatabase.getDatabase(this,applicationScope) }
 
     val repository by lazy { BioRepository(database.bioDao()) }
 
