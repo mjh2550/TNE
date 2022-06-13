@@ -57,7 +57,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         lateinit var viewBottomBtnBar : View
         lateinit var viewMainGraphView : View
         lateinit var bleSetData : BleSetData
-
+        val scope = CoroutineScope(Dispatchers.Default)
         //CircularQueue
         var emgQueue = CircularQueue()
         var accQueue0 = CircularQueue()
@@ -293,18 +293,19 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
      * 데이터 파싱 이벤트 핸들러 초기화하는 함수
      */
     override fun initUxParserEventHandler() {
+
         bleSetData.mUxParserEventHandler = object : UxParserEvent {
             override fun onParserHeaderPacket(headerPacket: HeaderPacket) {
                 when (headerPacket.packetType) {
-                    UxProtocol.RES_DAQ_STOP -> runOnUiThread {
+                    UxProtocol.RES_DAQ_STOP -> scope.launch {
                         mTVLogTextView!!.append("\nRES_DAQ_STOP")
                         stopDataUpdateTimer()
                     }
-                    UxProtocol.RES_DAQ -> runOnUiThread {
+                    UxProtocol.RES_DAQ -> scope.launch {
                         mTVLogTextView!!.append("\nRES_DAQ")
                         startDataUpdateTimer()
                     }
-                    UxProtocol.RES_SCALE_SET -> runOnUiThread {
+                    UxProtocol.RES_SCALE_SET -> scope.launch {
                         var log = ""
                         when (headerPacket.ecgSignalScale) {
                             UxProtocol.SCALE_1X -> log =
@@ -316,7 +317,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                         }
                         mTVLogTextView!!.append(log)
                     }
-                    UxProtocol.RES_BATT_INFO -> runOnUiThread {
+                    UxProtocol.RES_BATT_INFO -> scope.launch {
                         val batteryInfo = headerPacket.batteryInfo
                         val log = String.format(
                             "\nRES_BATT_INFO: Max: %.1f Cur: %.1f",
@@ -325,7 +326,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                         )
                         mTVLogTextView!!.append(log)
                     }
-                    UxProtocol.RES_FIRM_INFO -> runOnUiThread {
+                    UxProtocol.RES_FIRM_INFO -> scope.launch {
                         val deviceInfo = headerPacket.deviceInfo
                         val log = String.format(
                             "\nRES_FIRM_INFO: Major: %d Minor: %d Build: %d",
@@ -401,7 +402,6 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     override fun getDataUpdateTimerTask(): TimerTask? {
         return object : TimerTask() {
             override fun run() {
-                val scope = CoroutineScope(Dispatchers.Default)
 //                runOnUiThread {
                 scope.launch {
                     val emgSize = bleSetData.mEMGBuffer!!.size
@@ -792,7 +792,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 break
             }
             jsonObject.put("bioData", circularQueue.pop())
-            jsonObject.put("Time",System.currentTimeMillis().toString())
+            jsonObject.put("Time",getTime())
             jsonArray.put(jsonObject)
         }
         jsonObj.put("item",jsonArray)
