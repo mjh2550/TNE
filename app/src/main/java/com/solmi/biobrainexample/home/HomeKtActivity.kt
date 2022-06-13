@@ -44,40 +44,5 @@ class HomeKtActivity : AppCompatActivity() {
 
         findViewById<BottomNavigationView>(R.id.bottomNavigationView).setupWithNavController(navController)
     }
-    fun loop(){
-        var idx = 0
-        while (true){
-            Log.d("test",idx++.toString())
-        }
-    }
-
-    fun test(){
-        val circularQueue = CircularQueue()
-        var data = 0.11351f
-        var insCnt = 0
-        for(i in 0..5000){
-            circularQueue.insert(data)
-            data +=0.10101f
-            insCnt++
-        }
-
-        val jsonObj = JSONObject()
-        val jsonArray = JSONArray()
-        var idx =0
-           while(true){
-                val jsonObject = JSONObject()
-                var data = circularQueue.pop()
-                if(data == -99999999f || insCnt==idx){
-                    break
-                }
-                jsonObject.put("bioData",data)
-                jsonObject.put("Time",System.currentTimeMillis().toString())
-                jsonArray.put(jsonObject)
-               idx++
-            }
-        jsonObj.put("item",jsonArray)
-
-        Log.d("data : ",jsonObj.toString())
-    }
 
 }

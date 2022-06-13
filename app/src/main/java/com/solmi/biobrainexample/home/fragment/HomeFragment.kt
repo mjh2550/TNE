@@ -60,8 +60,6 @@ class HomeFragment : Fragment() , View.OnClickListener {
                 //fragment는 activity 위에서 돌아가기 때문에 activity를 넣어줘야 함
                 val intent = Intent(this.activity, StartActivity::class.java)
                 startActivity(intent)
-                Log.d("clicked>>>>>","dsgsdg")
-
             }
         }
 

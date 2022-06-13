@@ -16,7 +16,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -38,8 +37,12 @@ import com.solmi.bluetoothlibrary.common.BTDataDefine
 import com.solmi.uxprotocol.HeaderPacket
 import com.solmi.uxprotocol.UxParserEvent
 import com.solmi.uxprotocol.UxProtocol
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
@@ -54,7 +57,18 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         lateinit var viewBottomBtnBar : View
         lateinit var viewMainGraphView : View
         lateinit var bleSetData : BleSetData
-        var queue = CircularQueue()
+
+        //CircularQueue
+        var emgQueue = CircularQueue()
+        var accQueue0 = CircularQueue()
+        var accQueue1 = CircularQueue()
+        var accQueue2 = CircularQueue()
+        var gyroQueue0 = CircularQueue()
+        var gyroQueue1 = CircularQueue()
+        var gyroQueue2 = CircularQueue()
+        var magNetoQueue0 = CircularQueue()
+        var magNetoQueue1 = CircularQueue()
+        var magNetoQueue2 = CircularQueue()
     }
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
@@ -404,9 +418,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                         if (channels != null) {
                             val value = channels[0] / 2047f * 7.4f
                             Log.d("Emg",value.toString()+" Time : "+getTime())
-                            queue.insert(value)
-//                            queue.printFront()
-//                            queue.printTail()
+                            emgQueue.insert(value)
                             bleSetData.mSGEMGGraph!!.putValue(value)
                         }
                     }
@@ -418,9 +430,18 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
                                 when(index){
-                                    0->  Log.d("Acc","0 : "+valueArray[index].toString()+" Time : "+getTime())
-                                    1->  Log.d("Acc","1 : "+valueArray[index].toString()+" Time : "+getTime())
-                                    2->  Log.d("Acc","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                    0-> {
+                                        Log.d("Acc","0 : "+valueArray[index].toString()+" Time : "+getTime())
+                                        accQueue0.insert(valueArray[index])
+                                    }
+                                    1-> {
+                                        Log.d("Acc","1 : "+valueArray[index].toString()+" Time : "+getTime())
+                                        accQueue1.insert(valueArray[index])
+                                    }
+                                    2-> {
+                                        Log.d("Acc","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                        accQueue2.insert(valueArray[index])
+                                    }
                                 }
 
                             }
@@ -435,9 +456,18 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
                                 when(index){
-                                    0->  Log.d("Gyro","0 : "+valueArray[index].toString()+" Time : "+getTime())
-                                    1->  Log.d("Gyro","1 : "+valueArray[index].toString()+" Time : "+getTime())
-                                    2->  Log.d("Gyro","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                    0->  {
+                                        Log.d("Gyro","0 : "+valueArray[index].toString()+" Time : "+getTime())
+                                        gyroQueue0.insert(valueArray[index])
+                                    }
+                                    1->  {
+                                        Log.d("Gyro","1 : "+valueArray[index].toString()+" Time : "+getTime())
+                                        gyroQueue1.insert(valueArray[index])
+                                    }
+                                    2->  {
+                                        Log.d("Gyro","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                        gyroQueue2.insert(valueArray[index])
+                                    }
                                 }
                             }
                             bleSetData.mSGGyroGraph!!.putValueArray(valueArray)
@@ -451,9 +481,18 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             for (index in 0..2) {
                                 valueArray[index] = channels[index] / 1023f * 3f
                                 when(index){
-                                    0->  Log.d("Mag","0 : "+valueArray[index].toString()+" Time : "+getTime())
-                                    1->  Log.d("Mag","1 : "+valueArray[index].toString()+" Time : "+getTime())
-                                    2->  Log.d("Mag","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                    0->  {
+                                        Log.d("Mag","0 : "+valueArray[index].toString()+" Time : "+getTime())
+                                        magNetoQueue0.insert(valueArray[index])
+                                    }
+                                    1->  {
+                                        Log.d("Mag","1 : "+valueArray[index].toString()+" Time : "+getTime())
+                                        magNetoQueue1.insert(valueArray[index])
+                                    }
+                                    2->  {
+                                        Log.d("Mag","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                        magNetoQueue2.insert(valueArray[index])
+                                    }
                                 }
                             }
                             bleSetData.mSGMagnetoGraph!!.putValueArray(valueArray)
@@ -713,34 +752,24 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 //            R.id.btn_prev -> onClickBottomPrevBtn()
             //데이터 저장
             R.id.btn_mainDataSave ->{
-                /**
-                 * 1. queue 데이터 json 으로 변환
-                 * 2. JsonString으로 변환
-                 * 3. Bio 객체 생성후 데이터 바인딩
-                 * 4. dataInsert
-                 */
-                if(queue.getQueueSize()!=0){
-                    //1.2.
-                    //Bio Data
-                    val jsonString = getJsonString()
-
-                    //Current Time
-                    val now = System.currentTimeMillis();
-                    val date = Date(now)
-                    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    //3.
-//                    val bioData = Bio(bioData= jsonString)
-                    val bioData = Bio(bioData= "testData")
-
-                    Log.d("bioData : ",jsonString)
-                    //4.
-                    //Data Tran
-                    bioViewModel.insert(bioData)
+                val scope = CoroutineScope(Dispatchers.Default)
+                scope.launch {
+                    dataInsert(emgQueue,"EMG")
+                    dataInsert(accQueue0,"ACC")
+                    dataInsert(accQueue1,"ACC")
+                    dataInsert(accQueue2,"ACC")
+                    dataInsert(gyroQueue0,"GYRO")
+                    dataInsert(gyroQueue1,"GYRO")
+                    dataInsert(gyroQueue2,"GYRO")
+                    dataInsert(magNetoQueue0,"MAG")
+                    dataInsert(magNetoQueue1,"MAG")
+                    dataInsert(magNetoQueue2,"MAG")
                 }
-
             }
         }
     }
+
+
 
     //다음 버튼
     private fun onClickBottomNextBtn() {
@@ -756,20 +785,55 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 //            navController.popBackStack()
     }
 
-    private fun getJsonString() : String{
+    private fun getJsonString(circularQueue: CircularQueue) : String{
         val jsonObj = JSONObject()
         val jsonArray = JSONArray()
         while(true){
             val jsonObject = JSONObject()
-            var data = queue.pop()
-            if(data==-99999999f || queue.getQueueSize()<=0){
+            var data = circularQueue.pop()
+            if(data==-99999999f || circularQueue.getQueueSize()<=0){
                 break
             }
-            jsonObject.put("bioData", queue.pop())
+            jsonObject.put("bioData", circularQueue.pop())
             jsonObject.put("Time",System.currentTimeMillis().toString())
             jsonArray.put(jsonObject)
         }
         jsonObj.put("item",jsonArray)
         return jsonObj.toString()
+    }
+
+    private fun dataInsert(circularQueue: CircularQueue,dataType : String) {
+        /**
+         * 1. queue 데이터 json 으로 변환
+         * 2. JsonString으로 변환
+         * 3. Bio 객체 생성후 데이터 바인딩
+         * 4. dataInsert
+         * circularQueue.getQueueSize() != 0
+         */
+        if (true) {
+            try {
+                //1.2.
+                //Bio Data
+                val jsonString = getJsonString(circularQueue)
+
+                //Current Time
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
+                val calendar = Calendar.getInstance()
+
+                //3.
+                //val bioData = Bio(bioData= jsonString, bioDataType = dataType , regTime = dateFormat.format(calendar.time).toString())
+                val bioData = Bio(bioData = "testData", bioDataType = dataType, regTime = "")
+
+                Log.d("bioData : ", jsonString)
+                Log.d("dataType : ", dataType)
+//                Log.d("regTime : ", dateFormat.format(calendar.time).toString())
+                //4.
+                //Data Tran
+                bioViewModel.insert(bioData)
+            }catch (e : Exception){
+                Log.e("ERR",e.message.toString())
+            }
+
+        }
     }
 }
