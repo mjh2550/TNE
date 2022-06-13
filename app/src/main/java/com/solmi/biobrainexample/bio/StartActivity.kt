@@ -154,23 +154,12 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
      */
     private fun getTime() : String{
         //Current Time
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
+        val dateFormat = SimpleDateFormat("HH-mm-ss.SSS")
         val calendar = Calendar.getInstance()
 
         return dateFormat.format(calendar.time).toString()
     }
 
-
-/*    private fun requestPermission() {
-
-        val needPermissions = arrayOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-
-        ActivityCompat.requestPermissions(this, needPermissions, PERMISSION_REQUEST_CODE)
-
-    }*/
 
     /**
      * 권한 설정되었는지 확인하는 함수
@@ -412,7 +401,9 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     override fun getDataUpdateTimerTask(): TimerTask? {
         return object : TimerTask() {
             override fun run() {
-                runOnUiThread {
+                val scope = CoroutineScope(Dispatchers.Default)
+//                runOnUiThread {
+                scope.launch {
                     val emgSize = bleSetData.mEMGBuffer!!.size
                     for (count in 0 until emgSize) {
                         val channels = bleSetData.mEMGBuffer!!.poll()
@@ -753,6 +744,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 //            R.id.btn_prev -> onClickBottomPrevBtn()
             //데이터 저장
             R.id.btn_mainDataSave ->{
+                onClickStop()
+                onClickDisconnect()
                 val scope = CoroutineScope(Dispatchers.Default)
                 scope.launch {
                     queueDataInsert()
@@ -761,7 +754,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         }
     }
 
-    private suspend fun queueDataInsert() {
+    private fun queueDataInsert() {
         dataInsert(emgQueue, "EMG")
         dataInsert(accQueue0, "ACC")
         dataInsert(accQueue1, "ACC")
@@ -821,8 +814,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 val jsonString = getJsonString(circularQueue)
 
                 //3.
-                //val bioData = Bio(bioData= jsonString, bioDataType = dataType , regTime = getTime())
-                val bioData = Bio(bioData = "testData", bioDataType = dataType, regTime = getTime())
+                val bioData = Bio(bioData= jsonString, bioDataType = dataType , regTime = getTime())
+//                val bioData = Bio(bioData = "testData", bioDataType = dataType, regTime = getTime())
 
                 Log.d("bioData : ", jsonString)
                 Log.d("dataType : ", dataType)

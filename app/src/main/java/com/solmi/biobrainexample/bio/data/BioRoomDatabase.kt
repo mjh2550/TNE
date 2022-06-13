@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
-@Database(entities = [Bio::class] , version = 3)
+@Database(entities = [Bio::class] , version = 2)
 abstract class BioRoomDatabase : RoomDatabase() {
 
     abstract fun bioDao() : BioDao
@@ -55,7 +55,7 @@ abstract class BioRoomDatabase : RoomDatabase() {
 
 
         suspend fun populateDatabase(bioDao: BioDao){
-            bioDao.deleteAll()
+//            bioDao.deleteAll()
 //            val bioDataQueue = CircularQueue()
 //            for(i in 0..10){
 //                bioDataQueue.insert(0.12522525f)

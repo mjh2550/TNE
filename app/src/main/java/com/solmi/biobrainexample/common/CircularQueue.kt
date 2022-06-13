@@ -10,7 +10,7 @@ class CircularQueue {
     private val falseScore = -99999999f
 
     fun insert(value: Float) {
-        list[(++tail % QUEUE_SIZE)] = value
+//        list[(++tail % QUEUE_SIZE)] = value
         ++queueSize
     }
 
