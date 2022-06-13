@@ -150,13 +150,14 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
 
     /**
-     * 시간초 구하는 함수
+     * 날짜 , 시간 구하는 함수
      */
     private fun getTime() : String{
-//        val now = System.currentTimeMillis();
-//        val date = Date(now)
-//        val dateFormat = SimpleDateFormat("hh:mm:ss")
-        return System.currentTimeMillis().toString()
+        //Current Time
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
+        val calendar = Calendar.getInstance()
+
+        return dateFormat.format(calendar.time).toString()
     }
 
 
@@ -754,21 +755,24 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
             R.id.btn_mainDataSave ->{
                 val scope = CoroutineScope(Dispatchers.Default)
                 scope.launch {
-                    dataInsert(emgQueue,"EMG")
-                    dataInsert(accQueue0,"ACC")
-                    dataInsert(accQueue1,"ACC")
-                    dataInsert(accQueue2,"ACC")
-                    dataInsert(gyroQueue0,"GYRO")
-                    dataInsert(gyroQueue1,"GYRO")
-                    dataInsert(gyroQueue2,"GYRO")
-                    dataInsert(magNetoQueue0,"MAG")
-                    dataInsert(magNetoQueue1,"MAG")
-                    dataInsert(magNetoQueue2,"MAG")
+                    queueDataInsert()
                 }
             }
         }
     }
 
+    private suspend fun queueDataInsert() {
+        dataInsert(emgQueue, "EMG")
+        dataInsert(accQueue0, "ACC")
+        dataInsert(accQueue1, "ACC")
+        dataInsert(accQueue2, "ACC")
+        dataInsert(gyroQueue0, "GYRO")
+        dataInsert(gyroQueue1, "GYRO")
+        dataInsert(gyroQueue2, "GYRO")
+        dataInsert(magNetoQueue0, "MAG")
+        dataInsert(magNetoQueue1, "MAG")
+        dataInsert(magNetoQueue2, "MAG")
+    }
 
 
     //다음 버튼
@@ -808,21 +812,17 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
          * 2. JsonString으로 변환
          * 3. Bio 객체 생성후 데이터 바인딩
          * 4. dataInsert
-         * circularQueue.getQueueSize() != 0
+         *
          */
-        if (true) {
+        if (circularQueue.getQueueSize() != 0) {
             try {
                 //1.2.
                 //Bio Data
                 val jsonString = getJsonString(circularQueue)
 
-                //Current Time
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
-                val calendar = Calendar.getInstance()
-
                 //3.
-                //val bioData = Bio(bioData= jsonString, bioDataType = dataType , regTime = dateFormat.format(calendar.time).toString())
-                val bioData = Bio(bioData = "testData", bioDataType = dataType, regTime = "")
+                //val bioData = Bio(bioData= jsonString, bioDataType = dataType , regTime = getTime())
+                val bioData = Bio(bioData = "testData", bioDataType = dataType, regTime = getTime())
 
                 Log.d("bioData : ", jsonString)
                 Log.d("dataType : ", dataType)
@@ -830,6 +830,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 //4.
                 //Data Tran
                 bioViewModel.insert(bioData)
+
             }catch (e : Exception){
                 Log.e("ERR",e.message.toString())
             }
