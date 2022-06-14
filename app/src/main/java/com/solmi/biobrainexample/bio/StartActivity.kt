@@ -3,6 +3,7 @@ package com.solmi.biobrainexample.bio
 import android.Manifest
 import android.bluetooth.BluetoothDevice
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -57,6 +58,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         lateinit var viewBottomBtnBar : View
         lateinit var viewMainGraphView : View
         lateinit var bleSetData : BleSetData
+
         val scope = CoroutineScope(Dispatchers.Default)
         //CircularQueue
         var emgQueue = CircularQueue()
@@ -102,8 +104,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     }
 
     private fun initPermission() {
-        val isPermissionGranted: Boolean = checkPermission()
-//        val isBlePermissionGranted: Boolean = checkBlePermission()
+        val isPermissionGranted: Boolean = checkPermission(this)
         if (!isPermissionGranted) {
             requestPermission()
         }
@@ -161,47 +162,10 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     }
 
 
-    /**
-     * 권한 설정되었는지 확인하는 함수
-     * @return 권한 설정 여부
-     */
-    private fun checkPermission(): Boolean {
-        var locationPermissionCheck =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-        if (locationPermissionCheck == PackageManager.PERMISSION_DENIED)
-            return false
 
-        locationPermissionCheck =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        if(locationPermissionCheck == PackageManager.PERMISSION_DENIED)
-            return false
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            var blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH)
-            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
-                return false
-            blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
-            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
-                return false
-            blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN)
-            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
-                return false
-            blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADVERTISE)
-            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
-                return false
-
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            var blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH)
-            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
-                return false
-        }
-
-
-        return true
-    }
 
     private fun checkBlePermission() : Boolean{
-        var blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
+        val blueToothPermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
         if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
             return false
         return true
@@ -402,7 +366,6 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     override fun getDataUpdateTimerTask(): TimerTask? {
         return object : TimerTask() {
             override fun run() {
-//                runOnUiThread {
                 scope.launch {
                     val emgSize = bleSetData.mEMGBuffer!!.size
                     for (count in 0 until emgSize) {
@@ -746,7 +709,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
             R.id.btn_mainDataSave ->{
                 onClickStop()
                 onClickDisconnect()
-                val scope = CoroutineScope(Dispatchers.Default)
+                Toast.makeText(this,"Insert Start", Toast.LENGTH_SHORT).show()
                 scope.launch {
                     queueDataInsert()
                 }
@@ -756,15 +719,15 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
     private fun queueDataInsert() {
         dataInsert(emgQueue, "EMG")
-        dataInsert(accQueue0, "ACC")
-        dataInsert(accQueue1, "ACC")
-        dataInsert(accQueue2, "ACC")
-        dataInsert(gyroQueue0, "GYRO")
-        dataInsert(gyroQueue1, "GYRO")
-        dataInsert(gyroQueue2, "GYRO")
-        dataInsert(magNetoQueue0, "MAG")
-        dataInsert(magNetoQueue1, "MAG")
-        dataInsert(magNetoQueue2, "MAG")
+        dataInsert(accQueue0, "ACC_X")
+        dataInsert(accQueue1, "ACC_Y")
+        dataInsert(accQueue2, "ACC_Z")
+        dataInsert(gyroQueue0, "GYRO_X")
+        dataInsert(gyroQueue1, "GYRO_Y")
+        dataInsert(gyroQueue2, "GYRO_Z")
+        dataInsert(magNetoQueue0, "MAG_X")
+        dataInsert(magNetoQueue1, "MAG_Y")
+        dataInsert(magNetoQueue2, "MAG_Z")
     }
 
 
@@ -777,7 +740,6 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
         //두번째 프래그먼트
         else if (navController.currentDestination?.displayName.equals("${packageName}:id/startTwoFragment")){
-
         }
 //            navController.popBackStack()
     }
@@ -826,6 +788,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
             }catch (e : Exception){
                 Log.e("ERR",e.message.toString())
+            }finally {
+                Log.d("Fine","$dataType Insert OK")
             }
 
         }

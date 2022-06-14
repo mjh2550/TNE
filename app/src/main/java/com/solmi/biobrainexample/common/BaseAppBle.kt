@@ -1,6 +1,10 @@
 package com.solmi.biobrainexample.common
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.core.content.ContextCompat
 import java.util.*
 
 /**
@@ -79,5 +83,43 @@ interface BaseAppBle {
         bleSetData?.mAccCount = 0
         bleSetData?.mGyroCount = 0
         bleSetData?.mMagnetoCount = 0
+    }
+
+
+    /**
+     * 권한 설정되었는지 확인하는 함수
+     * @return 권한 설정 여부
+     */
+    fun checkPermission(context: Context): Boolean {
+        var locationPermissionCheck =
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (locationPermissionCheck == PackageManager.PERMISSION_DENIED)
+            return false
+
+        locationPermissionCheck =
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+        if(locationPermissionCheck == PackageManager.PERMISSION_DENIED)
+            return false
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            var blueToothPermissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+            blueToothPermissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+            blueToothPermissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+            blueToothPermissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_ADVERTISE)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            val blueToothPermissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH)
+            if(blueToothPermissionCheck == PackageManager.PERMISSION_DENIED)
+                return false
+        }
+        return true
     }
 }
