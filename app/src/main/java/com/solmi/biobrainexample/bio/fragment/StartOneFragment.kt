@@ -55,7 +55,7 @@ class StartOneFragment : Fragment(),View.OnClickListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        BaseApplication.progressON(activity as StartActivity)
+//        BaseApplication.progressON(activity as StartActivity)
         initBinding(view)
         setAnimation()
 
