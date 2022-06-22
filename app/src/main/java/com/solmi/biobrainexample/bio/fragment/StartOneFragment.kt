@@ -13,6 +13,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.bio.StartActivity
+import com.solmi.biobrainexample.common.BaseApplication
+import com.solmi.biobrainexample.home.HomeKtActivity
 import java.util.*
 
 /**
@@ -53,7 +55,7 @@ class StartOneFragment : Fragment(),View.OnClickListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-
+        BaseApplication.progressON(activity as StartActivity)
         initBinding(view)
         setAnimation()
 

@@ -4,10 +4,17 @@ import android.Manifest
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.ColorDrawable
 import android.icu.text.SimpleDateFormat
 import android.os.Build
+import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
+import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.bio.data.BioRepository
 import com.solmi.biobrainexample.bio.data.BioRoomDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +32,22 @@ class BaseApplication : Application(){
         var format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return format.format(System.currentTimeMillis())
     }*/
+
+    companion object{
+        fun progressON(context: Context){
+            var progressDialog = AppCompatDialog(context)
+            progressDialog.setCancelable(false)
+            progressDialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            progressDialog.setContentView(R.layout.dialog_progress)
+            progressDialog.show()
+        }
+        fun progressOFF(context: Context){
+            var progressDialog = AppCompatDialog(context)
+            if(progressDialog != null && progressDialog.isShowing()){
+                progressDialog.dismiss()
+            }
+        }
+    }
 
     /**
      * 권한 설정되었는지 확인하는 함수
@@ -62,4 +85,6 @@ class BaseApplication : Application(){
         }
         return true
     }
+
+
 }

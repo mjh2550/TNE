@@ -1,10 +1,13 @@
 package com.solmi.biobrainexample.bio
 
 import android.Manifest
+import android.app.Dialog
 import android.bluetooth.BluetoothDevice
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -17,6 +20,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -26,10 +30,7 @@ import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.bio.data.Bio
 import com.solmi.biobrainexample.bio.viewmodel.BioViewModel
 import com.solmi.biobrainexample.bio.viewmodel.BioViewModelFactory
-import com.solmi.biobrainexample.common.BaseAppBle
-import com.solmi.biobrainexample.common.BaseApplication
-import com.solmi.biobrainexample.common.BleSetData
-import com.solmi.biobrainexample.common.CircularQueue
+import com.solmi.biobrainexample.common.*
 import com.solmi.ble.BLECommManager
 import com.solmi.ble.BLEDefine.BluetoothState
 import com.solmi.ble.BTScanEvent
@@ -40,6 +41,7 @@ import com.solmi.uxprotocol.UxParserEvent
 import com.solmi.uxprotocol.UxProtocol
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
@@ -52,6 +54,7 @@ import java.util.concurrent.LinkedBlockingQueue
 class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
     companion object {
+        //view
         lateinit var viewMainBLE : View
         lateinit var viewBottom : View
         lateinit var viewBLEState : View
@@ -59,7 +62,12 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         lateinit var viewMainGraphView : View
         lateinit var bleSetData : BleSetData
 
+        //progress dialog
+//        private lateinit var progressDialog: AppCompatDialog
+
+        //coroutine scope
         val scope = CoroutineScope(Dispatchers.Default)
+
         //CircularQueue
         var emgQueue = CircularQueue()
         var accQueue0 = CircularQueue()
@@ -121,6 +129,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         viewBLEState = findViewById(R.id.view_ble_state)
         viewMainGraphView = findViewById(R.id.main_GraphView)
         bleSetData = BaseAppBle.getInstance(this)
+
     }
 
     private fun requestPermission() {
@@ -261,15 +270,15 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         bleSetData.mUxParserEventHandler = object : UxParserEvent {
             override fun onParserHeaderPacket(headerPacket: HeaderPacket) {
                 when (headerPacket.packetType) {
-                    UxProtocol.RES_DAQ_STOP -> scope.launch {
+                    UxProtocol.RES_DAQ_STOP -> runOnUiThread() {
                         mTVLogTextView!!.append("\nRES_DAQ_STOP")
                         stopDataUpdateTimer()
                     }
-                    UxProtocol.RES_DAQ -> scope.launch {
+                    UxProtocol.RES_DAQ -> runOnUiThread() {
                         mTVLogTextView!!.append("\nRES_DAQ")
                         startDataUpdateTimer()
                     }
-                    UxProtocol.RES_SCALE_SET -> scope.launch {
+                    UxProtocol.RES_SCALE_SET -> runOnUiThread() {
                         var log = ""
                         when (headerPacket.ecgSignalScale) {
                             UxProtocol.SCALE_1X -> log =
@@ -281,7 +290,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                         }
                         mTVLogTextView!!.append(log)
                     }
-                    UxProtocol.RES_BATT_INFO -> scope.launch {
+                    UxProtocol.RES_BATT_INFO -> runOnUiThread() {
                         val batteryInfo = headerPacket.batteryInfo
                         val log = String.format(
                             "\nRES_BATT_INFO: Max: %.1f Cur: %.1f",
@@ -366,7 +375,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     override fun getDataUpdateTimerTask(): TimerTask? {
         return object : TimerTask() {
             override fun run() {
-                scope.launch {
+                runOnUiThread() {
                     val emgSize = bleSetData.mEMGBuffer!!.size
                     for (count in 0 until emgSize) {
                         val channels = bleSetData.mEMGBuffer!!.poll()
@@ -655,7 +664,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
             mTVLogTextView!!.append("\nonClickStart: Send start command 125 SPS")
             bleSetData.mBLEManager!!.start(
                 UxProtocol.DAQ_ECG_ACC_GYRO_MAGNETO_SET,
-                UxProtocol.SAMPLINGRATE_250
+                UxProtocol.SAMPLINGRATE_125
             )
         } else if (bleSetData.mRGSamplingRate!!.checkedRadioButtonId == R.id.rb_mainSamplingRate250) {
             bleSetData.mSGEMGGraph!!.setSamplingRate(250f)
@@ -710,7 +719,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 onClickStop()
                 onClickDisconnect()
                 Toast.makeText(this,"Insert Start", Toast.LENGTH_SHORT).show()
-                scope.launch {
+                runOnUiThread {
                     queueDataInsert()
                 }
             }

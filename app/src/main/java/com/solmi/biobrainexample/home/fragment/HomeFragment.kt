@@ -2,16 +2,19 @@ package com.solmi.biobrainexample.home.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatDialog
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.bio.StartActivity
+import com.solmi.biobrainexample.common.BaseApplication
+import com.solmi.biobrainexample.home.HomeKtActivity
 
 
 /**
@@ -23,6 +26,7 @@ class HomeFragment : Fragment() , View.OnClickListener {
 
     lateinit var navController: NavController
     lateinit var btnGoMesure : Button
+    lateinit var progressDialog: AppCompatDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.Button
-import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.solmi.biobrainexample.R

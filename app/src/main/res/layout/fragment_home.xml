@@ -22,6 +22,9 @@
                 android:layout_height="300dp" />
         </LinearLayout>
 
+
+
+
         <TextView
             android:id="@+id/tv_BleState"
             android:layout_width="match_parent"
@@ -35,19 +38,20 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_BleState"
         app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp">
+        tools:layout_editor_absoluteX="-56dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:layout_marginTop="24dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_BleState"
             app:layout_constraintVertical_bias="0.351"
@@ -76,7 +80,10 @@
                 android:text="측정 결과\n분석하러 가기"
                 android:textSize="24dp" />
 
+
         </LinearLayout>
+
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
