@@ -66,7 +66,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 //        private lateinit var progressDialog: AppCompatDialog
 
         //coroutine scope
-        val scope = CoroutineScope(Dispatchers.Default)
+        lateinit var scope : CoroutineScope
 
         //CircularQueue
         var emgQueue = CircularQueue()
@@ -376,90 +376,108 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         return object : TimerTask() {
             override fun run() {
                 runOnUiThread() {
-                    val emgSize = bleSetData.mEMGBuffer!!.size
-                    for (count in 0 until emgSize) {
-                        val channels = bleSetData.mEMGBuffer!!.poll()
-                        if (channels != null) {
-                            val value = channels[0] / 2047f * 7.4f
-                            Log.d("Emg",value.toString()+" Time : "+getTime())
-                            emgQueue.insert(value)
-                            bleSetData.mSGEMGGraph!!.putValue(value)
+                    scope = CoroutineScope(Dispatchers.IO)
+                    scope.launch {
+                        val emgSize = bleSetData.mEMGBuffer!!.size
+                        for (count in 0 until emgSize) {
+                            val channels = bleSetData.mEMGBuffer!!.poll()
+                            if (channels != null) {
+                                val value = channels[0] / 2047f * 7.4f
+                                Log.d("Emg", value.toString() + " Time : " + getTime())
+                                emgQueue.insert(value)
+                                bleSetData.mSGEMGGraph!!.putValue(value)
+                            }
                         }
                     }
-                    val accSize = bleSetData.mAccBuffer!!.size
-                    for (count in 0 until accSize) {
-                        val channels = bleSetData.mAccBuffer!!.poll()
-                        if (channels != null) {
-                            val valueArray = FloatArray(3)
-                            for (index in 0..2) {
-                                valueArray[index] = channels[index] / 1023f * 3f
-                                when(index){
-                                    0-> {
-                                        Log.d("Acc","0 : "+valueArray[index].toString()+" Time : "+getTime())
-                                        accQueue0.insert(valueArray[index])
+                    scope.launch {
+                        val accSize = bleSetData.mAccBuffer!!.size
+                        for (count in 0 until accSize) {
+                            val channels = bleSetData.mAccBuffer!!.poll()
+                            if (channels != null) {
+                                val valueArray = FloatArray(3)
+                                for (index in 0..2) {
+                                    valueArray[index] = channels[index] / 1023f * 3f
+                                    when (index) {
+                                        0 -> {
+                                            Log.d(
+                                                "Acc",
+                                                "0 : " + valueArray[index].toString() + " Time : " + getTime()
+                                            )
+                                            accQueue0.insert(valueArray[index])
+                                        }
+                                        1 -> {
+                                            Log.d(
+                                                "Acc",
+                                                "1 : " + valueArray[index].toString() + " Time : " + getTime()
+                                            )
+                                            accQueue1.insert(valueArray[index])
+                                        }
+                                        2 -> {
+                                            Log.d(
+                                                "Acc",
+                                                "2 : " + valueArray[index].toString() + " Time : " + getTime()
+                                            )
+                                            accQueue2.insert(valueArray[index])
+                                        }
                                     }
-                                    1-> {
-                                        Log.d("Acc","1 : "+valueArray[index].toString()+" Time : "+getTime())
-                                        accQueue1.insert(valueArray[index])
-                                    }
-                                    2-> {
-                                        Log.d("Acc","2 : "+valueArray[index].toString()+" Time : "+getTime())
-                                        accQueue2.insert(valueArray[index])
-                                    }
-                                }
 
+                                }
+                                bleSetData.mSGAccGraph!!.putValueArray(valueArray)
                             }
-                            bleSetData.mSGAccGraph!!.putValueArray(valueArray)
                         }
                     }
-                    val gyroSize = bleSetData.mGyroBuffer!!.size
-                    for (count in 0 until gyroSize) {
-                        val channels = bleSetData.mGyroBuffer!!.poll()
-                        if (channels != null) {
-                            val valueArray = FloatArray(3)
-                            for (index in 0..2) {
-                                valueArray[index] = channels[index] / 1023f * 3f
-                                when(index){
-                                    0->  {
-                                        Log.d("Gyro","0 : "+valueArray[index].toString()+" Time : "+getTime())
-                                        gyroQueue0.insert(valueArray[index])
-                                    }
-                                    1->  {
-                                        Log.d("Gyro","1 : "+valueArray[index].toString()+" Time : "+getTime())
-                                        gyroQueue1.insert(valueArray[index])
-                                    }
-                                    2->  {
-                                        Log.d("Gyro","2 : "+valueArray[index].toString()+" Time : "+getTime())
-                                        gyroQueue2.insert(valueArray[index])
+                    scope.launch {
+                        val gyroSize = bleSetData.mGyroBuffer!!.size
+                        for (count in 0 until gyroSize) {
+                            val channels = bleSetData.mGyroBuffer!!.poll()
+                            if (channels != null) {
+                                val valueArray = FloatArray(3)
+                                for (index in 0..2) {
+                                    valueArray[index] = channels[index] / 1023f * 3f
+                                    when(index){
+                                        0->  {
+                                            Log.d("Gyro","0 : "+valueArray[index].toString()+" Time : "+getTime())
+                                            gyroQueue0.insert(valueArray[index])
+                                        }
+                                        1->  {
+                                            Log.d("Gyro","1 : "+valueArray[index].toString()+" Time : "+getTime())
+                                            gyroQueue1.insert(valueArray[index])
+                                        }
+                                        2->  {
+                                            Log.d("Gyro","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                            gyroQueue2.insert(valueArray[index])
+                                        }
                                     }
                                 }
+                                bleSetData.mSGGyroGraph!!.putValueArray(valueArray)
                             }
-                            bleSetData.mSGGyroGraph!!.putValueArray(valueArray)
                         }
                     }
-                    val magnetoSize = bleSetData.mMagnetoBuffer!!.size
-                    for (count in 0 until magnetoSize) {
-                        val channels =bleSetData.mMagnetoBuffer!!.poll()
-                        if (channels != null) {
-                            val valueArray = FloatArray(3)
-                            for (index in 0..2) {
-                                valueArray[index] = channels[index] / 1023f * 3f
-                                when(index){
-                                    0->  {
-                                        Log.d("Mag","0 : "+valueArray[index].toString()+" Time : "+getTime())
-                                        magNetoQueue0.insert(valueArray[index])
-                                    }
-                                    1->  {
-                                        Log.d("Mag","1 : "+valueArray[index].toString()+" Time : "+getTime())
-                                        magNetoQueue1.insert(valueArray[index])
-                                    }
-                                    2->  {
-                                        Log.d("Mag","2 : "+valueArray[index].toString()+" Time : "+getTime())
-                                        magNetoQueue2.insert(valueArray[index])
+                    scope.launch {
+                        val magnetoSize = bleSetData.mMagnetoBuffer!!.size
+                        for (count in 0 until magnetoSize) {
+                            val channels =bleSetData.mMagnetoBuffer!!.poll()
+                            if (channels != null) {
+                                val valueArray = FloatArray(3)
+                                for (index in 0..2) {
+                                    valueArray[index] = channels[index] / 1023f * 3f
+                                    when(index){
+                                        0->  {
+                                            Log.d("Mag","0 : "+valueArray[index].toString()+" Time : "+getTime())
+                                            magNetoQueue0.insert(valueArray[index])
+                                        }
+                                        1->  {
+                                            Log.d("Mag","1 : "+valueArray[index].toString()+" Time : "+getTime())
+                                            magNetoQueue1.insert(valueArray[index])
+                                        }
+                                        2->  {
+                                            Log.d("Mag","2 : "+valueArray[index].toString()+" Time : "+getTime())
+                                            magNetoQueue2.insert(valueArray[index])
+                                        }
                                     }
                                 }
+                                bleSetData.mSGMagnetoGraph!!.putValueArray(valueArray)
                             }
-                            bleSetData.mSGMagnetoGraph!!.putValueArray(valueArray)
                         }
                     }
                 }
@@ -707,6 +725,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     }
 
     override fun onClick(v: View?) {
+//        BaseApplication.progressON(this)
         when(v?.id){
             R.id.btn_mainScan -> onClickScan()
             R.id.btn_mainStart -> onClickStart()
@@ -719,24 +738,25 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                 onClickStop()
                 onClickDisconnect()
                 Toast.makeText(this,"Insert Start", Toast.LENGTH_SHORT).show()
-                runOnUiThread {
-                    queueDataInsert()
-                }
+                queueDataInsert()
             }
         }
+//        BaseApplication.progressOFF(this)
     }
 
     private fun queueDataInsert() {
-        dataInsert(emgQueue, "EMG")
-        dataInsert(accQueue0, "ACC_X")
-        dataInsert(accQueue1, "ACC_Y")
-        dataInsert(accQueue2, "ACC_Z")
-        dataInsert(gyroQueue0, "GYRO_X")
-        dataInsert(gyroQueue1, "GYRO_Y")
-        dataInsert(gyroQueue2, "GYRO_Z")
-        dataInsert(magNetoQueue0, "MAG_X")
-        dataInsert(magNetoQueue1, "MAG_Y")
-        dataInsert(magNetoQueue2, "MAG_Z")
+        runOnUiThread {
+            dataInsert(emgQueue, "EMG")
+            dataInsert(accQueue0, "ACC_X")
+            dataInsert(accQueue1, "ACC_Y")
+            dataInsert(accQueue2, "ACC_Z")
+            dataInsert(gyroQueue0, "GYRO_X")
+            dataInsert(gyroQueue1, "GYRO_Y")
+            dataInsert(gyroQueue2, "GYRO_Z")
+            dataInsert(magNetoQueue0, "MAG_X")
+            dataInsert(magNetoQueue1, "MAG_Y")
+            dataInsert(magNetoQueue2, "MAG_Z")
+        }
     }
 
 
