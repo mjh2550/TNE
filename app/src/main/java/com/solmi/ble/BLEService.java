@@ -61,7 +61,7 @@ public class BLEService extends Service {
 	/**
 	 * 데이터 수신할 수 있는 최대 Credit 수
 	 */
-	private final int MAX_RX_CREDITS_COUNT = 32;//250;//64;
+	private final int MAX_RX_CREDITS_COUNT = 250;//64;
 	/**
 	 * 데이터 수신할 수 있는 최소 Credit 수
 	 */

@@ -79,6 +79,12 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         var magNetoQueue0 = CircularQueue()
         var magNetoQueue1 = CircularQueue()
         var magNetoQueue2 = CircularQueue()
+
+        //Current Data Cnt
+        /*var accCnt = 0
+        var gyroCnt = 0
+        var magCnt = 0*/
+
     }
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
@@ -96,6 +102,8 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     var mBtnDataSave : Button? = null
     var mBtnDisconnect: Button? = null
     var mLVDeviceList: ListView? = null
+
+    private val multiple = 5
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -236,6 +244,13 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
 
     }
 
+    private fun isExposeTarget(dataCount : Int) : Boolean{
+        if(dataCount % multiple == 0){
+            return true
+        }
+        return false
+    }
+
     /**
      * 디바이스 리스트 뷰 아이템 클릭 이벤트 핸들러 초기화하는 함수
      */
@@ -299,7 +314,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                         )
                         mTVLogTextView!!.append(log)
                     }
-                    UxProtocol.RES_FIRM_INFO -> scope.launch {
+                    UxProtocol.RES_FIRM_INFO -> runOnUiThread() {
                         val deviceInfo = headerPacket.deviceInfo
                         val log = String.format(
                             "\nRES_FIRM_INFO: Major: %d Minor: %d Build: %d",
@@ -383,7 +398,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             val channels = bleSetData.mEMGBuffer!!.poll()
                             if (channels != null) {
                                 val value = channels[0] / 2047f * 7.4f
-                                Log.d("Emg", value.toString() + " Time : " + getTime())
+                                Log.d("Emg", "Value : $value , Time : ${getTime()} , Count : ${bleSetData.mEMGCount}")
                                 emgQueue.insert(value)
                                 bleSetData.mSGEMGGraph!!.putValue(value)
                             }
@@ -397,30 +412,31 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                                 val valueArray = FloatArray(3)
                                 for (index in 0..2) {
                                     valueArray[index] = channels[index] / 1023f * 3f
-                                    when (index) {
-                                        0 -> {
-                                            Log.d(
-                                                "Acc",
-                                                "0 : " + valueArray[index].toString() + " Time : " + getTime()
-                                            )
-                                            accQueue0.insert(valueArray[index])
-                                        }
-                                        1 -> {
-                                            Log.d(
-                                                "Acc",
-                                                "1 : " + valueArray[index].toString() + " Time : " + getTime()
-                                            )
-                                            accQueue1.insert(valueArray[index])
-                                        }
-                                        2 -> {
-                                            Log.d(
-                                                "Acc",
-                                                "2 : " + valueArray[index].toString() + " Time : " + getTime()
-                                            )
-                                            accQueue2.insert(valueArray[index])
+                                    if(isExposeTarget(bleSetData.mAccCount)){
+                                        when (index) {
+                                            0 -> {
+                                                Log.d(
+                                                    "Acc",
+                                                    "0 : ${valueArray[index]} , Time : ${getTime()} , Count : ${bleSetData.mAccCount}"
+                                                )
+                                                accQueue0.insert(valueArray[index])
+                                            }
+                                            1 -> {
+                                                Log.d(
+                                                    "Acc",
+                                                    "1 : ${valueArray[index]} , Time : ${getTime()} , Count : ${bleSetData.mAccCount}"
+                                                )
+                                                accQueue1.insert(valueArray[index])
+                                            }
+                                            2 -> {
+                                                Log.d(
+                                                    "Acc",
+                                                    "2 : ${valueArray[index]} , Time : ${getTime()} , Count : ${bleSetData.mAccCount}"
+                                                )
+                                                accQueue2.insert(valueArray[index])
+                                            }
                                         }
                                     }
-
                                 }
                                 bleSetData.mSGAccGraph!!.putValueArray(valueArray)
                             }
@@ -434,18 +450,20 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                                 val valueArray = FloatArray(3)
                                 for (index in 0..2) {
                                     valueArray[index] = channels[index] / 1023f * 3f
-                                    when(index){
-                                        0->  {
-                                            Log.d("Gyro","0 : "+valueArray[index].toString()+" Time : "+getTime())
-                                            gyroQueue0.insert(valueArray[index])
-                                        }
-                                        1->  {
-                                            Log.d("Gyro","1 : "+valueArray[index].toString()+" Time : "+getTime())
-                                            gyroQueue1.insert(valueArray[index])
-                                        }
-                                        2->  {
-                                            Log.d("Gyro","2 : "+valueArray[index].toString()+" Time : "+getTime())
-                                            gyroQueue2.insert(valueArray[index])
+                                    if(isExposeTarget(bleSetData.mGyroCount)){
+                                       when(index){
+                                            0->  {
+                                                Log.d("Gyro","0 : ${valueArray[index]} , Time : ${getTime()} , Count : ${bleSetData.mGyroCount}")
+                                                gyroQueue0.insert(valueArray[index])
+                                            }
+                                            1->  {
+                                                Log.d("Gyro","1 : ${valueArray[index]} , Time : ${getTime()} , Count : ${bleSetData.mGyroCount}")
+                                                gyroQueue1.insert(valueArray[index])
+                                            }
+                                            2->  {
+                                                Log.d("Gyro","2 : ${valueArray[index]} , Time : ${getTime()} , Count : ${bleSetData.mGyroCount}")
+                                                gyroQueue2.insert(valueArray[index])
+                                            }
                                         }
                                     }
                                 }
@@ -461,18 +479,20 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                                 val valueArray = FloatArray(3)
                                 for (index in 0..2) {
                                     valueArray[index] = channels[index] / 1023f * 3f
-                                    when(index){
-                                        0->  {
-                                            Log.d("Mag","0 : "+valueArray[index].toString()+" Time : "+getTime())
-                                            magNetoQueue0.insert(valueArray[index])
-                                        }
-                                        1->  {
-                                            Log.d("Mag","1 : "+valueArray[index].toString()+" Time : "+getTime())
-                                            magNetoQueue1.insert(valueArray[index])
-                                        }
-                                        2->  {
-                                            Log.d("Mag","2 : "+valueArray[index].toString()+" Time : "+getTime())
-                                            magNetoQueue2.insert(valueArray[index])
+                                    if(isExposeTarget(bleSetData.mMagnetoCount)){
+                                       when(index){
+                                            0->  {
+                                                Log.d("Mag","0 : ${valueArray[index]} , Time : ${getTime()} , Count : ${bleSetData.mMagnetoCount}")
+                                                magNetoQueue0.insert(valueArray[index])
+                                            }
+                                            1->  {
+                                                Log.d("Mag","1 : ${valueArray[index]} , Time : ${getTime()} , Count : ${bleSetData.mMagnetoCount}")
+                                                magNetoQueue1.insert(valueArray[index])
+                                            }
+                                            2->  {
+                                                Log.d("Mag","2 : ${valueArray[index]} , Time : ${getTime()} , Count : ${bleSetData.mMagnetoCount}")
+                                                magNetoQueue2.insert(valueArray[index])
+                                            }
                                         }
                                     }
                                 }
