@@ -390,7 +390,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     override fun getDataUpdateTimerTask(): TimerTask? {
         return object : TimerTask() {
             override fun run() {
-                runOnUiThread() {
+//                runOnUiThread() {
                     scope = CoroutineScope(Dispatchers.IO)
                     scope.launch {
                         val emgSize = bleSetData.mEMGBuffer!!.size
@@ -398,8 +398,10 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             val channels = bleSetData.mEMGBuffer!!.poll()
                             if (channels != null) {
                                 val value = channels[0] / 2047f * 7.4f
-                                Log.d("Emg", "Value : $value , Time : ${getTime()} , Count : ${bleSetData.mEMGCount}")
-                                emgQueue.insert(value)
+                                if(isExposeTarget(bleSetData.mEMGCount)){
+                                    Log.d("Emg", "Value : $value , Time : ${getTime()} , Count : ${bleSetData.mEMGCount}")
+                                    emgQueue.insert(value)
+                                }
                                 bleSetData.mSGEMGGraph!!.putValue(value)
                             }
                         }
@@ -500,7 +502,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             }
                         }
                     }
-                }
+//                }
             }
         }
     }
@@ -818,6 +820,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
          * 4. dataInsert
          *
          */
+        //TODO 시간을 여기서 저장하지 말고, Queue에 insert할때 같이 저장해야 함
         if (circularQueue.getQueueSize() != 0) {
             try {
                 //1.2.
