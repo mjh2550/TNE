@@ -20,7 +20,7 @@ class Converters {
         while(true){
             val jsonObject = JSONObject()
             var data = circularQueue.pop()
-            if(data==-99999999f){
+            if(data=="fs"){
                 break
             }
             jsonObject.put("bioData",circularQueue.pop())

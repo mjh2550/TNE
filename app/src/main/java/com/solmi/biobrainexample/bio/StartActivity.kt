@@ -390,7 +390,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
     override fun getDataUpdateTimerTask(): TimerTask? {
         return object : TimerTask() {
             override fun run() {
-//                runOnUiThread() {
+                runOnUiThread() {
                     scope = CoroutineScope(Dispatchers.IO)
                     scope.launch {
                         val emgSize = bleSetData.mEMGBuffer!!.size
@@ -502,7 +502,7 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
                             }
                         }
                     }
-//                }
+                }
             }
         }
     }
@@ -801,11 +801,11 @@ class StartActivity : AppCompatActivity() , View.OnClickListener , BaseAppBle {
         while(true){
             val jsonObject = JSONObject()
             var data = circularQueue.pop()
-            if(data==-99999999f || circularQueue.getQueueSize()<=0){
+            if(data=="fs" || circularQueue.getQueueSize()<=0){
                 break
             }
             jsonObject.put("bioData", circularQueue.pop())
-            jsonObject.put("Time",getTime())
+            jsonObject.put("saveTime",getTime())
             jsonArray.put(jsonObject)
         }
         jsonObj.put("item",jsonArray)
