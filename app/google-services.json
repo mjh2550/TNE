@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1086285657151",
-    "project_id": "turtleneckescape",
-    "storage_bucket": "turtleneckescape.appspot.com"
+    "project_number": "420514001633",
+    "project_id": "turtleneckescape-c641c",
+    "storage_bucket": "turtleneckescape-c641c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1086285657151:android:2202bc29e79809e378748a",
+        "mobilesdk_app_id": "1:420514001633:android:3fa30e0c0a1279dace3da0",
         "android_client_info": {
           "package_name": "com.solmi.biobrainexample"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1086285657151-09b5nr6np6td4qpp91kr80op887v82oo.apps.googleusercontent.com",
+          "client_id": "420514001633-hg4f1r3kbqm5prtnakkm0du6bigp8k4l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAvH0Imv2RMRZu7WfNMdgCYC8Xw3HgtHpI"
+          "current_key": "AIzaSyDYd-179ajONwy2dVvjOnBwwFG5xMvi1d8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1086285657151-09b5nr6np6td4qpp91kr80op887v82oo.apps.googleusercontent.com",
+              "client_id": "420514001633-hg4f1r3kbqm5prtnakkm0du6bigp8k4l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
