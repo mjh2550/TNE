@@ -14,6 +14,17 @@ import com.google.firebase.messaging.RemoteMessage
 
 class FcmMessageService : FirebaseMessagingService() {
 
+    /**
+     * 다양한 알림 구현
+     * ref :https://whyprogrammer.tistory.com/586
+     *
+     * 7/4
+     * * 특정 시간 이상 해당 값이 지속될 경우 알람 출력
+     * 알람은 소리, 영상을 백그라운드에서 출력 with 푸시메세지
+     * + 카카오 오븐 디자인
+     * 설정이 가능해야함 ( 소리 or 영상 or 진동)
+     */
+
     //메세지 수신 시 호출
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
