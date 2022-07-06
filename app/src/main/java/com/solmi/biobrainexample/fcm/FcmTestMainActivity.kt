@@ -1,18 +1,22 @@
 package com.solmi.biobrainexample.fcm
 
 import android.content.Context
+import android.media.MediaPlayer
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.*
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.databinding.ActivityFcmTestMainBinding
 
 
 class FcmTestMainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityFcmTestMainBinding
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +25,7 @@ class FcmTestMainActivity : AppCompatActivity() {
 
         val firebaseMessaging = FirebaseMessaging.getInstance()
         var fcmToken = ""
+        //setMusic() //음악설정
 
         binding.fcmBtn01.setOnClickListener {
             //TODO FCM 서버 -> 앱 TOKEN 받기
@@ -39,44 +44,50 @@ class FcmTestMainActivity : AppCompatActivity() {
         }
 
         binding.fcmBtn02.setOnClickListener {
+            /**
+             * https://o-s-z.tistory.com/62
+             */
             //TODO 진동
-
-         /*   val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator // 진동을 울리기 위한
-            if (Build.VERSION.SDK_INT >= 26) {  // 안드로이드 버전에 따른 조건
-                vibrator.vibrate(VibrationEffect.createOneShot(1000, 100)) // 지속시간, 크기
-            } else {
-                vibrator.vibrate(1000) // 지속시간
-            }*/
-
-            val vib = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-                vibratorManager.defaultVibrator
+                 val vib =vibratorManager.defaultVibrator
+                 vib.vibrate(VibrationEffect.createOneShot(1000,100))
             } else {
                 @Suppress("DEPRECATION")
-                getSystemService(VIBRATOR_SERVICE) as Vibrator
+                val vib = getSystemService(VIBRATOR_SERVICE) as Vibrator
+                 vib.vibrate(1000)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-                vib.vibrate(VibrationEffect.createOneShot(1000,100))
-            }else {
-                vib.vibrate(1000)
-            }
+
 
         }
 
 
         binding.fcmBtn03.setOnClickListener {
+            val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION) // 소리를 울리기 위한(TYPE_NOTIFICATION를 다른 거로 바꾸면 설정한 벨소리 등 소리 울리게 가능)
 
+            val ringtone = RingtoneManager.getRingtone(applicationContext, uri)
+            ringtone.play()
         }
 
         binding.fcmBtn04.setOnClickListener {
-
+            if(mediaPlayer!=null){
+                mediaPlayer.start()
+                //setMusic()
+            }
         }
 
         binding.fcmBtn05.setOnClickListener {
-
+            if(mediaPlayer.isPlaying){
+                mediaPlayer.pause()
+            }else{
+                mediaPlayer.start()
+            }
         }
+    }
 
-
-
+    private fun setMusic(){
+        //커스텀 뮤직 설정
+        mediaPlayer = MediaPlayer.create(applicationContext, R.raw.keep)//음악선택
+        mediaPlayer.isLooping = true
     }
 }
