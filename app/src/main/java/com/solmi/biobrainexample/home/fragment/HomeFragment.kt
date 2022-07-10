@@ -15,6 +15,7 @@ import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.bio.StartActivity
 import com.solmi.biobrainexample.common.BaseApplication
 import com.solmi.biobrainexample.home.HomeKtActivity
+import com.solmi.biobrainexample.setting.SettingActivity
 
 
 /**
@@ -27,6 +28,7 @@ class HomeFragment : Fragment() , View.OnClickListener {
     lateinit var navController: NavController
     lateinit var btnGoMesure : Button
     lateinit var progressDialog: AppCompatDialog
+    lateinit var btnGoResult : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +55,9 @@ class HomeFragment : Fragment() , View.OnClickListener {
 
         btnGoMesure = v.findViewById(R.id.btn_go_measure)
         btnGoMesure.setOnClickListener(this)
+        btnGoResult = v.findViewById(R.id.btn_go_result)
+        btnGoResult.setOnClickListener(this)
+
 
     }
 
@@ -65,7 +70,12 @@ class HomeFragment : Fragment() , View.OnClickListener {
                 val intent = Intent(this.activity, StartActivity::class.java)
                 startActivity(intent)
             }
-        }
 
+            R.id.btn_go_result -> {
+                //임시로 설정창 넘어가게
+                val intent = Intent(this.activity , SettingActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }
