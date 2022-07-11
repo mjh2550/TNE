@@ -14,6 +14,7 @@ import androidx.navigation.Navigation
 import com.solmi.biobrainexample.R
 import com.solmi.biobrainexample.bio.StartActivity
 import com.solmi.biobrainexample.common.BaseApplication
+import com.solmi.biobrainexample.fcm.PushMessageActivity
 import com.solmi.biobrainexample.home.HomeKtActivity
 import com.solmi.biobrainexample.setting.SettingActivity
 
@@ -72,8 +73,8 @@ class HomeFragment : Fragment() , View.OnClickListener {
             }
 
             R.id.btn_go_result -> {
-                //임시로 설정창 넘어가게
-                val intent = Intent(this.activity , SettingActivity::class.java)
+                //임시로 푸시메시지 보내는 창
+                val intent = Intent(this.activity , PushMessageActivity::class.java)
                 startActivity(intent)
             }
         }

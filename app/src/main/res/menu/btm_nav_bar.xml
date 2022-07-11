@@ -16,9 +16,8 @@
         android:icon="@drawable/arrow_white"
         android:title="결과" />
     <item
-        android:id="@+id/fragment_setting"
+        android:id="@+id/activity_setting"
         android:enabled="true"
         android:icon="@drawable/arrow_white"
         android:title="설정" />
-
 </menu>

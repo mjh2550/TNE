@@ -9,6 +9,8 @@ import android.preference.PreferenceScreen
 import android.widget.BaseAdapter
 import android.widget.ListPopupWindow
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.firebase.database.core.SyncTree
 import com.solmi.biobrainexample.R
 import java.util.prefs.PreferencesFactory
