@@ -3,10 +3,12 @@ package com.solmi.biobrainexample.fcm
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.solmi.biobrainexample.R
@@ -19,6 +21,10 @@ class PushMessageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPushMessageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbar2)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "푸시 테스트"
 
         binding.btnPush.setOnClickListener{
             if(binding.edtTitle.length()!=0 && binding.edtBody.length()!=0){
@@ -49,9 +55,22 @@ class PushMessageActivity : AppCompatActivity() {
 
         }
 
-
-
+        binding.btnFb.setOnClickListener {
+            val intent = Intent(this@PushMessageActivity,FcmTestMainActivity::class.java)
+            startActivity(intent)
+        }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item?.itemId){
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun getNotificationBuilder(id:String , name:String) : NotificationCompat.Builder{
 
         //OS버전별 분기

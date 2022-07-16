@@ -69,7 +69,7 @@ class FcmTestMainActivity : AppCompatActivity() {
             ringtone.play()
         }
 
-        binding.fcmBtn04.setOnClickListener {
+       /* binding.fcmBtn04.setOnClickListener {
             if(mediaPlayer!=null){
                 mediaPlayer.start()
                 //setMusic()
@@ -82,7 +82,7 @@ class FcmTestMainActivity : AppCompatActivity() {
             }else{
                 mediaPlayer.start()
             }
-        }
+        }*/
     }
 
     private fun setMusic(){

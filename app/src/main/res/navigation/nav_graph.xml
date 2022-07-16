@@ -20,9 +20,11 @@
         android:name="com.solmi.biobrainexample.home.fragment.ResultFragment"
         android:label="fragment_result"
         tools:layout="@layout/fragment_result" />
-    <fragment
+    <activity
         android:id="@+id/activity_setting"
-        android:name="com.solmi.biobrainexample.home.fragment.SettingFragment"
-        android:label="fragment_setting"
+        android:name="com.solmi.biobrainexample.setting.SettingActivity"
+        android:label="activity_setting"
         tools:layout="@layout/activity_setting" />
+
+
 </navigation>

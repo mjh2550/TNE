@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Preference category">
+    <PreferenceCategory android:title="알림 설정">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="switch_preference_1"
-            android:title="메세지 알림" />
-
-        <PreferenceScreen
-            android:key="keyword_screen"
-            android:title="키워드 알림"
-            android:summary="사용안함">
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="switch_preference_1"
-                android:title="키워드 알림" />
-            <ListPreference
-                android:defaultValue="1"
-                android:entries="@array/array_voice"
-                android:entryValues="@array/array_voice"
-                android:summary="카톡"
-                android:key="keyword_sound_list"
-                android:title="키워드 전용 알림음" />
-        </PreferenceScreen>
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="switch_preference_1"
-            android:title="소리" />
+            android:key="alarm"
+            android:defaultValue="true"
+            android:summary="알림을 받으려면 체크하세요"
+            android:title="알림" />
 
         <ListPreference
+            android:key="alarm_type_list"
             android:defaultValue="1"
             android:entries="@array/array_voice"
             android:entryValues="@array/array_voice"
-            android:summary="카톡"
-            android:key="sound_list"
-            android:title="알림음음" />
+            android:summary="아이템1"
+            android:title="벨소리 타입" />
+
+        <ListPreference
+            android:key="alarm_sound_list"
+            android:defaultValue="1"
+            android:entries="@array/array_voice"
+            android:entryValues="@array/array_voice"
+            android:summary="아이템1"
+            android:title="벨소리 설정" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="프로필 설정">
+
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="언어 설정">
+
+
 
     </PreferenceCategory>
 
